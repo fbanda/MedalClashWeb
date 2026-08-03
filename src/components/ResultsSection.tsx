@@ -21,43 +21,47 @@ export const ResultsSection = () => {
       if(!store.filterInputValue && !store.searchByName && !store.searchByText && !store.searchByType)
         return card;
 
-      const compareArmor = () => (store.armorCompare !== "ALL" && card.armor > 0 && (
+      const compareArmor = () => (store.armorValue > 0 && (
           (store.armorCompare === "EQ" && card.armor === store.armorValue) ||
           (store.armorCompare === "GT" && card.armor > store.armorValue) ||
           (store.armorCompare === "GTEQ" && card.armor >= store.armorValue) ||
           (store.armorCompare === "LT" && card.armor < store.armorValue) ||
           (store.armorCompare === "LTEQ" && card.armor <= store.armorValue)
-      ) || store.armorCompare === "ALL")
+      ) || store.armorValue === 0)
 
-      const compareSpirit = () => (store.spiritCompare !== "ALL" && card.spirit > 0 && (
+      const compareSpirit = () => (store.spiritValue > 0 &&  (
           (store.spiritCompare === "EQ" && card.spirit === store.spiritValue) ||
           (store.spiritCompare === "GT" && card.spirit > store.spiritValue) ||
           (store.spiritCompare === "GTEQ" && card.spirit >= store.spiritValue) ||
           (store.spiritCompare === "LT" && card.spirit < store.spiritValue) ||
           (store.spiritCompare === "LTEQ" && card.spirit <= store.spiritValue)
-      ) || store.spiritCompare === "ALL")
+      ) || store.spiritValue === 0)
 
-      const compareCost = () => (store.costCompare !== "ALL" && card.mainCost > 0 && (
-          (store.costCompare === "EQ" && card.mainCost === store.costValue) ||
-          (store.costCompare === "GT" && card.mainCost > store.costValue) ||
-          (store.costCompare === "GTEQ" && card.mainCost >= store.costValue) ||
-          (store.costCompare === "LT" && card.mainCost < store.costValue) ||
-          (store.costCompare === "LTEQ" && card.mainCost <= store.costValue)
-      ) || store.costCompare === "ALL")
+      const compareCost = () => (store.costValue > 0 &&  (
+          (store.costCompare === "EQ" && (card.mainCost === store.costValue || card.triggerCost === store.costValue)) ||
+          (store.costCompare === "GT" && (card.mainCost > store.costValue || card.triggerCost > store.costValue)) ||
+          (store.costCompare === "GTEQ" && (card.mainCost >= store.costValue || card.triggerCost >= store.costValue)) ||
+          (store.costCompare === "LT" && (card.mainCost < store.costValue || card.triggerCost < store.costValue)) ||
+          (store.costCompare === "LTEQ" && (card.mainCost <= store.costValue || card.triggerCost <= store.costValue))
+      ) || store.costValue === 0)
 
-      const comparePower = () => (store.powerCompare !== "ALL" && card.power > 0 && (
+      const comparePower = () => (store.powerValue > 0 &&  (
           (store.powerCompare === "EQ" && card.power === store.powerValue) ||
           (store.powerCompare === "GT" && card.power > store.powerValue) ||
           (store.powerCompare === "GTEQ" && card.power >= store.powerValue) ||
           (store.powerCompare === "LT" && card.power < store.powerValue) ||
           (store.powerCompare === "LTEQ" && card.power <= store.powerValue)
-      ) || store.powerCompare === "ALL")
+      ) || store.powerValue === 0)
 
       return !card.isBack &&
           (
-          store.searchByName && card.cardname.toLowerCase().includes(store.filterInputValue.toLowerCase()) ||
-          store.searchByText && card.mainText.toLowerCase().includes(store.filterInputValue.toLowerCase()) ||
-          store.searchByType && card.cardType.toLowerCase().includes(store.filterInputValue.toLowerCase())
+          store.searchByName && (card.cardname.toLowerCase().includes(store.filterInputValue.toLowerCase()) || card.medapartName.toLowerCase().includes(store.filterInputValue.toLowerCase())) ||
+          store.searchByText && (card.mainText.toLowerCase().includes(store.filterInputValue.toLowerCase()) || card.medapartText.toLowerCase().includes(store.filterInputValue.toLowerCase())) ||
+          store.searchByType && (
+                card.medabotType.toLowerCase().includes(store.filterInputValue.toLowerCase()) ||
+                card.medafighterIdentity.toLowerCase().includes(store.filterInputValue.toLowerCase()) ||
+                card.groups.join(" ").toLowerCase().includes(store.filterInputValue.toLowerCase())
+            )
           ) &&
           (store.searchBySet && card.set.toLowerCase() === store.searchBySet.toLowerCase() || !store.searchBySet || store.searchBySet === "ALL") &&
           (store.cardType !== DEFAULT_CARD_TYPE && store.cardType === card.cardType || store.cardType === DEFAULT_CARD_TYPE && card.cardType !== "LEADER" && card.cardType !== "MEDAL") &&
@@ -108,83 +112,91 @@ export const ResultsSection = () => {
 
         <div className={"flex flex-col gap-4 p-4 my-6"}>
           <Pagination align="center" current={store.currentPage} pageSize={PAGE_SIZE} showSizeChanger={false} total={totalResults} onChange={(page) => store.setCurrentPage(page)} />
-          <div className={"grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 content-center my-6"}>
-            {displayData.map((card, index) => (
-                <div key={index} className={"group relative"}>
-                  <div className={"z-10 md:opacity-0 md:group-hover:opacity-100"}>
-                    <div className={"absolute bottom-[45px] left-[5px]"}>
-                      <Hexagon isBtn text={<PlusIcon/>} onClick={() => {
-                        if(card.cardType !== "LEADER" && card.cardType !== "MEDAL") {
-                          store.addCardToDeck(card.cardId)
-                        }
-                        if(card.cardType === "LEADER") {
-                          store.setLeader(card.cardId)
-                        }
-                        if(card.cardType === "MEDAL" && card.medalLevel === 1) {
-                          store.setMedalLvl1(card.cardId)
-                        }
-                        if(card.cardType === "MEDAL" && card.medalLevel === 2) {
-                          store.setMedalLvl2(card.cardId)
-                        }
-                        if(card.cardType === "MEDAL" && card.medalLevel === 3) {
-                          store.setMedalLvl3(card.cardId)
-                        }
-                      }}/>
-                    </div>
-                    <div className={"absolute bottom-[45px] left-[40px]"}>
-                      <Hexagon isBtn text={<MinusIcon/>} onClick={() => {
-                        if(card.cardType !== "LEADER" && card.cardType !== "MEDAL") {
-                          store.removeCardFromDeck(card.cardId)
-                        }
-                        if(card.cardType === "LEADER") {
-                          store.setLeader("")
-                        }
-                        if(card.cardType === "MEDAL" && card.medalLevel === 1) {
-                          store.setMedalLvl1("")
-                        }
-                        if(card.cardType === "MEDAL" && card.medalLevel === 2) {
-                          store.setMedalLvl2("")
-                        }
-                        if(card.cardType === "MEDAL" && card.medalLevel === 3) {
-                          store.setMedalLvl3("")
-                        }
-                      }}/>
-                    </div>
-
-                    {(card.cardType !== "LEADER" && card.cardType !== "MEDAL") && (
-                      <>
-                        <div className={"absolute bottom-[45px] left-[80px]"}>
-                          <Hexagon size={"sm"} isBtn text={<PlusIcon/>}
-                                   onClick={() => store.addCardToSideDeck(card.cardId)}/>
+          {displayData.length === 0 && (
+              <div className={"flex items-center justify-center h-32"}>
+                <p>No cards were found.</p>
+              </div>
+          )}
+          {displayData.length > 0 && (
+              <div
+                  className={"grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 content-center my-6"}>
+                {displayData.map((card, index) => (
+                    <div key={index} className={"group relative"}>
+                      <div className={"z-10 md:opacity-0 md:group-hover:opacity-100"}>
+                        <div className={"absolute bottom-[45px] left-[5px]"}>
+                          <Hexagon isBtn text={<PlusIcon/>} onClick={() => {
+                            if (card.cardType !== "LEADER" && card.cardType !== "MEDAL") {
+                              store.addCardToDeck(card.cardId)
+                            }
+                            if (card.cardType === "LEADER") {
+                              store.setLeader(card.cardId)
+                            }
+                            if (card.cardType === "MEDAL" && card.medalLevel === 1) {
+                              store.setMedalLvl1(card.cardId)
+                            }
+                            if (card.cardType === "MEDAL" && card.medalLevel === 2) {
+                              store.setMedalLvl2(card.cardId)
+                            }
+                            if (card.cardType === "MEDAL" && card.medalLevel === 3) {
+                              store.setMedalLvl3(card.cardId)
+                            }
+                          }}/>
                         </div>
-                        <div className={"absolute bottom-[45px] left-[105px]"}>
-                          <Hexagon size={"sm"} isBtn text={<MinusIcon/>}
-                                   onClick={() => store.removeCardFromSideDeck(card.cardId)}/>
+                        <div className={"absolute bottom-[45px] left-[40px]"}>
+                          <Hexagon isBtn text={<MinusIcon/>} onClick={() => {
+                            if (card.cardType !== "LEADER" && card.cardType !== "MEDAL") {
+                              store.removeCardFromDeck(card.cardId)
+                            }
+                            if (card.cardType === "LEADER") {
+                              store.setLeader("")
+                            }
+                            if (card.cardType === "MEDAL" && card.medalLevel === 1) {
+                              store.setMedalLvl1("")
+                            }
+                            if (card.cardType === "MEDAL" && card.medalLevel === 2) {
+                              store.setMedalLvl2("")
+                            }
+                            if (card.cardType === "MEDAL" && card.medalLevel === 3) {
+                              store.setMedalLvl3("")
+                            }
+                          }}/>
                         </div>
-                      </>
-                    )}
 
-                    <div className={"absolute bottom-[45px] right-[10px]"}>
-                      <Hexagon
-                          isBtn
-                          onClick={() => {
-                            setIsModalOpen(true)
-                            setSelectedCard(card)
-                          }}
-                          text={<EyeIcon/>}
-                      />
+                        {(card.cardType !== "LEADER" && card.cardType !== "MEDAL") && (
+                            <>
+                              <div className={"absolute bottom-[45px] left-[80px]"}>
+                                <Hexagon size={"sm"} isBtn text={<PlusIcon/>}
+                                         onClick={() => store.addCardToSideDeck(card.cardId)}/>
+                              </div>
+                              <div className={"absolute bottom-[45px] left-[105px]"}>
+                                <Hexagon size={"sm"} isBtn text={<MinusIcon/>}
+                                         onClick={() => store.removeCardFromSideDeck(card.cardId)}/>
+                              </div>
+                            </>
+                        )}
+
+                        <div className={"absolute bottom-[45px] right-[10px]"}>
+                          <Hexagon
+                              isBtn
+                              onClick={() => {
+                                setIsModalOpen(true)
+                                setSelectedCard(card)
+                              }}
+                              text={<EyeIcon/>}
+                          />
+                        </div>
+                      </div>
+                      <Image preview={false} src={card.cardImageUrl} alt={"card"}/>
+                      <div className={"text-xs font-bold"}>
+                        {card.cardname}
+                      </div>
+                      <div className={"text-xs font-normal"}>
+                        {card.set} - {card.collectorNumber}
+                      </div>
                     </div>
-                  </div>
-                  <Image preview={false} src={card.cardImageUrl} alt={"card"}/>
-                  <div className={"text-xs font-bold"}>
-                    {card.cardname}
-                  </div>
-                  <div className={"text-xs font-normal"}>
-                    {card.set} - {card.collectorNumber}
-                  </div>
-                </div>
-            ))}
-          </div>
+                ))}
+              </div>
+          )}
           <Pagination align="center" current={store.currentPage} pageSize={PAGE_SIZE} showSizeChanger={false} total={totalResults} onChange={(page) => store.setCurrentPage(page)}/>
         </div>
       </>

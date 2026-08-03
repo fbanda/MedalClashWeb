@@ -31,9 +31,6 @@ const COLOR_OPTIONS = [
 ]
 const COMPARE_OPTIONS = [
   {
-    value: 'ALL',
-    label: 'ALL',
-  },{
     value: 'EQ',
     label: '=',
   },
@@ -55,6 +52,10 @@ const COMPARE_OPTIONS = [
   },
 ]
 
+const cardTypeOptions = ["ALL", "MEDABOT", "EVENT", "MEDAFIGHTER"].map(item => ({
+  value: item,
+  label: item
+}));
 const attributeOptions = ["ALL", ...new Set(dataSet.flatMap(card => card.attributes))].map(item => ({
   value: item,
   label: item
@@ -76,10 +77,16 @@ const medapartTypeOptions = ["ALL", ...new Set(dataSet.flatMap(card => card.meda
   label: item
 }));
 
-export const AdvancedFilters = forwardRef((_, ref) => {
+export interface AdvancedFiltersProps {
+  handleOnSearch: () => void;
+}
+
+export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => {
   const store = useStore();
+  const { handleOnSearch } = props;
 
   const [selectedColor, setSelectedColor] = useState<string>(COLOR_OPTIONS[0].value);
+  const [selectedCardType, setSelectedCardType] = useState<string>(cardTypeOptions[0].value);
   const [selectedArmor, setSelectedArmor] = useState<string>(COMPARE_OPTIONS[0].value);
   const [armorInput, setArmorInput] = useState<string>("");
   const [selectedSpirit, setSelectedSpirit] = useState<string>(COMPARE_OPTIONS[0].value);
@@ -97,20 +104,10 @@ export const AdvancedFilters = forwardRef((_, ref) => {
 
   useImperativeHandle(ref, () => ({
     onSearch: () => {
-      store.setColor(selectedColor);
-      store.setArmorCompare(selectedArmor);
       store.setArmorValue(+armorInput);
-      store.setSpiritCompare(selectedSpirit);
       store.setSpiritValue(+spiritInput)
-      store.setCostCompare(selectedCost);
       store.setCostValue(+costInput);
-      store.setPowerCompare(selectedPower);
       store.setPowerValue(+powerInput);
-      store.setAttribute(selectedAttribute);
-      store.setGroup(selectedGroup);
-      store.setGender(selectedGender);
-      store.setLegType(selectedLegType);
-      store.setMedapartType(selectedMedapartType);
     },
     onClearSearch: () => {
       setSelectedColor(COLOR_OPTIONS[0].value);
@@ -132,10 +129,10 @@ export const AdvancedFilters = forwardRef((_, ref) => {
 
  return (
      <div className={"flex flex-col md:flex-row gap-4"}>
-       <div className={"flex flex-col basis-1/2 gap-4"}>
+       <div className={"flex flex-col w-full  gap-4"}>
          {/* Primera fila */}
          <div className={"flex flex-col md:flex-row w-full gap-2"}>
-           <div className={"w-full"}>
+           <div className={"basis-1/4"}>
              <div className={"flex justify-between"}>
                <p>
                  Select a color
@@ -146,169 +143,169 @@ export const AdvancedFilters = forwardRef((_, ref) => {
                    placeholder="Color"
                    className={"w-full"}
                    value={selectedColor}
-                   onChange={setSelectedColor}
+                   onChange={(value) => {
+                     setSelectedColor(value);
+                     store.setColor(value);
+                     handleOnSearch();
+                   }}
                    options={COLOR_OPTIONS}
                />
              </div>
            </div>
+           <div className={"basis-1/4"}>
+             <div className={"flex justify-between"}>
+               <p>
+                 Select a card type
+               </p>
+             </div>
+             <div className={"flex mt-2"}>
+               <Select
+                   placeholder="Color"
+                   className={"w-full"}
+                   value={selectedCardType}
+                   onChange={(value) => {
+                     setSelectedCardType(value);
+                     store.setCardType(value);
+                     handleOnSearch();
+                   }}
+                   options={cardTypeOptions}
+               />
+             </div>
+           </div>
+           <div className={"flex gap-2 basis-1/4 items-end"}>
+             <div className={"basis-1/4"}>
+               <div className={"flex justify-between"}>
+                 <p>
+                   Cost
+                 </p>
+               </div>
+               <div className={"flex mt-2"}>
+                 <Select
+                     placeholder="Select a cost"
+                     className={"w-full"}
+                     value={selectedCost}
+                     onChange={(value) => {
+                       setSelectedCost(value);
+                       store.setCostCompare(value);
+                       handleOnSearch();
+                     }}
+                     options={COMPARE_OPTIONS}
+                 />
+               </div>
+             </div>
+             <div className={"basis-3/4"}>
+               <div className={"flex justify-between"}>
+                 <p className={"hidden sm:block"}>
+                   &nbsp;
+                 </p>
+               </div>
+               <div className={"flex mt-2"}>
+                 <Input placeholder={"Type to search"} value={costInput} type={"number"} onChange={(e) => setCostInput(e.target.value)}/>
+               </div>
+             </div>
+           </div>
+           <div className={"flex gap-2 basis-1/4 items-end"}>
+             <div className={"basis-1/4"}>
+               <div className={"flex justify-between"}>
+                 <p>
+                   Power
+                 </p>
+               </div>
+               <div className={"flex mt-2"}>
+                 <Select
+                     placeholder="Select a power"
+                     className={"w-full"}
+                     value={selectedPower}
+                     onChange={(value) => {
+                       setSelectedPower(value);
+                       store.setPowerCompare(value);
+                       handleOnSearch();
+                     }}
+                     options={COMPARE_OPTIONS}
+                 />
+               </div>
+             </div>
+             <div className={"basis-3/4"}>
+               <div className={"flex justify-between"}>
+                 <p className={"hidden sm:block"}>
+                   &nbsp;
+                 </p>
+               </div>
+               <div className={"flex mt-2"}>
+                 <Input placeholder={"Type to search"} value={powerInput} type={"number"} onChange={(e) => setPowerInput(e.target.value)}/>
+               </div>
+             </div>
+           </div>
+
          </div>
 
          {/* Segunda fila */}
          <div className={"flex flex-col md:flex-row w-full gap-2"}>
-           <div className={"basis-2/12"}>
-             <div className={"flex justify-between"}>
-               <p>
-                 Armor
-               </p>
+           <div className={"flex gap-2 basis-1/4 items-end"}>
+             <div className={"basis-1/4"}>
+               <div className={"flex justify-between"}>
+                 <p>
+                   Armor
+                 </p>
+               </div>
+               <div className={"flex mt-2"}>
+                 <Select
+                     placeholder="Select a color"
+                     className={"w-full"}
+                     value={selectedArmor}
+                     onChange={(value) => {
+                       setSelectedArmor(value);
+                       store.setArmorCompare(value);
+                       handleOnSearch();
+                     }}
+                     options={COMPARE_OPTIONS}
+                 />
+               </div>
              </div>
-             <div className={"flex mt-2"}>
-               <Select
-                   placeholder="Select a color"
-                   className={"w-full"}
-                   value={selectedArmor}
-                   onChange={setSelectedArmor}
-                   options={COMPARE_OPTIONS}
-               />
-             </div>
-           </div>
-           <div className={"basis-4/12"}>
-             <div className={"flex justify-between"}>
-               <p className={"hidden sm:block"}>
-                 &nbsp;
-               </p>
-             </div>
-             <div className={"flex mt-2"}>
-               <Input placeholder={"Type to search"} value={armorInput} type={"number"} onChange={e => setArmorInput(e.target.value)}/>
-             </div>
-           </div>
-
-           <div className={"basis-2/12"}>
-             <div className={"flex justify-between"}>
-               <p>
-                 Spirit
-               </p>
-             </div>
-             <div className={"flex mt-2"}>
-               <Select
-                   placeholder="Type to search"
-                   className={"w-full"}
-                   value={selectedSpirit}
-                   onChange={setSelectedSpirit}
-                   options={COMPARE_OPTIONS}
-               />
+             <div className={"basis-3/4"}>
+               <div className={"flex justify-between"}>
+                 <p className={"hidden sm:block"}>
+                   &nbsp;
+                 </p>
+               </div>
+               <div className={"flex mt-2"}>
+                 <Input placeholder={"Type to search"} value={armorInput} type={"number"} onChange={e => setArmorInput(e.target.value)}/>
+               </div>
              </div>
            </div>
-           <div className={"basis-4/12"}>
-             <div className={"flex justify-between"}>
-               <p className={"hidden sm:block"}>
-                 &nbsp;
-               </p>
+           <div className={"flex gap-2 basis-1/4 items-end"}>
+             <div className={"basis-1/4"}>
+               <div className={"flex justify-between"}>
+                 <p>
+                   Spirit
+                 </p>
+               </div>
+               <div className={"flex mt-2"}>
+                 <Select
+                     placeholder="Type to search"
+                     className={"w-full"}
+                     value={selectedSpirit}
+                     onChange={(value) => {
+                       setSelectedSpirit(value);
+                       store.setSpiritCompare(value);
+                       handleOnSearch();
+                     }}
+                     options={COMPARE_OPTIONS}
+                 />
+               </div>
              </div>
-             <div className={"flex mt-2"}>
-               <Input placeholder={"Type to search"} value={spiritInput} type={"number"} onChange={(e) => setSpiritInput(e.target.value)}/>
-             </div>
-           </div>
-         </div>
-
-         {/* Tercera fila */}
-         <div className={"flex flex-col md:flex-row w-full gap-2"}>
-           <div className={"basis-1/2"}>
-             <div className={"flex justify-between"}>
-               <p>
-                 Select and Attribute
-               </p>
-             </div>
-             <div className={"flex mt-2"}>
-               <Select
-                   placeholder="Atrribute"
-                   className={"w-full"}
-                   value={selectedAttribute}
-                   onChange={setSelectedAttribute}
-                   options={attributeOptions}
-               />
-             </div>
-           </div>
-           <div className={"basis-1/2"}>
-             <div className={"flex justify-between"}>
-               <p>
-                 Select a Group
-               </p>
-             </div>
-             <div className={"flex mt-2"}>
-               <Select
-                   placeholder="Group"
-                   className={"w-full"}
-                   value={selectedGroup}
-                   onChange={setSelectedGroup}
-                   options={groupOptions}
-               />
+             <div className={"basis-3/4"}>
+               <div className={"flex justify-between"}>
+                 <p className={"hidden sm:block"}>
+                   &nbsp;
+                 </p>
+               </div>
+               <div className={"flex mt-2"}>
+                 <Input placeholder={"Type to search"} value={spiritInput} type={"number"} onChange={(e) => setSpiritInput(e.target.value)}/>
+               </div>
              </div>
            </div>
-         </div>
-
-       </div>
-
-       <div className={"flex flex-col basis-1/2 gap-4"}>
-         {/* Primera fila */}
-         <div className={"flex flex-col md:flex-row w-full gap-2"}>
-           <div className={"basis-2/12"}>
-             <div className={"flex justify-between"}>
-               <p>
-                 Cost
-               </p>
-             </div>
-             <div className={"flex mt-2"}>
-               <Select
-                   placeholder="Select a cost"
-                   className={"w-full"}
-                   value={selectedCost}
-                   onChange={setSelectedCost}
-                   options={COMPARE_OPTIONS}
-               />
-             </div>
-           </div>
-           <div className={"basis-4/12"}>
-             <div className={"flex justify-between"}>
-               <p className={"hidden sm:block"}>
-                 &nbsp;
-               </p>
-             </div>
-             <div className={"flex mt-2"}>
-               <Input placeholder={"Type to search"} value={costInput} type={"number"} onChange={(e) => setCostInput(e.target.value)}/>
-             </div>
-           </div>
-
-           <div className={"basis-2/12"}>
-             <div className={"flex justify-between"}>
-               <p>
-                 Power
-               </p>
-             </div>
-             <div className={"flex mt-2"}>
-               <Select
-                   placeholder="Select a power"
-                   className={"w-full"}
-                   value={selectedPower}
-                   onChange={setSelectedPower}
-                   options={COMPARE_OPTIONS}
-               />
-             </div>
-           </div>
-           <div className={"basis-4/12"}>
-             <div className={"flex justify-between"}>
-               <p className={"hidden sm:block"}>
-                 &nbsp;
-               </p>
-             </div>
-             <div className={"flex mt-2"}>
-               <Input placeholder={"Type to search"} value={powerInput} type={"number"} onChange={(e) => setPowerInput(e.target.value)}/>
-             </div>
-           </div>
-         </div>
-
-         {/* Segunda fila */}
-         <div className={"flex flex-col md:flex-row w-full gap-2"}>
-           <div className={"basis-1/2"}>
+           <div className={"basis-1/4"}>
              <div className={"flex justify-between"}>
                <p>
                  Select a Gender
@@ -319,12 +316,16 @@ export const AdvancedFilters = forwardRef((_, ref) => {
                    placeholder="Gender"
                    className={"w-full"}
                    value={selectedGender}
-                   onChange={setSelectedGender}
+                   onChange={(value) => {
+                     setSelectedGender(value);
+                     store.setGender(value);
+                     handleOnSearch();
+                   }}
                    options={genderOptions}
                />
              </div>
            </div>
-           <div className={"basis-1/2"}>
+           <div className={"basis-1/4"}>
              <div className={"flex justify-between"}>
                <p>
                  Select a Leg type
@@ -335,7 +336,11 @@ export const AdvancedFilters = forwardRef((_, ref) => {
                    placeholder="Leg type"
                    className={"w-full"}
                    value={selectedLegType}
-                   onChange={setSelectedLegType}
+                   onChange={(value) => {
+                     setSelectedLegType(value);
+                     store.setLegType(value);
+                     handleOnSearch();
+                   }}
                    options={legTypeOptions}
                />
              </div>
@@ -344,19 +349,43 @@ export const AdvancedFilters = forwardRef((_, ref) => {
 
          {/* Tercera fila */}
          <div className={"flex flex-col md:flex-row w-full gap-2"}>
-           <div className={"basis-1/2"}>
+           <div className={"basis-1/4"}>
              <div className={"flex justify-between"}>
                <p>
-                 Select Rarity
+                 Select and Attribute
                </p>
              </div>
              <div className={"flex mt-2"}>
                <Select
-                   placeholder="Rarity"
+                   placeholder="Atrribute"
                    className={"w-full"}
-                   value={null}
-                   onChange={() => {}}
-                   options={[]}
+                   value={selectedAttribute}
+                   onChange={(value) => {
+                     setSelectedAttribute(value);
+                     store.setAttribute(value);
+                     handleOnSearch();
+                   }}
+                   options={attributeOptions}
+               />
+             </div>
+           </div>
+           <div className={"basis-1/4"}>
+             <div className={"flex justify-between"}>
+               <p>
+                 Select a Group
+               </p>
+             </div>
+             <div className={"flex mt-2"}>
+               <Select
+                   placeholder="Group"
+                   className={"w-full"}
+                   value={selectedGroup}
+                   onChange={(value) => {
+                     setSelectedGroup(value);
+                     store.setGroup(value);
+                     handleOnSearch();
+                   }}
+                   options={groupOptions}
                />
              </div>
            </div>
@@ -371,12 +400,17 @@ export const AdvancedFilters = forwardRef((_, ref) => {
                    placeholder="Medapart type"
                    className={"w-full"}
                    value={selectedMedapartType}
-                   onChange={setSelectedMedapartType}
+                   onChange={(value) => {
+                     setSelectedMedapartType(value);
+                     store.setMedapartType(value);
+                     handleOnSearch();
+                   }}
                    options={medapartTypeOptions}
                />
              </div>
            </div>
          </div>
+
        </div>
      </div>
 

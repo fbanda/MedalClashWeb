@@ -37,8 +37,6 @@ export const Filters = () => {
     store.setSearchByName(searchByName)
     store.setSearchByText(searchByText)
     store.setSearchByType(searchByType)
-    store.setSearchBySet(selectedSet)
-    store.setCardType(selectedCardType)
     store.setCurrentPage(1);
     advancedFiltersRef.current?.onSearch();
   }
@@ -108,7 +106,7 @@ export const Filters = () => {
           <div className={"basis-1/4"}>
             <div className={"flex justify-between"}>
               <p>
-                CARD Type
+                CARD TYPE
               </p>
             </div>
             <div className={"flex mt-2"}>
@@ -116,7 +114,11 @@ export const Filters = () => {
                   placeholder="Select a Card Set"
                   className={"w-full"}
                   value={selectedCardType}
-                  onChange={(value) => {setSelectedCardType(value)}}
+                  onChange={(value) => {
+                    setSelectedCardType(value);
+                    store.setCardType(value)
+                    handleOnSearch();
+                  }}
                   options={CardTypes}
               />
             </div>
@@ -132,7 +134,11 @@ export const Filters = () => {
                   placeholder="Select a Card Set"
                   className={"w-full"}
                   value={selectedSet}
-                  onChange={(value) => {setSelectedSet(value)}}
+                  onChange={(value) => {
+                    setSelectedSet(value)
+                    store.setSearchBySet(value)
+                    handleOnSearch();
+                  }}
                   options={SetListUnique.map(set => (
                       {value: set, label: set}
                   ))}
@@ -143,7 +149,7 @@ export const Filters = () => {
         <div className={"ps-4 pe-4 pt-8 md:pt-0"}>
           <Collapse
               onChange={handleToggleAdvancedSearch}
-              items={[{ key: '1', label: 'Advanced Search', children: <AdvancedFilters ref={advancedFiltersRef} /> }]}
+              items={[{ key: '1', label: 'Advanced Search', children: <AdvancedFilters handleOnSearch={handleOnSearch} ref={advancedFiltersRef} /> }]}
           />
         </div>
       </Form>

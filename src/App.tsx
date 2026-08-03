@@ -1,4 +1,4 @@
-import {BrowserRouter, Routes, Route} from "react-router-dom"
+import {HashRouter, Routes, Route} from "react-router-dom"
 import './App.css'
 import {Home} from "./pages/Home.tsx";
 import {Builder} from "./pages/Builder.tsx";
@@ -15,14 +15,14 @@ const theme = {
 function App() {
   return (
       <ConfigProvider theme={theme}>
-        <BrowserRouter>
+        <HashRouter>
           <Navbar/>
           <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="/builder" element={<Builder/>}/>
             <Route path="/loadDeck" element={<LoadDeck/>}/>
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
       </ConfigProvider>
   )
 }

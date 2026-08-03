@@ -125,13 +125,13 @@ export const useStore = create<StoreInterface>()(persist((set, getState) => ({
       gender: DEFAULT_CARD_TYPE,
       legType: DEFAULT_CARD_TYPE,
       medapartType: DEFAULT_CARD_TYPE,
-      armorCompare: DEFAULT_CARD_TYPE,
+      armorCompare: "EQ",
       armorValue: 0,
-      spiritCompare: DEFAULT_CARD_TYPE,
+      spiritCompare: "EQ",
       spiritValue: 0,
-      powerCompare: DEFAULT_CARD_TYPE,
+      powerCompare: "EQ",
       powerValue: 0,
-      costCompare: DEFAULT_CARD_TYPE,
+      costCompare: "EQ",
       costValue: 0,
 
       setDeckName: (name: string) => {
