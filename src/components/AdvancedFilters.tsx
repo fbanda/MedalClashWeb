@@ -206,10 +206,11 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
            </div>
            <div className={"flex gap-2 basis-1/4 items-end"}>
              <div className={"basis-1/4"}>
-               <div className={"flex justify-between"}>
-                 <p>
-                   Power
-                 </p>
+               <div className={"flex gap-2 items-center"}>
+                 <img src={"https://fbanda.github.io/Arena-MedabotsCard/Assets/Icons/SP.png"} className={"w-[16px] h-[16px]"}/>
+                 <span>
+                    Power
+                 </span>
                </div>
                <div className={"flex mt-2"}>
                  <Select
@@ -243,10 +244,11 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
          <div className={"flex flex-col md:flex-row w-full gap-2"}>
            <div className={"flex gap-2 basis-1/4 items-end"}>
              <div className={"basis-1/4"}>
-               <div className={"flex justify-between"}>
-                 <p>
+               <div className={"flex gap-2 items-center"}>
+                 <img src={"https://fbanda.github.io/Arena-MedabotsCard/Assets/Icons/SA.png"} className={"w-[16px] h-[16px]"}/>
+                 <span>
                    Armor
-                 </p>
+                 </span>
                </div>
                <div className={"flex mt-2"}>
                  <Select
@@ -275,10 +277,11 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
            </div>
            <div className={"flex gap-2 basis-1/4 items-end"}>
              <div className={"basis-1/4"}>
-               <div className={"flex justify-between"}>
-                 <p>
+               <div className={"flex gap-2 items-center"}>
+                 <img src={"https://fbanda.github.io/Arena-MedabotsCard/Assets/Icons/SS.png"} className={"w-[16px] h-[16px]"}/>
+                 <span>
                    Spirit
-                 </p>
+                 </span>
                </div>
                <div className={"flex mt-2"}>
                  <Select
