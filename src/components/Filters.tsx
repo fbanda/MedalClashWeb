@@ -148,6 +148,7 @@ export const Filters = () => {
         </div>
         <div className={"ps-4 pe-4 pt-8 md:pt-0"}>
           <Collapse
+              styles={{ header: { backgroundColor: '#fff', borderRadius: "8px 8px 0 0", }}}
               onChange={handleToggleAdvancedSearch}
               items={[{ key: '1', label: 'Advanced Search', children: <AdvancedFilters handleOnSearch={handleOnSearch} ref={advancedFiltersRef} /> }]}
           />

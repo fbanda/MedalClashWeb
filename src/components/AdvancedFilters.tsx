@@ -1,5 +1,5 @@
 import {Input, Select} from "antd";
-import {forwardRef, useImperativeHandle, useState} from "react";
+import {forwardRef, type ReactNode, useImperativeHandle, useState} from "react";
 import {useStore} from "../store/store.ts";
 import dataSet from "../assets/TestCardDataSet.json";
 
@@ -52,9 +52,9 @@ const COMPARE_OPTIONS = [
   },
 ]
 
-const cardTypeOptions = ["ALL", "MEDABOT", "EVENT", "MEDAFIGHTER"].map(item => ({
+const cardTypeOptions: {value: string, label: string | ReactNode}[] = ["ALL", "MEDABOT", "EVENT", "MEDAFIGHTER"].map(item => ({
   value: item,
-  label: item
+  label: <p>{item}</p>
 }));
 const attributeOptions = ["ALL", ...new Set(dataSet.flatMap(card => card.attributes))].map(item => ({
   value: item,
@@ -174,10 +174,12 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
            </div>
            <div className={"flex gap-2 basis-1/4 items-end"}>
              <div className={"basis-1/4"}>
-               <div className={"flex justify-between"}>
-                 <p>
+               <div className={"flex gap-2 items-center"}>
+                 <img src={"https://fbanda.github.io/Arena-MedabotsCard/Assets/Icons/CM.png"} className={"w-[16px] h-[16px]"}/>
+                 <img src={"https://fbanda.github.io/Arena-MedabotsCard/Assets/Icons/CT.png"} className={"w-[16px] h-[16px]"}/>
+                 <span>
                    Cost
-                 </p>
+                 </span>
                </div>
                <div className={"flex mt-2"}>
                  <Select

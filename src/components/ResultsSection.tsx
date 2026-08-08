@@ -55,15 +55,15 @@ export const ResultsSection = () => {
 
       return !card.isBack &&
           (
-          store.searchByName && (card.cardname.toLowerCase().includes(store.filterInputValue.toLowerCase()) || card.medapartName.toLowerCase().includes(store.filterInputValue.toLowerCase())) ||
-          store.searchByText && (card.mainText.toLowerCase().includes(store.filterInputValue.toLowerCase()) || card.medapartText.toLowerCase().includes(store.filterInputValue.toLowerCase())) ||
+          store.searchByName && (card.cardname.removeAccentsToLowerCase().includes(store.filterInputValue.removeAccentsToLowerCase()) || card.medapartName.removeAccentsToLowerCase().includes(store.filterInputValue.removeAccentsToLowerCase())) ||
+          store.searchByText && (card.mainText.removeAccentsToLowerCase().includes(store.filterInputValue.removeAccentsToLowerCase()) || card.medapartText.removeAccentsToLowerCase().includes(store.filterInputValue.removeAccentsToLowerCase())) ||
           store.searchByType && (
-                card.medabotType.toLowerCase().includes(store.filterInputValue.toLowerCase()) ||
-                card.medafighterIdentity.toLowerCase().includes(store.filterInputValue.toLowerCase()) ||
-                card.groups.join(" ").toLowerCase().includes(store.filterInputValue.toLowerCase())
+                card.medabotType.removeAccentsToLowerCase().includes(store.filterInputValue.removeAccentsToLowerCase()) ||
+                card.medafighterIdentity.removeAccentsToLowerCase().includes(store.filterInputValue.removeAccentsToLowerCase()) ||
+                card.groups.join(" ").removeAccentsToLowerCase().includes(store.filterInputValue.removeAccentsToLowerCase())
             )
           ) &&
-          (store.searchBySet && card.set.toLowerCase() === store.searchBySet.toLowerCase() || !store.searchBySet || store.searchBySet === "ALL") &&
+          (store.searchBySet && card.set.removeAccentsToLowerCase() === store.searchBySet.removeAccentsToLowerCase() || !store.searchBySet || store.searchBySet === "ALL") &&
           (store.cardType !== DEFAULT_CARD_TYPE && store.cardType === card.cardType || store.cardType === DEFAULT_CARD_TYPE && card.cardType !== "LEADER" && card.cardType !== "MEDAL") &&
           (store.color !== "ALL" && card.colors.includes(store.color) || store.color === "ALL") &&
           (store.attribute !== "ALL" && (card.attributes as string[]).includes(store.attribute) || store.attribute === "ALL") &&

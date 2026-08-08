@@ -105,3 +105,13 @@ export const SaveDeckToStore = (store: any, deckName: string, deck: string, side
     });
   }
 }
+
+declare global {
+  interface String {
+    removeAccentsToLowerCase(): string;
+  }
+}
+
+String.prototype.removeAccentsToLowerCase = function() {
+  return this.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+};
