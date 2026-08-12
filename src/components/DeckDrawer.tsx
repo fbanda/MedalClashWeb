@@ -24,7 +24,7 @@ export const DeckDrawer = (props: DeckDrawerProps) => {
       >
         {showBanner && (
           <div className={"mb-2"}>
-            <Alert title="Algunas de tus cartas no cumplen con el tipo de medallas elegidas" type="error" showIcon/>
+            <Alert title="Some cards don't meet their Medal Requirements" type="error" showIcon/>
           </div>
         )}
         <LeaderAndMedalsSection />

@@ -8,7 +8,7 @@ const SetList = dataSet.map(card => card.set);
 const SetListUnique = ["ALL", ...new Set(SetList)];
 
 const CardTypes = [
-  {value: DEFAULT_CARD_TYPE, label: "Other Cards"},
+  {value: DEFAULT_CARD_TYPE, label: "Main Deck"},
   {value: "LEADER", label: "Leaders"},
   {value: "MEDAL", label: "Medals"},
 ]
@@ -93,13 +93,13 @@ export const Filters = () => {
                 <Checkbox
                     onChange={(value) => { setSearchByType(value.target.checked) }}
                     checked={searchByType}>
-                  Type
+                  Types
                 </Checkbox>
               </div>
             </div>
             <div className={"mt-2"}>
               <Form.Item>
-                <Input placeholder={"Search"} value={inputValue} onChange={(e) => handleOnChangeName(e)}/>
+                <Input placeholder={"Enter text"} value={inputValue} onChange={(e) => handleOnChangeName(e)}/>
               </Form.Item>
             </div>
           </div>
@@ -150,7 +150,7 @@ export const Filters = () => {
           <Collapse
               styles={{ header: { backgroundColor: '#fff', borderRadius: "8px 8px 0 0", }}}
               onChange={handleToggleAdvancedSearch}
-              items={[{ key: '1', label: 'Advanced Search', children: <AdvancedFilters handleOnSearch={handleOnSearch} ref={advancedFiltersRef} /> }]}
+              items={[{ key: '1', label: 'ADVANCED SEARCH', children: <AdvancedFilters handleOnSearch={handleOnSearch} ref={advancedFiltersRef} /> }]}
           />
         </div>
       </Form>

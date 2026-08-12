@@ -13,6 +13,10 @@ const COLOR_OPTIONS = [
     label: 'Red',
   },
   {
+    value: 'P',
+    label: 'Purple',
+  },
+  {
     value: 'B',
     label: 'Blue',
   },
@@ -25,8 +29,8 @@ const COLOR_OPTIONS = [
     label: 'Yellow',
   },
   {
-    value: 'P',
-    label: 'Purple',
+    value: 'M',
+    label: 'Multicolored',
   }
 ]
 const COMPARE_OPTIONS = [
@@ -135,7 +139,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
            <div className={"basis-1/4"}>
              <div className={"flex justify-between"}>
                <p>
-                 Select a color
+                 Color
                </p>
              </div>
              <div className={"flex mt-2"}>
@@ -155,12 +159,12 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
            <div className={"basis-1/4"}>
              <div className={"flex justify-between"}>
                <p>
-                 Select a card type
+                 Card Type
                </p>
              </div>
              <div className={"flex mt-2"}>
                <Select
-                   placeholder="Color"
+                   placeholder="Card Type"
                    className={"w-full"}
                    value={selectedCardType}
                    onChange={(value) => {
@@ -183,7 +187,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
                </div>
                <div className={"flex mt-2"}>
                  <Select
-                     placeholder="Select a cost"
+                     placeholder="Cost"
                      className={"w-full"}
                      value={selectedCost}
                      onChange={(value) => {
@@ -202,7 +206,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
                  </p>
                </div>
                <div className={"flex mt-2"}>
-                 <Input placeholder={"Type to search"} value={costInput} type={"number"} onChange={(e) => setCostInput(e.target.value)}/>
+                 <Input placeholder={"Number"} value={costInput} type={"number"} onChange={(e) => setCostInput(e.target.value)}/>
                </div>
              </div>
            </div>
@@ -216,7 +220,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
                </div>
                <div className={"flex mt-2"}>
                  <Select
-                     placeholder="Select a power"
+                     placeholder="Power"
                      className={"w-full"}
                      value={selectedPower}
                      onChange={(value) => {
@@ -235,7 +239,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
                  </p>
                </div>
                <div className={"flex mt-2"}>
-                 <Input placeholder={"Type to search"} value={powerInput} type={"number"} onChange={(e) => setPowerInput(e.target.value)}/>
+                 <Input placeholder={"Number"} value={powerInput} type={"number"} onChange={(e) => setPowerInput(e.target.value)}/>
                </div>
              </div>
            </div>
@@ -254,7 +258,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
                </div>
                <div className={"flex mt-2"}>
                  <Select
-                     placeholder="Select a color"
+                     placeholder="Armor"
                      className={"w-full"}
                      value={selectedArmor}
                      onChange={(value) => {
@@ -273,7 +277,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
                  </p>
                </div>
                <div className={"flex mt-2"}>
-                 <Input placeholder={"Type to search"} value={armorInput} type={"number"} onChange={e => setArmorInput(e.target.value)}/>
+                 <Input placeholder={"Number"} value={armorInput} type={"number"} onChange={e => setArmorInput(e.target.value)}/>
                </div>
              </div>
            </div>
@@ -287,7 +291,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
                </div>
                <div className={"flex mt-2"}>
                  <Select
-                     placeholder="Type to search"
+                     placeholder="Spirit"
                      className={"w-full"}
                      value={selectedSpirit}
                      onChange={(value) => {
@@ -306,14 +310,14 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
                  </p>
                </div>
                <div className={"flex mt-2"}>
-                 <Input placeholder={"Type to search"} value={spiritInput} type={"number"} onChange={(e) => setSpiritInput(e.target.value)}/>
+                 <Input placeholder={"Number"} value={spiritInput} type={"number"} onChange={(e) => setSpiritInput(e.target.value)}/>
                </div>
              </div>
            </div>
            <div className={"basis-1/4"}>
              <div className={"flex justify-between"}>
                <p>
-                 Select a Gender
+                 Gender
                </p>
              </div>
              <div className={"flex mt-2"}>
@@ -333,7 +337,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
            <div className={"basis-1/4"}>
              <div className={"flex justify-between"}>
                <p>
-                 Select a Leg type
+                 Leg Type
                </p>
              </div>
              <div className={"flex mt-2"}>
@@ -357,7 +361,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
            <div className={"basis-1/4"}>
              <div className={"flex justify-between"}>
                <p>
-                 Select and Attribute
+                 Attribute
                </p>
              </div>
              <div className={"flex mt-2"}>
@@ -377,7 +381,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
            <div className={"basis-1/4"}>
              <div className={"flex justify-between"}>
                <p>
-                 Select a Group
+                 Group
                </p>
              </div>
              <div className={"flex mt-2"}>
@@ -397,12 +401,12 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
            <div className={"basis-1/2"}>
              <div className={"flex justify-between"}>
                <p>
-                 Select a Medapart type
+                 Medapart Type
                </p>
              </div>
              <div className={"flex mt-2"}>
                <Select
-                   placeholder="Medapart type"
+                   placeholder="Medapart Type"
                    className={"w-full"}
                    value={selectedMedapartType}
                    onChange={(value) => {
