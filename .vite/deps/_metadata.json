@@ -1,0 +1,64 @@
+{
+  "hash": "458e04d2",
+  "configHash": "a9301f73",
+  "lockfileHash": "9ea0a2a9",
+  "browserHash": "fb7b6b49",
+  "optimized": {
+    "antd": {
+      "src": "../../node_modules/antd/es/index.js",
+      "file": "antd.js",
+      "fileHash": "6dda46a4",
+      "needsInterop": false
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "ca94241e",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.mjs",
+      "file": "react-router-dom.js",
+      "fileHash": "f8d6f388",
+      "needsInterop": false
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "bae88fa7",
+      "needsInterop": true
+    },
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "5a583615",
+      "needsInterop": true
+    },
+    "zustand": {
+      "src": "../../node_modules/zustand/esm/index.mjs",
+      "file": "zustand.js",
+      "fileHash": "15cce5f3",
+      "needsInterop": false
+    },
+    "zustand/middleware": {
+      "src": "../../node_modules/zustand/esm/middleware.mjs",
+      "file": "zustand_middleware.js",
+      "fileHash": "33eb1b14",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "client-D2S2vx5p": {
+      "file": "client-D2S2vx5p.js",
+      "isDynamicEntry": false
+    },
+    "react-BQupsjBO": {
+      "file": "react-BQupsjBO.js",
+      "isDynamicEntry": false
+    },
+    "react-dom-NWqLDSPJ": {
+      "file": "react-dom-NWqLDSPJ.js",
+      "isDynamicEntry": false
+    }
+  }
+}
