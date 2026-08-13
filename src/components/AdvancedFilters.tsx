@@ -106,6 +106,8 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
 
   const [selectedCost, setSelectedCost] = useState<string>(COMPARE_OPTIONS[0].value);
   const [costInput, setCostInput] = useState<string>("");
+  const [selectedLevel, setSelectedLevel] = useState<string>(COMPARE_OPTIONS[0].value);
+  const [levelInput, setLevelInput] = useState<string>("");
   const [selectedPower, setSelectedPower] = useState<string>(COMPARE_OPTIONS[0].value);
   const [powerInput, setPowerInput] = useState<string>("");
   const [selectedGender, setSelectedGender] = useState<string>(genderOptions[0].value);
@@ -117,6 +119,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
       store.setArmorValue(+armorInput);
       store.setSpiritValue(+spiritInput)
       store.setCostValue(+costInput);
+      store.setLevelValue(+levelInput);
       store.setPowerValue(+powerInput);
     },
     onClearSearch: () => {
@@ -128,6 +131,8 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
       setSpiritInput("");
       setSelectedCost(COMPARE_OPTIONS[0].value);
       setCostInput("");
+      setSelectedLevel(COMPARE_OPTIONS[0].value);
+      setLevelInput("");
       setSelectedPower(COMPARE_OPTIONS[0].value);
       setPowerInput("");
       setSelectedAttribute(attributeOptions[0].value)
@@ -220,6 +225,40 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
            <div className={"flex gap-2 basis-1/4 items-end"}>
              <div className={"basis-1/4"}>
                <div className={"flex gap-2 items-center"}>
+                <p>Level</p>
+               </div>
+               <div className={"flex mt-2"}>
+                 <Select
+                     placeholder="Level"
+                     className={"w-full"}
+                     value={selectedLevel}
+                     onChange={(value) => {
+                       setSelectedLevel(value);
+                       store.setLevelCompare(value);
+                       handleOnSearch();
+                     }}
+                     options={COMPARE_OPTIONS}
+                 />
+               </div>
+             </div>
+             <div className={"basis-3/4"}>
+               <div className={"flex justify-between"}>
+                 <p className={"hidden sm:block"}>
+                   &nbsp;
+                 </p>
+               </div>
+               <div className={"flex mt-2"}>
+                 <Input placeholder={"Number"} value={levelInput} type={"number"} onChange={(e) => setLevelInput(e.target.value)}/>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         {/* Segunda fila */}
+         <div className={"flex flex-col md:flex-row w-full gap-2"}>
+           <div className={"flex gap-2 basis-1/4 items-end"}>
+             <div className={"basis-1/4"}>
+               <div className={"flex gap-2 items-center"}>
                  <img src={"https://fbanda.github.io/Arena-MedabotsCard/Assets/Icons/SP.png"} className={"w-[16px] h-[16px]"}/>
                  <span>
                     Power
@@ -250,11 +289,6 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
                </div>
              </div>
            </div>
-
-         </div>
-
-         {/* Segunda fila */}
-         <div className={"flex flex-col md:flex-row w-full gap-2"}>
            <div className={"flex gap-2 basis-1/4 items-end"}>
              <div className={"basis-1/4"}>
                <div className={"flex gap-2 items-center"}>
@@ -341,6 +375,10 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
                />
              </div>
            </div>
+         </div>
+
+         {/* Tercera fila */}
+         <div className={"flex flex-col md:flex-row w-full gap-2"}>
            <div className={"basis-1/4"}>
              <div className={"flex justify-between"}>
                <p>
@@ -361,10 +399,6 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
                />
              </div>
            </div>
-         </div>
-
-         {/* Tercera fila */}
-         <div className={"flex flex-col md:flex-row w-full gap-2"}>
            <div className={"basis-1/4"}>
              <div className={"flex justify-between"}>
                <p>
@@ -405,7 +439,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
                />
              </div>
            </div>
-           <div className={"basis-1/2"}>
+           <div className={"basis-1/4"}>
              <div className={"flex justify-between"}>
                <p>
                  Medapart Type

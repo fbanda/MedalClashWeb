@@ -88,6 +88,11 @@ export interface StoreInterface {
   powerValue: number;
   setPowerValue: (value: number) => void;
 
+  levelCompare: string;
+  setLevelCompare: (value: string) => void;
+  levelValue: number;
+  setLevelValue: (value: number) => void;
+
   // set filters
   setSearchByName: (name: boolean) => void;
   setSearchByText: (text: boolean) => void;
@@ -133,6 +138,8 @@ export const useStore = create<StoreInterface>()(persist((set, getState) => ({
       powerValue: 0,
       costCompare: "EQ",
       costValue: 0,
+      levelCompare: "EQ",
+      levelValue: 0,
 
       setDeckName: (name: string) => {
         const state = getState();
@@ -255,6 +262,8 @@ export const useStore = create<StoreInterface>()(persist((set, getState) => ({
       setCostValue: (value: number) => set({costValue: value}),
       setPowerCompare: (value: string) => set({powerCompare: value}),
       setPowerValue: (value: number) => set({powerValue: value}),
+      setLevelCompare: (value: string) => set({levelCompare: value}),
+      setLevelValue:  (value: number) => set({levelValue: value}),
 
       setLeader: (cardId: string) => {
         const state = getState();

@@ -58,6 +58,14 @@ export const ResultsSection = () => {
           (store.powerCompare === "LTEQ" && card.power <= store.powerValue)
       ) || store.powerValue === 0)
 
+      const compareLevel = () => (store.levelValue > 0 && card.medalLevel >= 0 && (
+          (store.levelCompare === "EQ" && card.medalLevel === store.levelValue) ||
+          (store.levelCompare === "GT" && card.medalLevel > store.levelValue) ||
+          (store.levelCompare === "GTEQ" && card.medalLevel >= store.levelValue) ||
+          (store.levelCompare === "LT" && card.medalLevel < store.levelValue) ||
+          (store.levelCompare === "LTEQ" && card.medalLevel <= store.levelValue)
+      ) || store.levelValue === 0)
+
       return !card.isBack && !card.isToken &&
           ((!store.searchByName && !store.searchByText && !store.searchByType) || (
           store.searchByName && (card.cardname.removeAccentsToLowerCase().includes(store.filterInputValue.removeAccentsToLowerCase()) || card.medapartName.removeAccentsToLowerCase().includes(store.filterInputValue.removeAccentsToLowerCase())) ||
@@ -79,7 +87,8 @@ export const ResultsSection = () => {
           compareArmor() &&
           compareSpirit() &&
           compareCost() &&
-          comparePower()
+          comparePower() &&
+          compareLevel()
     });
 
     const cardsToDisplay = newDisplayData.slice((store.currentPage - 1) * PAGE_SIZE, store.currentPage * PAGE_SIZE);
@@ -104,6 +113,8 @@ export const ResultsSection = () => {
       store.costCompare,
       store.powerValue,
       store.powerCompare,
+      store.levelValue,
+      store.levelCompare,
       store.attribute,
       store.group,
       store.gender,

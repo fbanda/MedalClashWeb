@@ -1,7 +1,7 @@
 import {useStore} from "../../store/store.ts";
 import {useEffect, useState} from "react";
 import dataSet from "../../assets/TestCardDataSet.json";
-import {Button, Dropdown, Input, notification} from "antd";
+import {Alert, Button, Dropdown, Input, notification} from "antd";
 import {LeaderAndMedalsCard} from "./LeaderAndMedalsCard.tsx";
 import {DeckCard} from "./DeckCard.tsx";
 import {SaveDeckToStore} from "../../Utils.ts";
@@ -120,6 +120,8 @@ export const DeckBuilder = () => {
     }
   }
 
+  const showBanner = store.deck.cards.some(card => card.isError);
+
   return (
       <div className={"flex flex-col gap-0 p-4 my-6"}>
         {contextHolder}
@@ -171,6 +173,11 @@ export const DeckBuilder = () => {
             </div>
           </div>
         </div>
+        {showBanner && (
+          <div className={"mb-2"}>
+            <Alert title="Some cards don't meet their Medal Requirements" type="error" showIcon/>
+          </div>
+        )}
         <div className={"font-michroma font-bold text-xl text-left mb-3"}>Main Deck ({store.deck.cards.reduce((sum, card) => sum + card.amount, 0)})</div>
         {displayData.length === 0 && (
             <div className={"text-start"}>
