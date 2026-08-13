@@ -3,35 +3,22 @@ import {forwardRef, type ReactNode, useImperativeHandle, useState} from "react";
 import {useStore} from "../store/store.ts";
 import dataSet from "../assets/TestCardDataSet.json";
 
+const getIconUrl = (text: string, icon: string): ReactNode =>
+    <div className={"flex gap-2"}><img src={`https://fbanda.github.io/Arena-MedabotsCard/Assets/Icons/${icon}.png`} width={22} /><span>{text}</span></div>
+
+interface Option {
+  value: string;
+  label: string | ReactNode;
+}
+
 const COLOR_OPTIONS = [
-  {
-    value: 'ALL',
-    label: 'ALL',
-  },
-  {
-    value: 'R',
-    label: 'Red',
-  },
-  {
-    value: 'P',
-    label: 'Purple',
-  },
-  {
-    value: 'B',
-    label: 'Blue',
-  },
-  {
-    value: 'G',
-    label: 'Green',
-  },
-  {
-    value: 'Y',
-    label: 'Yellow',
-  },
-  {
-    value: 'M',
-    label: 'Multicolored',
-  }
+  { value: 'ALL', label: 'ALL' },
+  { value: 'R', label: 'Red' },
+  { value: 'P', label: 'Purple' },
+  { value: 'B', label: 'Blue' },
+  { value: 'G', label: 'Green' },
+  { value: 'Y', label: 'Yellow' },
+  { value: 'M', label: 'Multicolored' }
 ]
 const COMPARE_OPTIONS = [
   {
@@ -56,30 +43,49 @@ const COMPARE_OPTIONS = [
   },
 ]
 
-const cardTypeOptions: {value: string, label: string | ReactNode}[] = ["ALL", "Medabot", "Event", "Medafighter"].map(item => ({
+const cardTypeOptions: Option[] = ["ALL", "Medabot", "Event", "Medafighter"].map(item => ({
   value: item,
   label: <p>{item}</p>
 }));
-const attributeOptions = ["ALL", ...new Set(dataSet.flatMap(card => card.attributes))].map(item => ({
-  value: item,
-  label: item
-}));
+
 const groupOptions = ["ALL", ...new Set(dataSet.flatMap(card => card.groups))].map(item => ({
   value: item,
   label: item
 }));
-const genderOptions = ["ALL", ...new Set(dataSet.flatMap(card => card.gender))].filter(item => item !== "").map(item => ({
-  value: item,
-  label: item
-}));
-const legTypeOptions = ["ALL", ...new Set(dataSet.flatMap(card => card.legType))].filter(item => item !== "").map(item => ({
-  value: item,
-  label: item
-}));
-const medapartTypeOptions = ["ALL", ...new Set(dataSet.flatMap(card => card.medapartType))].filter(item => item !== "").map(item => ({
-  value: item,
-  label: item
-}));
+
+const attributeOptions: Option[] = [
+    {value: "ALL", label: "ALL"},
+    {value: "Range", label: getIconUrl("Range", "ARn")},
+    {value: "Melee", label: getIconUrl("Melee", "AMl")},
+    {value: "Ailment", label: getIconUrl("Ailment", "ASt")},
+    {value: "Assist", label: getIconUrl("Assist", "ASp")},
+    {value: "Defense", label: getIconUrl("Defense", "ADf")},
+    {value: "Morph", label: getIconUrl("Morph", "AMr")},
+];
+const genderOptions = [
+    {value: "ALL", label: "ALL"},
+    {value: "M", label: getIconUrl("", "GM")},
+    {value: "F", label: getIconUrl("", "GF")},
+]
+
+const legTypeOptions = [
+  {value: "ALL", label: "ALL"},
+  {value: "Biped", label: getIconUrl("Biped", "LB")},
+  {value: "Multi-Leg", label: getIconUrl("Multi-Leg", "LM")},
+  {value: "Wheel", label: getIconUrl("Wheel", "LW")},
+  {value: "Hover", label: getIconUrl("Hover", "LH")},
+  {value: "Tank", label: getIconUrl("Tank", "LT")},
+  {value: "Flight", label: getIconUrl("Flight", "LF")},
+  {value: "Water", label: getIconUrl("Water", "LA")},
+]
+
+const medapartTypeOptions = [
+    {value: "ALL", label: "ALL"},
+    {value: "Head", label: getIconUrl("Head", "MH")},
+    {value: "Right Arm", label: getIconUrl("Right Arm", "MR")},
+    {value: "Left Arm", label: getIconUrl("Left Arm", "ML")},
+    {value: "Legs", label: getIconUrl("Legs", "MF")},
+]
 
 export interface AdvancedFiltersProps {
   handleOnSearch: () => void;
