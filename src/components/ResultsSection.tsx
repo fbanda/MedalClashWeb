@@ -65,7 +65,7 @@ export const ResultsSection = () => {
           ) &&
           (store.searchBySet && card.set.removeAccentsToLowerCase() === store.searchBySet.removeAccentsToLowerCase() || !store.searchBySet || store.searchBySet === "ALL") &&
           (store.cardType !== DEFAULT_CARD_TYPE && store.cardType === card.cardType || store.cardType === DEFAULT_CARD_TYPE && card.cardType !== "LEADER" && card.cardType !== "MEDAL") &&
-          (store.color !== "ALL" && card.colors.includes(store.color) || store.color === "ALL") &&
+          (store.color !== "ALL" && (card.colors as string[]).includes(store.color) || store.color === "ALL") &&
           (store.attribute !== "ALL" && (card.attributes as string[]).includes(store.attribute) || store.attribute === "ALL") &&
           (store.group !== "ALL" && (card.groups as string[]).includes(store.group) || store.group === "ALL") &&
           (store.gender !== "ALL" && card.gender == store.gender || store.gender === "ALL") &&

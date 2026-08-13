@@ -56,7 +56,7 @@ const COMPARE_OPTIONS = [
   },
 ]
 
-const cardTypeOptions: {value: string, label: string | ReactNode}[] = ["ALL", "MEDABOT", "EVENT", "MEDAFIGHTER"].map(item => ({
+const cardTypeOptions: {value: string, label: string | ReactNode}[] = ["ALL", "Medabot", "Event", "Medafighter"].map(item => ({
   value: item,
   label: <p>{item}</p>
 }));
