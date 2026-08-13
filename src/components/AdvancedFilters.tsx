@@ -64,8 +64,8 @@ const attributeOptions: Option[] = [
 ];
 const genderOptions = [
     {value: "ALL", label: "ALL"},
-    {value: "M", label: getIconUrl("", "GM")},
-    {value: "F", label: getIconUrl("", "GF")},
+    {value: "M", label: getIconUrl("Male", "GM")},
+    {value: "F", label: getIconUrl("Female", "GF")},
 ]
 
 const legTypeOptions = [
