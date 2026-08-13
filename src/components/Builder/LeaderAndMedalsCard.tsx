@@ -10,16 +10,16 @@ export const LeaderAndMedalsCard = ({card}: { card: any }) => {
         <div className={"z-10 md:opacity-0 md:group-hover:opacity-100"}>
           <div className={"absolute bottom-[45px] left-[5px]"}>
             <Hexagon isBtn text={<MinusIcon/>} onClick={() => {
-              if(card.cardType === "LEADER") {
+              if(card.cardType === "Leader") {
                 store.setLeader("")
               }
-              if(card.cardType === "MEDAL" && card.medalLevel === 1) {
+              if(card.cardType === "Medal" && card.medalLevel === 1) {
                 store.setMedalLvl1("")
               }
-              if(card.cardType === "MEDAL" && card.medalLevel === 2) {
+              if(card.cardType === "Medal" && card.medalLevel === 2) {
                 store.setMedalLvl2("")
               }
-              if(card.cardType === "MEDAL" && card.medalLevel === 3) {
+              if(card.cardType === "Medal" && card.medalLevel === 3) {
                 store.setMedalLvl3("")
               }
             }}/>

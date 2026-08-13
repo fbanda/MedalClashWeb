@@ -69,7 +69,7 @@ export const ResultsSection = () => {
             )
           )) &&
           (store.searchBySet && card.set.removeAccentsToLowerCase() === store.searchBySet.removeAccentsToLowerCase() || !store.searchBySet || store.searchBySet === "ALL") &&
-          (store.cardType !== DEFAULT_CARD_TYPE && store.cardType === card.cardType || store.cardType === DEFAULT_CARD_TYPE && card.cardType !== "LEADER" && card.cardType !== "MEDAL") &&
+          (store.cardType !== DEFAULT_CARD_TYPE && store.cardType === card.cardType || store.cardType === DEFAULT_CARD_TYPE && card.cardType !== "Leader" && card.cardType !== "Medal") &&
           (store.color !== "ALL" && (card.colors as string[]).includes(store.color) || store.color === "ALL") &&
           (store.attribute !== "ALL" && (card.attributes as string[]).includes(store.attribute) || store.attribute === "ALL") &&
           (store.group !== "ALL" && (card.groups as string[]).includes(store.group) || store.group === "ALL") &&
@@ -130,44 +130,44 @@ export const ResultsSection = () => {
                       <div className={"z-10 md:opacity-0 md:group-hover:opacity-100"}>
                         <div className={"absolute bottom-[45px] left-[5px]"}>
                           <Hexagon isBtn text={<PlusIcon/>} onClick={() => {
-                            if (card.cardType !== "LEADER" && card.cardType !== "MEDAL") {
+                            if (card.cardType !== "Leader" && card.cardType !== "Medal") {
                               store.addCardToDeck(card.cardId)
                             }
-                            if (card.cardType === "LEADER") {
+                            if (card.cardType === "Leader") {
                               store.setLeader(card.cardId)
                             }
-                            if (card.cardType === "MEDAL" && card.medalLevel === 1) {
+                            if (card.cardType === "Medal" && card.medalLevel === 1) {
                               store.setMedalLvl1(card.cardId)
                             }
-                            if (card.cardType === "MEDAL" && card.medalLevel === 2) {
+                            if (card.cardType === "Medal" && card.medalLevel === 2) {
                               store.setMedalLvl2(card.cardId)
                             }
-                            if (card.cardType === "MEDAL" && card.medalLevel === 3) {
+                            if (card.cardType === "Medal" && card.medalLevel === 3) {
                               store.setMedalLvl3(card.cardId)
                             }
                           }}/>
                         </div>
                         <div className={"absolute bottom-[45px] left-[40px]"}>
                           <Hexagon isBtn text={<MinusIcon/>} onClick={() => {
-                            if (card.cardType !== "LEADER" && card.cardType !== "MEDAL") {
+                            if (card.cardType !== "Leader" && card.cardType !== "Medal") {
                               store.removeCardFromDeck(card.cardId)
                             }
-                            if (card.cardType === "LEADER") {
+                            if (card.cardType === "Leader") {
                               store.setLeader("")
                             }
-                            if (card.cardType === "MEDAL" && card.medalLevel === 1) {
+                            if (card.cardType === "Medal" && card.medalLevel === 1) {
                               store.setMedalLvl1("")
                             }
-                            if (card.cardType === "MEDAL" && card.medalLevel === 2) {
+                            if (card.cardType === "Medal" && card.medalLevel === 2) {
                               store.setMedalLvl2("")
                             }
-                            if (card.cardType === "MEDAL" && card.medalLevel === 3) {
+                            if (card.cardType === "Medal" && card.medalLevel === 3) {
                               store.setMedalLvl3("")
                             }
                           }}/>
                         </div>
 
-                        {(card.cardType !== "LEADER" && card.cardType !== "MEDAL") && (
+                        {(card.cardType !== "Leader" && card.cardType !== "Medal") && (
                             <>
                               <div className={"absolute bottom-[45px] left-[80px]"}>
                                 <Hexagon size={"sm"} isBtn text={<PlusIcon/>}

@@ -34,40 +34,40 @@ export const SideCard = (props: SideCardProps) => {
           {!hideHexagon && (
             <Hexagon size={"sm"} isBtn text={<PlusIcon/>}
               onClick={() => {
-                if (cardType !== "LEADER" && cardType !== "MEDAL") {
+                if (cardType !== "Leader" && cardType !== "Medal") {
                   if (isMainDeck) store.addCardToDeck(cardId)
                   else store.addCardToSideDeck(cardId)
                 }
-                if (cardType === "LEADER") {
+                if (cardType === "Leader") {
                   store.setLeader(cardId)
                 }
-                if (cardType === "MEDAL" && medalLevel === 1) {
+                if (cardType === "Medal" && medalLevel === 1) {
                   store.setMedalLvl1(cardId)
                 }
-                if (cardType === "MEDAL" && medalLevel === 2) {
+                if (cardType === "Medal" && medalLevel === 2) {
                   store.setMedalLvl2(cardId)
                 }
-                if (cardType === "MEDAL" && medalLevel === 3) {
+                if (cardType === "Medal" && medalLevel === 3) {
                   store.setMedalLvl3(cardId)
                 }
               }}
             />
           )}
           <Hexagon size={"sm"} isBtn text={<MinusIcon/>} onClick={() => {
-            if(cardType !== "LEADER" && cardType !== "MEDAL") {
+            if(cardType !== "Leader" && cardType !== "Medal") {
               if (isMainDeck) store.removeCardFromDeck(cardId)
               else store.removeCardFromSideDeck(cardId)
             }
-            if(cardType === "LEADER") {
+            if(cardType === "Leader") {
               store.setLeader("")
             }
-            if(cardType === "MEDAL" && medalLevel === 1) {
+            if(cardType === "Medal" && medalLevel === 1) {
               store.setMedalLvl1("")
             }
-            if(cardType === "MEDAL" && medalLevel === 2) {
+            if(cardType === "Medal" && medalLevel === 2) {
               store.setMedalLvl2("")
             }
-            if(cardType === "MEDAL" && medalLevel === 3) {
+            if(cardType === "Medal" && medalLevel === 3) {
               store.setMedalLvl3("")
             }
           }}/>

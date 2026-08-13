@@ -9,8 +9,8 @@ const SetListUnique = ["ALL", ...new Set(SetList)];
 
 const CardTypes = [
   {value: DEFAULT_CARD_TYPE, label: "Main Deck"},
-  {value: "LEADER", label: "Leaders"},
-  {value: "MEDAL", label: "Medals"},
+  {value: "Leader", label: "Leaders"},
+  {value: "Medal", label: "Medals"},
 ]
 
 export const Filters = () => {
