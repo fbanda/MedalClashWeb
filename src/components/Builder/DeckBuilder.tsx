@@ -64,7 +64,7 @@ export const DeckBuilder = () => {
     const medalLvl3 = store.deck.medalLvl3;
     const deck = store.deck.cards.map(item => `${item.id}x${item.amount}`);
     const sideDeck = store.deck.sideCards.map(item => `${item.id}x${item.amount}`);
-    const url = `${window.location.origin}/loadDeck?deckName=${name}&leader=${leader}&medalLvl1=${medalLvl1}&medalLvl2=${medalLvl2}&medalLvl3=${medalLvl3}&deck=${deck.join(",")}&sideDeck=${sideDeck.join(",")}`;
+    const url = `${window.location.origin}/#/loadDeck?deckName=${name}&leader=${leader}&medalLvl1=${medalLvl1}&medalLvl2=${medalLvl2}&medalLvl3=${medalLvl3}&deck=${deck.join(",")}&sideDeck=${sideDeck.join(",")}`;
     await navigator.clipboard.writeText(url);
     api.success({
       description: "Url copied to clipboard.",
@@ -199,11 +199,10 @@ export const DeckBuilder = () => {
             </div>
             <div className={"flex flex-row gap-2 items-start"}>
               <Button className={"w-40"} htmlType={"button"} onClick={resetDeck}>New</Button>
-              <Button className={"w-40"} htmlType={"button"} onClick={onGetURL}>Get URL</Button>
+              <Button className={"w-40"} htmlType={"button"} onClick={onGetURL}>Share Link</Button>
             </div>
             <div className={"flex flex-row gap-2 items-start"}>
-              <Button className={"w-40"} htmlType={"button"} onClick={exportToJson}>Export JSON</Button>
-              <Button className={"w-40"} htmlType={"button"} onClick={loadFromJsonFile}>Load JSON</Button>
+              <Button className={"w-40"} htmlType={"button"}>Export to TCG Arena</Button>
             </div>
           </div>
           <div className={"basis-2/3"}>

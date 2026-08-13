@@ -31,7 +31,7 @@ const COMPARE_OPTIONS = [
   },
   {
     value: 'GTEQ',
-    label: '>=',
+    label: '≥',
   },
   {
     value: 'LT',
@@ -39,16 +39,16 @@ const COMPARE_OPTIONS = [
   },
   {
     value: 'LTEQ',
-    label: '<=',
+    label: '≤',
   },
 ]
 
-const cardTypeOptions: Option[] = ["ALL", "Medabot", "Event", "Medafighter"].map(item => ({
+const cardTypeOptions: Option[] = ["ALL", "Medabot", "Medafighter", "Event"].map(item => ({
   value: item,
   label: <p>{item}</p>
 }));
 
-const groupOptions = ["ALL", ...new Set(dataSet.flatMap(card => card.groups))].map(item => ({
+const groupOptions = ["ALL", ...new Set(dataSet.flatMap(card => card.groups).sort())].map(item => ({
   value: item,
   label: item
 }));
@@ -64,8 +64,8 @@ const attributeOptions: Option[] = [
 ];
 const genderOptions = [
     {value: "ALL", label: "ALL"},
-    {value: "M", label: getIconUrl("Male", "GM")},
-    {value: "F", label: getIconUrl("Female", "GF")},
+    {value: "Male", label: getIconUrl("Male", "GM")},
+    {value: "Female", label: getIconUrl("Female", "GF")},
 ]
 
 const legTypeOptions = [
@@ -121,6 +121,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
     },
     onClearSearch: () => {
       setSelectedColor(COLOR_OPTIONS[0].value);
+      setSelectedCardType(cardTypeOptions[0].value);
       setSelectedArmor(COMPARE_OPTIONS[0].value);
       setArmorInput("");
       setSelectedSpirit(COMPARE_OPTIONS[0].value);

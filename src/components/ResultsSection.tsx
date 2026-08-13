@@ -17,11 +17,8 @@ export const ResultsSection = () => {
 
   useEffect(() => {
     const newDisplayData = dataSet.filter(card => {
-      // if no filters are selected, show all cards
-      if(!store.filterInputValue && !store.searchByName && !store.searchByText && !store.searchByType)
-        return card;
 
-      const compareArmor = () => (store.armorValue > 0 && (
+      const compareArmor = () => (store.armorValue > 0 && card.armor >= 0 && (
           (store.armorCompare === "EQ" && card.armor === store.armorValue) ||
           (store.armorCompare === "GT" && card.armor > store.armorValue) ||
           (store.armorCompare === "GTEQ" && card.armor >= store.armorValue) ||
@@ -29,7 +26,7 @@ export const ResultsSection = () => {
           (store.armorCompare === "LTEQ" && card.armor <= store.armorValue)
       ) || store.armorValue === 0)
 
-      const compareSpirit = () => (store.spiritValue > 0 &&  (
+      const compareSpirit = () => (store.spiritValue > 0 && card.spirit >= 0 &&  (
           (store.spiritCompare === "EQ" && card.spirit === store.spiritValue) ||
           (store.spiritCompare === "GT" && card.spirit > store.spiritValue) ||
           (store.spiritCompare === "GTEQ" && card.spirit >= store.spiritValue) ||
@@ -37,15 +34,23 @@ export const ResultsSection = () => {
           (store.spiritCompare === "LTEQ" && card.spirit <= store.spiritValue)
       ) || store.spiritValue === 0)
 
-      const compareCost = () => (store.costValue > 0 &&  (
-          (store.costCompare === "EQ" && (card.mainCost === store.costValue || card.triggerCost === store.costValue)) ||
-          (store.costCompare === "GT" && (card.mainCost > store.costValue || card.triggerCost > store.costValue)) ||
-          (store.costCompare === "GTEQ" && (card.mainCost >= store.costValue || card.triggerCost >= store.costValue)) ||
-          (store.costCompare === "LT" && (card.mainCost < store.costValue || card.triggerCost < store.costValue)) ||
-          (store.costCompare === "LTEQ" && (card.mainCost <= store.costValue || card.triggerCost <= store.costValue))
-      ) || store.costValue === 0)
+      const compareCost = () => (store.costValue > 0 &&
+        (card.mainCost >= 0 && (
+          (store.costCompare === "EQ" && card.mainCost === store.costValue) ||
+          (store.costCompare === "GT" && card.mainCost > store.costValue) ||
+          (store.costCompare === "GTEQ" && card.mainCost >= store.costValue) ||
+          (store.costCompare === "LT" && card.mainCost < store.costValue) ||
+          (store.costCompare === "LTEQ" && card.mainCost <= store.costValue)
+        )) ||
+        (card.triggerCost >= 0 && (
+          (store.costCompare === "EQ" && card.triggerCost === store.costValue) ||
+          (store.costCompare === "GT" && card.triggerCost > store.costValue) ||
+          (store.costCompare === "GTEQ" && card.triggerCost >= store.costValue) ||
+          (store.costCompare === "LT" && card.triggerCost < store.costValue) ||
+          (store.costCompare === "LTEQ" && card.triggerCost <= store.costValue)
+        )) || store.costValue === 0)
 
-      const comparePower = () => (store.powerValue > 0 &&  (
+      const comparePower = () => (store.powerValue > 0 && card.power >= 0 && (
           (store.powerCompare === "EQ" && card.power === store.powerValue) ||
           (store.powerCompare === "GT" && card.power > store.powerValue) ||
           (store.powerCompare === "GTEQ" && card.power >= store.powerValue) ||
@@ -53,8 +58,8 @@ export const ResultsSection = () => {
           (store.powerCompare === "LTEQ" && card.power <= store.powerValue)
       ) || store.powerValue === 0)
 
-      return !card.isBack &&
-          (
+      return !card.isBack && !card.isToken &&
+          ((!store.searchByName && !store.searchByText && !store.searchByType) || (
           store.searchByName && (card.cardname.removeAccentsToLowerCase().includes(store.filterInputValue.removeAccentsToLowerCase()) || card.medapartName.removeAccentsToLowerCase().includes(store.filterInputValue.removeAccentsToLowerCase())) ||
           store.searchByText && (card.mainText.removeAccentsToLowerCase().includes(store.filterInputValue.removeAccentsToLowerCase()) || card.medapartText.removeAccentsToLowerCase().includes(store.filterInputValue.removeAccentsToLowerCase())) ||
           store.searchByType && (
@@ -62,7 +67,7 @@ export const ResultsSection = () => {
                 card.medafighterIdentity.removeAccentsToLowerCase().includes(store.filterInputValue.removeAccentsToLowerCase()) ||
                 card.groups.join(" ").removeAccentsToLowerCase().includes(store.filterInputValue.removeAccentsToLowerCase())
             )
-          ) &&
+          )) &&
           (store.searchBySet && card.set.removeAccentsToLowerCase() === store.searchBySet.removeAccentsToLowerCase() || !store.searchBySet || store.searchBySet === "ALL") &&
           (store.cardType !== DEFAULT_CARD_TYPE && store.cardType === card.cardType || store.cardType === DEFAULT_CARD_TYPE && card.cardType !== "LEADER" && card.cardType !== "MEDAL") &&
           (store.color !== "ALL" && (card.colors as string[]).includes(store.color) || store.color === "ALL") &&
@@ -186,12 +191,12 @@ export const ResultsSection = () => {
                           />
                         </div>
                       </div>
-                      <Image preview={false} src={card.cardImageUrl} alt={"card"}/>
+                      <Image preview={false} src={card.cardPreviewUrl} alt={"card"}/>
                       <div className={"text-xs font-bold"}>
                         {card.cardname}
                       </div>
                       <div className={"text-xs font-normal"}>
-                        {card.set} - {card.collectorNumber}
+                        {card.cardCode}
                       </div>
                     </div>
                 ))}

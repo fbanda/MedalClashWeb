@@ -45,10 +45,10 @@ export const Navbar = () => {
             className={"font-michroma text-xs font-bold"}
         >
           <div className={getLinkClass("/")}>
-            <Link className={"!text-black"} to={"/"}>CARDS</Link>
+            <Link className={"!text-black"} to={"/"} onClick={() => setIsOpen(false)}>CARDS</Link>
           </div>
           <div className={getLinkClass("/builder")}>
-            <Link className={"!text-black"} to={"/builder"}>DECK BUILDER</Link>
+            <Link className={"!text-black"} to={"/builder"} onClick={() => setIsOpen(false)}>DECK BUILDER</Link>
           </div>
           <div className={buttonClass}>RULES</div>
           <div className={buttonClass}>INFO</div>

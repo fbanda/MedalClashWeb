@@ -32,12 +32,12 @@ export const LeaderAndMedalsCard = ({card}: { card: any }) => {
             />
           </div>
         </div>
-        <Image preview={false} src={card.cardImageUrl} alt={"card"}/>
+        <Image preview={false} src={card.cardPreviewUrl} alt={"card"}/>
         <div className={"text-xs font-bold"}>
           {card.cardname}
         </div>
         <div className={"text-xs font-normal"}>
-          {card.set} - {card.collectorNumber}
+          {card.cardCode}
         </div>
       </div>
   )
