@@ -25,7 +25,7 @@ export const  DeckSection = ({title, isMainDeck} : DeckSectionProps) => {
                       cardType={cardFromDataSet.cardType}
                       image={cardFromDataSet.thumbnailUrl}
                       name={cardFromDataSet.cardname}
-                      type={cardFromDataSet.cardType}
+                      cardCode={cardFromDataSet.cardCode}
                       amount={card.amount.toString()}
                       isMainDeck
                   />)
@@ -43,7 +43,7 @@ export const  DeckSection = ({title, isMainDeck} : DeckSectionProps) => {
                           cardType={cardFromDataSet.cardType}
                           image={cardFromDataSet.thumbnailUrl}
                           name={cardFromDataSet.cardname}
-                          type={cardFromDataSet.cardType}
+                          cardCode={cardFromDataSet.cardCode}
                           amount={card.amount.toString()}
                       />)
                 }else {

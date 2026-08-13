@@ -9,13 +9,13 @@ export interface SideCardProps {
   image: string;
   name: string;
   amount: string;
-  type: string;
+  cardCode: string;
   hideHexagon?: boolean;
   isMainDeck?: boolean;
 }
 
 export const SideCard = (props: SideCardProps) => {
-  const {cardId, cardType, medalLevel, image, name, type, amount, hideHexagon, isMainDeck} = props;
+  const {cardId, cardType, medalLevel, image, name, cardCode, amount, hideHexagon, isMainDeck} = props;
   const store = useStore();
 
   const card = store.deck.cards.find(c => c.id === cardId);
@@ -27,8 +27,8 @@ export const SideCard = (props: SideCardProps) => {
           <img src={image} alt={"card"} className={"w-full h-full object-cover"}/>
         </div>
         <div className={"flex flex-col"}>
-          <div className={"font-bold max-w-[150px] truncate"}>{name}</div>
-          <div>{type}</div>
+          <div className={"font-bold max-w-[150px] truncate"}>{name}{cardType === "Leader" ? " (Leader)" : ""}{medalLevel ? " Lv" + medalLevel : ""}</div>
+          <div>{cardCode}</div>
         </div>
         <div className={"flex flex-row gap-1 ml-auto"}>
           {!hideHexagon && (

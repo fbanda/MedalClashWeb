@@ -50,6 +50,8 @@ export const DeckBuilder = () => {
     setDisplayData(dataToDisplay);
     setSideDisplayData(sideDataToDisplay);
     setLeadMedals(leadMedalsCount);
+
+    setSavedDecks(Object.keys(JSON.parse(localStorage.getItem("deckList") || "{}")));
   }, [store.deck.cards, store.deck.leader, store.deck.medalLvl1, store.deck.medalLvl2, store.deck.medalLvl3, store.deck.sideCards]);
 
   const resetDeck = () => {
@@ -120,7 +122,11 @@ export const DeckBuilder = () => {
     }
   }
 
-  const showBanner = store.deck.cards.some(card => card.isError);
+  const warningMissingLeaderMedal = store.deck.leader === "";
+  const warningRequirements = store.deck.cards.some(card => card.isError) || store.deck.sideCards.some(card => card.isError);
+  const warningUnder = store.deck.cards.reduce((sum, card) => sum + card.amount, 0) < 40;
+  const warningOverMain = store.deck.cards.reduce((sum, card) => sum + card.amount, 0) > 50;
+  const warningOverSide = store.deck.sideCards.reduce((sum, card) => sum + card.amount, 0) > 10;
 
   return (
       <div className={"flex flex-col gap-0 p-4 my-6"}>
@@ -135,19 +141,25 @@ export const DeckBuilder = () => {
             </div>
             <div className={"flex flex-row gap-2 items-start"}>
               <Button className={"w-40"} htmlType={"button"} onClick={save} disabled={!deckName}>Save</Button>
-              <Dropdown menu={{ items: savedDecks.map(item => ({key: item, label: <>{item}  <Button>borrar</Button></>, onClick: () => { load(item)}})) }} placement="bottomLeft">
+              <Button className={"w-40"} htmlType={"button"} onClick={resetDeck}>New</Button>
+            </div>
+            <div className={"flex flex-row gap-2 items-start"}>
+              <Dropdown menu={{ items: savedDecks.map(item => ({key: item, label: <>{item}</>, onClick: () => { load(item)}})) }} placement="bottomLeft">
                 <Button className={"w-40"}>Load</Button>
               </Dropdown>
+              <Button className={"w-40"} htmlType={"button"}>Delete</Button>
             </div>
             <div className={"flex flex-row gap-2 items-start"}>
-              <Button className={"w-40"} htmlType={"button"} onClick={resetDeck}>New</Button>
               <Button className={"w-40"} htmlType={"button"} onClick={onGetURL}>Share Link</Button>
-            </div>
-            <div className={"flex flex-row gap-2 items-start"}>
               <Button className={"w-40"} htmlType={"button"}>Export to TCG Arena</Button>
             </div>
           </div>
           <div className={"basis-2/3"}>
+            {warningMissingLeaderMedal && (
+              <div className={"mb-2"}>
+                <Alert title="Deck needs 1 Leader and 3 Medals" type="error" showIcon/>
+              </div>
+            )}
             <div className={"font-michroma font-bold text-xl text-left mb-3"}>Leader and Medals ({leadMedals})</div>
             {!leader && !medalLvl1 && !medalLvl2 && !medalLvl3 && (
                 <div className={"text-start"}>
@@ -173,15 +185,25 @@ export const DeckBuilder = () => {
             </div>
           </div>
         </div>
-        {showBanner && (
+        {warningRequirements && (
           <div className={"mb-2"}>
             <Alert title="Some cards don't meet their Medal Requirements" type="error" showIcon/>
+          </div>
+        )}
+        {warningUnder && (
+          <div className={"mb-2"}>
+            <Alert title="Main Deck needs at least 40 cards" type="error" showIcon/>
+          </div>
+        )}
+        {warningOverMain && (
+          <div className={"mb-2"}>
+            <Alert title="Main Deck can't have more than 50 cards" type="error" showIcon/>
           </div>
         )}
         <div className={"font-michroma font-bold text-xl text-left mb-3"}>Main Deck ({store.deck.cards.reduce((sum, card) => sum + card.amount, 0)})</div>
         {displayData.length === 0 && (
             <div className={"text-start"}>
-              No Cards for deck have been selected.
+              No cards have been selected for Main Deck.
             </div>
         )}
         <div
@@ -195,10 +217,15 @@ export const DeckBuilder = () => {
               />
           ))}
         </div>
+        {warningOverSide && (
+          <div className={"mb-2"}>
+            <Alert title="Side Deck can't have more than 10 cards" type="error" showIcon/>
+          </div>
+        )}
         <div className={"font-michroma font-bold text-xl text-left mb-3"}>Side Deck ({store.deck.sideCards.reduce((sum, card) => sum + card.amount, 0)})</div>
         {sideDisplayData.length === 0 && (
             <div className={"text-start"}>
-              No Cards for side deck have been selected.
+              No cards have been selected for Side Deck.
             </div>
         )}
         <div
