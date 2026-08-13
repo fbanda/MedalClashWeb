@@ -72,66 +72,6 @@ export const DeckBuilder = () => {
     });
   }
 
-  const exportToJson = async () => {
-    const deck = store.deck.cards.map(item => `${item.id}x${item.amount}`);
-    const sideDeck = store.deck.sideCards.map(item => `${item.id}x${item.amount}`);
-    const jsonData = {
-      deckName: deckName,
-      leader: store.deck.leader,
-      medalLvl1: store.deck.medalLvl1,
-      medalLvl2: store.deck.medalLvl2,
-      medalLvl3: store.deck.medalLvl3,
-      deck: deck.join(","),
-      sideDeck: sideDeck.join(","),
-    }
-    const jsonString = JSON.stringify(jsonData, null, 2);
-    const blob = new Blob([jsonString], {type: 'application/json'});
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = deckName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  }
-
-  const loadFromJsonFile = async () => {
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = '.json';
-    fileInput.onchange = async (e) => {
-      const file = (e.target as HTMLInputElement).files?.[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = async (e) => {
-          try {
-            const jsonData = JSON.parse(e.target?.result as string);
-
-            store.resetDeck();
-
-            SaveDeckToStore(store, jsonData.deckName, jsonData.deck, jsonData.sideDeck, jsonData.leader, jsonData.medalLvl1, jsonData.medalLvl2, jsonData.medalLvl3);
-
-            api.success({
-              title: "Deck loaded",
-              description: "Deck loaded successfully.",
-              placement: "topRight",
-            });
-          } catch (err) {
-            console.error(err)
-            api.error({
-              title: "Invalid file",
-              description: "Please, check the file and try again.",
-              placement: "topRight",
-            });
-          }
-        };
-        reader.readAsText(file);
-      }
-    };
-    fileInput.click();
-  };
-
   const save = () => {
     const deck = store.deck.cards.map(item => `${item.id}x${item.amount}`);
     const sideDeck = store.deck.sideCards.map(item => `${item.id}x${item.amount}`);
