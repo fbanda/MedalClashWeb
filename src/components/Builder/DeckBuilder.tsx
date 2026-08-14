@@ -40,11 +40,11 @@ export const DeckBuilder = () => {
       if (item.cardId === store.deck.medalLvl1) { setMedalLvl1(item); leadMedalsCount++; }
       if (item.cardId === store.deck.medalLvl2) { setMedalLvl2(item); leadMedalsCount++; }
       if (item.cardId === store.deck.medalLvl3) { setMedalLvl3(item); leadMedalsCount++; }
-      if (!store.deck.leader) setLeader(null);
-      if (!store.deck.medalLvl1) setMedalLvl1(null);
-      if (!store.deck.medalLvl2) setMedalLvl2(null);
-      if (!store.deck.medalLvl3) setMedalLvl3(null);
     });
+    if (!store.deck.leader) setLeader(null);
+    if (!store.deck.medalLvl1) setMedalLvl1(null);
+    if (!store.deck.medalLvl2) setMedalLvl2(null);
+    if (!store.deck.medalLvl3) setMedalLvl3(null);
 
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setDisplayData(dataToDisplay);

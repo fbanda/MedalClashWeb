@@ -66,6 +66,13 @@ export const validateErrorsOnDeck = (deck: Card[], medalsArray: (string | undefi
   });
 }
 
+function IsValidForMainSideDeck(card: any): boolean
+{
+  if(card.isToken) return false;
+  if(card.cardType === "Leader" || card.cardType === "Medal") return false;
+  return true;
+}
+
 export const SaveDeckToStore = (store: any, deckName: string, deck: string, sideDeck: string, leader: string, medalLvl1: string, medalLvl2: string, medalLvl3: string) => {
   const cards = deck?.split(",") ?? [];
   const cardsIds = cards.map(card => card.split("x")[0]);
@@ -79,7 +86,7 @@ export const SaveDeckToStore = (store: any, deckName: string, deck: string, side
 
   if(cardsIds.length > 0) {
     dataSet.forEach(card => {
-      if(cardsIds.includes(card.cardId)) {
+      if(IsValidForMainSideDeck(card) && cardsIds.includes(card.cardId)) {
         const cardIndex = cardsIds.indexOf(card.cardId);
         const cardAmount = +cardsAmount[cardIndex];
         for(let i = 0; i < cardAmount; i++) {
@@ -95,7 +102,7 @@ export const SaveDeckToStore = (store: any, deckName: string, deck: string, side
 
   if(sideCardsIds.length > 0) {
     dataSet.forEach(card => {
-      if(sideCardsIds.includes(card.cardId)) {
+      if(IsValidForMainSideDeck(card) && sideCardsIds.includes(card.cardId)) {
         const cardIndex = sideCardsIds.indexOf(card.cardId);
         const cardAmount = +sideCardsAmount[cardIndex];
         for(let i = 0; i < cardAmount; i++) {
