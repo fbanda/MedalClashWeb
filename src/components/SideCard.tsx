@@ -33,7 +33,7 @@ export const SideCard = (props: SideCardProps) => {
           <img src={image} alt={"card"} className={"w-full h-full object-cover"}/>
         </div>
         <div className={"flex flex-col"}>
-          <div className={"font-bold max-w-[150px] truncate"}>{name}{cardType === "Leader" ? " (Leader)" : ""}{medalLevel ? " Lv" + medalLevel : ""}</div>
+          <div className={"font-bold max-w-[200px]"}>{name}{cardType === "Leader" ? " (Leader)" : ""}{medalLevel ? " Lv" + medalLevel : ""}</div>
           <div>
             <div className={"flex flex-row"}>
               {medalReq1 && (
