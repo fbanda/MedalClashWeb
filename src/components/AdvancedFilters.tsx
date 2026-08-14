@@ -218,7 +218,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
                  </p>
                </div>
                <div className={"flex mt-2"}>
-                 <Input placeholder={"Number"} value={costInput} type={"number"} onChange={(e) => setCostInput(e.target.value)}/>
+                 <Input placeholder={"Number"} value={costInput} type={"number"} tabIndex={-1} onChange={(e) => setCostInput(e.target.value)}/>
                </div>
              </div>
            </div>
@@ -248,7 +248,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
                  </p>
                </div>
                <div className={"flex mt-2"}>
-                 <Input placeholder={"Number"} value={levelInput} type={"number"} onChange={(e) => setLevelInput(e.target.value)}/>
+                 <Input placeholder={"Number"} value={levelInput} type={"number"} tabIndex={-1} onChange={(e) => setLevelInput(e.target.value)}/>
                </div>
              </div>
            </div>
@@ -285,7 +285,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
                  </p>
                </div>
                <div className={"flex mt-2"}>
-                 <Input placeholder={"Number"} value={powerInput} type={"number"} onChange={(e) => setPowerInput(e.target.value)}/>
+                 <Input placeholder={"Number"} value={powerInput} type={"number"} tabIndex={-1} onChange={(e) => setPowerInput(e.target.value)}/>
                </div>
              </div>
            </div>
@@ -318,7 +318,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
                  </p>
                </div>
                <div className={"flex mt-2"}>
-                 <Input placeholder={"Number"} value={armorInput} type={"number"} onChange={e => setArmorInput(e.target.value)}/>
+                 <Input placeholder={"Number"} value={armorInput} type={"number"} tabIndex={-1} onChange={e => setArmorInput(e.target.value)}/>
                </div>
              </div>
            </div>
@@ -351,7 +351,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
                  </p>
                </div>
                <div className={"flex mt-2"}>
-                 <Input placeholder={"Number"} value={spiritInput} type={"number"} onChange={(e) => setSpiritInput(e.target.value)}/>
+                 <Input placeholder={"Number"} value={spiritInput} type={"number"} tabIndex={-1} onChange={(e) => setSpiritInput(e.target.value)}/>
                </div>
              </div>
            </div>
