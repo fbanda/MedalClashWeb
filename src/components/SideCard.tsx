@@ -33,17 +33,17 @@ export const SideCard = (props: SideCardProps) => {
           <img src={image} alt={"card"} className={"w-full h-full object-cover"}/>
         </div>
         <div className={"flex flex-col"}>
-          <div className={"font-bold max-w-[200px]"}>{name}{cardType === "Leader" ? " (Leader)" : ""}{medalLevel ? " Lv" + medalLevel : ""}</div>
+          <div className={"font-bold max-w-35 leading-4"}>{name}{cardType === "Leader" ? " (Leader)" : ""}{medalLevel ? " Lv" + medalLevel : ""}</div>
           <div>
             <div className={"flex flex-row"}>
               {medalReq1 && (
-                <img src={getMedalIconUrl(medalReq1)} className={"w-[16px] h-[16px]"}/>
+                <img src={getMedalIconUrl(medalReq1)} className={"w-4 h-4 mt-0.5"}/>
               )}
               {medalReq2 && (
-                <img src={getMedalIconUrl(medalReq2)} className={"w-[16px] h-[16px]"}/>
+                <img src={getMedalIconUrl(medalReq2)} className={"w-4 h-4 mt-0.5"}/>
               )}
               {medalReq3 && (
-                <img src={getMedalIconUrl(medalReq3)} className={"w-[16px] h-[16px]"}/>
+                <img src={getMedalIconUrl(medalReq3)} className={"w-4 h-4 mt-0.5"}/>
               )}
               <span className={"ms-1"}>{cardCode}</span>
             </div>
