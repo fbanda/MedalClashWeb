@@ -22,7 +22,7 @@ export const DeckDrawer = (props: DeckDrawerProps) => {
       <Drawer
           size={550}
           mask={{enabled: false}}
-          title="DECK"
+          title={store.deck.name}
           closable={{'aria-label': 'Close Button'}}
           onClose={() => setIsOpen(false)}
           open={isOpen}

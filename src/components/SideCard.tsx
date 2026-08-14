@@ -2,6 +2,9 @@ import {Hexagon} from "./Hexagon.tsx";
 import {MinusIcon, PlusIcon} from "../Icons.tsx";
 import {useStore} from "../store/store.ts";
 
+const getMedalIconUrl = (icon: string): string =>
+  "https://fbanda.github.io/Arena-MedabotsCard/Assets/Icons/R" + icon + ".png"
+
 export interface SideCardProps {
   cardId: string;
   cardType: string;
@@ -12,10 +15,13 @@ export interface SideCardProps {
   cardCode: string;
   hideHexagon?: boolean;
   isMainDeck?: boolean;
+  medalReq1?: string;
+  medalReq2?: string;
+  medalReq3?: string;
 }
 
 export const SideCard = (props: SideCardProps) => {
-  const {cardId, cardType, medalLevel, image, name, cardCode, amount, hideHexagon, isMainDeck} = props;
+  const {cardId, cardType, medalLevel, image, name, cardCode, amount, hideHexagon, isMainDeck, medalReq1, medalReq2, medalReq3} = props;
   const store = useStore();
 
   const card = store.deck.cards.find(c => c.id === cardId);
@@ -28,7 +34,20 @@ export const SideCard = (props: SideCardProps) => {
         </div>
         <div className={"flex flex-col"}>
           <div className={"font-bold max-w-[150px] truncate"}>{name}{cardType === "Leader" ? " (Leader)" : ""}{medalLevel ? " Lv" + medalLevel : ""}</div>
-          <div>{cardCode}</div>
+          <div>
+            <div className={"flex flex-row"}>
+              {medalReq1 && (
+                <img src={getMedalIconUrl(medalReq1)} className={"w-[16px] h-[16px]"}/>
+              )}
+              {medalReq2 && (
+                <img src={getMedalIconUrl(medalReq2)} className={"w-[16px] h-[16px]"}/>
+              )}
+              {medalReq3 && (
+                <img src={getMedalIconUrl(medalReq3)} className={"w-[16px] h-[16px]"}/>
+              )}
+              <span className={"ms-1"}>{cardCode}</span>
+            </div>
+          </div>
         </div>
         <div className={"flex flex-row gap-1 ml-auto"}>
           {!hideHexagon && (
