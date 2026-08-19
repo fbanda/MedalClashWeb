@@ -12,7 +12,6 @@ export const ResultsSection = () => {
   const store = useStore();
   const [displayData, setDisplayData] = useState<any[]>([]);
   const [totalResults, setTotalResults] = useState<number>(dataSet.length);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState<any>(null);
 
   useEffect(() => {
@@ -124,7 +123,7 @@ export const ResultsSection = () => {
 
   return (
       <>
-        <SingleCardModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} selectedCard={selectedCard}/>
+        <SingleCardModal isModalOpen={store.isSingleCardModalOpen} selectedCard={selectedCard}/>
 
         <div className={"flex flex-col gap-4 p-4 my-6"}>
           <Pagination align="center" current={store.currentPage} pageSize={PAGE_SIZE} showSizeChanger={false} total={totalResults} onChange={(page) => store.setCurrentPage(page)} />
@@ -195,7 +194,7 @@ export const ResultsSection = () => {
                           <Hexagon
                               isBtn
                               onClick={() => {
-                                setIsModalOpen(true)
+                                store.setIsSingleCardModalOpen(true);
                                 setSelectedCard(card)
                               }}
                               text={<EyeIcon/>}

@@ -16,8 +16,8 @@ const CardTypes = [
 export const Filters = () => {
   const store = useStore();
   const [inputValue, setInputValue] = useState(store.filterInputValue);
-  const [selectedSet, setSelectedSet] = useState(SetListUnique[0]);
-  const [selectedCardType, setSelectedCardType] = useState<string>(DEFAULT_CARD_TYPE);
+  const [selectedSet, setSelectedSet] = useState(store.searchBySet);
+  const [selectedCardType, setSelectedCardType] = useState<string>(store.cardType);
   const [searchByName, setSearchByName] = useState(store.searchByName);
   const [searchByText, setSearchByText] = useState(store.searchByText);
   const [searchByType, setSearchByType] = useState(store.searchByType);
@@ -43,11 +43,23 @@ export const Filters = () => {
 
   const handleOnClearFilters = () => {
     setInputValue("");
+    store.setFilterInputValue("");
+
     setSelectedSet("ALL");
+    store.setSearchBySet("ALL");
+
     setSelectedCardType(DEFAULT_CARD_TYPE)
+    store.setCardType(DEFAULT_CARD_TYPE)
+
     setSearchByName(true);
+    store.setSearchByName(true);
+
     setSearchByText(false);
+    store.setSearchByText(false);
+
     setSearchByType(false);
+    store.setSearchByType(false);
+
     advancedFiltersRef.current?.onClearSearch();
   }
 
@@ -76,7 +88,10 @@ export const Filters = () => {
               </p>
               <div>
                 <Checkbox
-                    onChange={(value) => { setSearchByName(value.target.checked) }}
+                    onChange={(value) => {
+                      setSearchByName(value.target.checked)
+                      store.setSearchByName(value.target.checked)
+                    }}
                     checked={searchByName}
                 >
                   Name
@@ -84,14 +99,20 @@ export const Filters = () => {
               </div>
               <div>
                 <Checkbox
-                    onChange={(value) => { setSearchByText(value.target.checked) }}
+                    onChange={(value) => {
+                      setSearchByText(value.target.checked)
+                      store.setSearchByText(value.target.checked)
+                    }}
                     checked={searchByText}>
                   Text
                 </Checkbox>
               </div>
               <div>
                 <Checkbox
-                    onChange={(value) => { setSearchByType(value.target.checked) }}
+                    onChange={(value) => {
+                      setSearchByType(value.target.checked)
+                      store.setSearchByType(value.target.checked)
+                    }}
                     checked={searchByType}>
                   Types
                 </Checkbox>

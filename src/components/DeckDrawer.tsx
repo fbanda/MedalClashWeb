@@ -11,8 +11,7 @@ export interface DeckDrawerProps {
 export const DeckDrawer = (props: DeckDrawerProps) => {
   const {isOpen, setIsOpen} = props;
   const store = useStore();
-  const warningMissingLeaderMedal = store.deck.leader === "" || store.deck.medalLvl1 === "" ||
-                                    store.deck.medalLvl2 === "" || store.deck.medalLvl3 === "";
+  const warningMissingLeaderMedal = store.deck.leader === "" || store.deck.medalLvl1 === "" || store.deck.medalLvl2 === "" || store.deck.medalLvl3 === "";
   const warningRequirements = store.deck.cards.some(card => card.isError) || store.deck.sideCards.some(card => card.isError);
   const warningUnder = store.deck.cards.reduce((sum, card) => sum + card.amount, 0) < 40;
   const warningOverMain = store.deck.cards.reduce((sum, card) => sum + card.amount, 0) > 50;
@@ -27,7 +26,6 @@ export const DeckDrawer = (props: DeckDrawerProps) => {
           onClose={() => setIsOpen(false)}
           open={isOpen}
       >
-        
         {warningMissingLeaderMedal && (
           <div className={"mb-2"}>
             <Alert title="Deck needs 1 Leader and 3 Medals" type="error" showIcon/>

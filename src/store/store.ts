@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 import dataSet from "../assets/TestCardDataSet.json";
-import {isValidMedalRequirements, validateErrorsOnDeck} from "../Utils.ts";
+import {getCurrentFormattedDate, isValidMedalRequirements, validateErrorsOnDeck} from "../Utils.ts";
 import { persist } from 'zustand/middleware';
 
 export const DEFAULT_CARD_TYPE = "ALL";
@@ -14,6 +14,7 @@ export interface Card {
 
 export interface Deck {
   name: string;
+  id: string;
   leader: string;
   medalLvl1: string;
   medalLvl2: string;
@@ -25,6 +26,7 @@ export interface Deck {
 export interface StoreInterface {
   // deck
   deck: Deck
+  setDeckId: (id: string) => void;
   setDeckName: (name: string) => void;
   addCardToDeck: (cardId: string) => void
   addCardToSideDeck: (cardId: string) => void
@@ -103,11 +105,16 @@ export interface StoreInterface {
 
   // functions
   resetDeck: () => void;
+  isSingleCardModalOpen: boolean,
+  setIsSingleCardModalOpen: (value: boolean) => void,
 }
+
+const deckName = "NewDeck__" + getCurrentFormattedDate();
 
 export const useStore = create<StoreInterface>()(persist((set, getState) => ({
       deck: {
-        name: "New Deck",
+        name: deckName,
+        id: "",
         leader: "",
         medalLvl1: "",
         medalLvl2: "",
@@ -140,7 +147,17 @@ export const useStore = create<StoreInterface>()(persist((set, getState) => ({
       costValue: 0,
       levelCompare: "EQ",
       levelValue: 0,
+      isSingleCardModalOpen: false,
 
+      setDeckId: (id: string) => {
+        const state = getState();
+        set({
+          deck: {
+            ...state.deck,
+            id: id,
+          }
+        })
+      },
       setDeckName: (name: string) => {
         const state = getState();
         set({
@@ -337,7 +354,8 @@ export const useStore = create<StoreInterface>()(persist((set, getState) => ({
       resetDeck: () => {
         set({
           deck: {
-            name: "New Deck",
+            name: "NewDeck__" + getCurrentFormattedDate() + "",
+            id: new Date().getTime().toString(),
             leader: "",
             medalLvl1: "",
             medalLvl2: "",
@@ -347,17 +365,12 @@ export const useStore = create<StoreInterface>()(persist((set, getState) => ({
           },
           medalsColor: [undefined, undefined, undefined],
         })
-      }
+      },
+      setIsSingleCardModalOpen: (value: boolean) => set({isSingleCardModalOpen: value}),
     }),
     {
       name: 'medabot-deck-storage',
-      partialize: (state) => ({
-        deck: state.deck,
-        medalsColor: state.medalsColor,
-        filterInputValue: state.filterInputValue,
-        searchByName: state.searchByName,
-        searchByText: state.searchByText,
-        searchByType: state.searchByType,
+      partialize: () => ({
       }),
     }
 ))

@@ -73,10 +73,12 @@ function IsValidForMainSideDeck(card: any): boolean
   return true;
 }
 
-export const SaveDeckToStore = (store: any, deckName: string, deck: string, sideDeck: string, leader: string, medalLvl1: string, medalLvl2: string, medalLvl3: string) => {
+export const SaveDeckToStore = (store: any, deckName: string, deck: string, sideDeck: string, leader: string, medalLvl1: string, medalLvl2: string, medalLvl3: string, deckId?: string) => {
   const cards = deck?.split(",") ?? [];
   const cardsIds = cards.map(card => card.split("x")[0]);
   const cardsAmount = cards.map(card => card.split("x")[1]);
+
+  if (deckId) store.setDeckId(deckId);
 
   store.setDeckName(deckName);
   store.setLeader(leader);
@@ -122,3 +124,16 @@ declare global {
 String.prototype.removeAccentsToLowerCase = function() {
   return this.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 };
+
+export const getCurrentFormattedDate = () => {
+  const now = new Date();
+
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+
+  return `${year}-${month}-${day}_${hours}-${minutes}-${seconds}`;
+}

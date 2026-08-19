@@ -2,7 +2,7 @@ import {useNavigate, useSearchParams} from "react-router-dom";
 import {useStore} from "../store/store.ts";
 import {useEffect} from "react";
 import {notification} from "antd";
-import {SaveDeckToStore} from "../Utils.ts";
+import {getCurrentFormattedDate, SaveDeckToStore} from "../Utils.ts";
 
 export const LoadDeck = () => {
   const [searchParams] = useSearchParams();
@@ -11,7 +11,6 @@ export const LoadDeck = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const deckName = searchParams.get("deckName");
     const deck = searchParams.get("deck");
     const sideDeck = searchParams.get("sideDeck");
     const leader = searchParams.get("leader");
@@ -19,7 +18,7 @@ export const LoadDeck = () => {
     const medalLvl2 = searchParams.get("medalLvl2");
     const medalLvl3 = searchParams.get("medalLvl3");
 
-    if(deckName === null || deck === null || sideDeck === null || leader === null || medalLvl1 === null || medalLvl2 === null || medalLvl3 === null) {
+    if(deck === null || sideDeck === null || leader === null || medalLvl1 === null || medalLvl2 === null || medalLvl3 === null) {
       api.error({
         title: "Invalid deck.",
         description: "Please, check the link and try again.",
@@ -30,6 +29,8 @@ export const LoadDeck = () => {
     }
 
     store.resetDeck();
+
+    const deckName = "NewDeck__" + getCurrentFormattedDate();
 
     try {
       SaveDeckToStore(store, deckName, deck, sideDeck, leader, medalLvl1, medalLvl2, medalLvl3);

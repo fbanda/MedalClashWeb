@@ -1,5 +1,5 @@
 import {Hexagon} from "./Hexagon.tsx";
-import {MinusIcon, PlusIcon} from "../Icons.tsx";
+import {ExclamationIcon, EyeIcon, MinusIcon, PlusIcon} from "../Icons.tsx";
 import {useStore} from "../store/store.ts";
 
 const getMedalIconUrl = (icon: string): string =>
@@ -28,12 +28,14 @@ export const SideCard = (props: SideCardProps) => {
 
   return (
       <div className={"flex gap-4"}>
-        <Hexagon size={"lg"} text={amount} className={hideHexagon ? "invisible" : ""} isError={card?.isError ?? false}/>
+        <Hexagon size={"lg"} text={amount} className={hideHexagon ? "invisible" : ""} />
         <div className={"ms-[-40px] mt-[2px] w-[100px] h-[50px] overflow-hidden relative border-gray-900 border-2"}>
           <img src={image} alt={"card"} className={"w-full h-full object-cover"}/>
         </div>
         <div className={"flex flex-col"}>
-          <div className={"font-bold max-w-35 leading-4"}>{name}{cardType === "Leader" ? " (Leader)" : ""}{medalLevel ? " Lv" + medalLevel : ""}</div>
+          <div className={"flex gap-1 font-bold max-w-35 leading-4"}>
+            {card?.isError ? <ExclamationIcon/> : ""}{name}{cardType === "Leader" ? " (Leader)" : ""}{medalLevel ? " Lv" + medalLevel : ""}
+          </div>
           <div>
             <div className={"flex flex-row"}>
               {medalReq1 && (
@@ -50,6 +52,7 @@ export const SideCard = (props: SideCardProps) => {
           </div>
         </div>
         <div className={"flex flex-row gap-1 ml-auto"}>
+          <Hexagon size={"sm"} isBtn text={<EyeIcon/>} onClick={() => store.setIsSingleCardModalOpen(true)} />
           {!hideHexagon && (
             <Hexagon size={"sm"} isBtn text={<PlusIcon/>}
               onClick={() => {

@@ -13,7 +13,7 @@ export const DeckBuilder = () => {
   const [sideDisplayData, setSideDisplayData] = useState<any[]>([]);
   const [deckName, setDeckName] = useState<string>(store.deck.name);
 
-  const [savedDecks, setSavedDecks] = useState<string[]>([]);
+  const [savedDecks, setSavedDecks] = useState<{label: string, value: string}[]>([]);
 
   const [leader, setLeader] = useState<any>(null);
   const [medalLvl1, setMedalLvl1] = useState<any>(null);
@@ -51,11 +51,19 @@ export const DeckBuilder = () => {
     setSideDisplayData(sideDataToDisplay);
     setLeadMedals(leadMedalsCount);
 
-    setSavedDecks(Object.keys(JSON.parse(localStorage.getItem("deckList") || "{}")));
+    const deckList = JSON.parse(localStorage.getItem("deckList") || "{}");
+
+    const options = Object.keys(deckList).map(item => ({
+      label: deckList[item].deckName,
+      value: item,
+    }))
+
+    setSavedDecks(options);
   }, [store.deck.cards, store.deck.leader, store.deck.medalLvl1, store.deck.medalLvl2, store.deck.medalLvl3, store.deck.sideCards]);
 
   const resetDeck = () => {
     store.resetDeck();
+    setDeckName(store.deck.name);
   }
 
   const onGetURL = async () => {
@@ -66,7 +74,7 @@ export const DeckBuilder = () => {
     const medalLvl3 = store.deck.medalLvl3;
     const deck = store.deck.cards.map(item => `${item.id}x${item.amount}`);
     const sideDeck = store.deck.sideCards.map(item => `${item.id}x${item.amount}`);
-    const url = `${window.location.origin}/#/loadDeck?deckName=${name}&leader=${leader}&medalLvl1=${medalLvl1}&medalLvl2=${medalLvl2}&medalLvl3=${medalLvl3}&deck=${deck.join(",")}&sideDeck=${sideDeck.join(",")}`;
+    const url = `${window.location.origin}/MedalClashWeb/#/loadDeck?deckName=${name}&leader=${leader}&medalLvl1=${medalLvl1}&medalLvl2=${medalLvl2}&medalLvl3=${medalLvl3}&deck=${deck.join(",")}&sideDeck=${sideDeck.join(",")}`;
     await navigator.clipboard.writeText(url);
     api.success({
       description: "Url copied to clipboard.",
@@ -89,33 +97,42 @@ export const DeckBuilder = () => {
 
     const deckList: string | null = localStorage.getItem("deckList");
     let newDeckList = "";
+    const curDate = String(new Date().getTime());
 
-    if (deckList) {
+    if (deckList && store.deck.id) {
       const deckListObj = JSON.parse(deckList);
-      deckListObj[deckName] = jsonData;
+      deckListObj[store.deck.id] = jsonData;
       newDeckList = JSON.stringify(deckListObj);
     } else {
-      newDeckList = JSON.stringify({[deckName]: jsonData});
+      store.setDeckId(curDate);
+      newDeckList = JSON.stringify({[curDate]: jsonData});
     }
 
     localStorage.setItem("deckList", newDeckList);
-    setSavedDecks(Object.keys(JSON.parse(localStorage.getItem("deckList") || "{}")));
+
+    const parseDeckList = JSON.parse(localStorage.getItem("deckList") || "{}");
+
+    const options = Object.keys(parseDeckList).map(item => ({
+      label: parseDeckList[item].deckName,
+      value: item,
+    }))
+
+    setSavedDecks(options);
     api.success({
       description: "Deck saved successfully.",
-      placement: "topRight",
     });
   }
 
-  const load = (deckName: string) => {
+  const load = (deckId: string) => {
     const deckList: string | null = localStorage.getItem("deckList");
     if (deckList) {
       const deckListObj = JSON.parse(deckList);
-      if (deckListObj[deckName]) {
-        const deckData = deckListObj[deckName];
+      if (deckListObj[deckId]) {
+        const deckData = deckListObj[deckId];
         store.resetDeck();
-        SaveDeckToStore(store, deckData.deckName, deckData.deck, deckData.sideDeck, deckData.leader, deckData.medalLvl1, deckData.medalLvl2, deckData.medalLvl3);
+        setDeckName(deckData.deckName);
+        SaveDeckToStore(store, deckData.deckName, deckData.deck, deckData.sideDeck, deckData.leader, deckData.medalLvl1, deckData.medalLvl2, deckData.medalLvl3, deckId);
         api.success({
-          title: "Deck loaded",
           description: "Deck loaded successfully.",
         })
       }
@@ -135,8 +152,15 @@ export const DeckBuilder = () => {
           <div className={"flex flex-col gap-4 basis-1/3 mb-6"}>
             <div className={"flex flex-row gap-2 items-center"}>
               <div className={"text-start"}>Deck Name:</div>
-              <div>
-                <Input placeholder={"Deck Name"} value={deckName} onChange={(e) => setDeckName(e.target.value)}/>
+              <div className={"w-[60%]"}>
+                <Input
+                    placeholder={"Deck Name"}
+                    value={deckName}
+                    onChange={(e) => {
+                      setDeckName(e.target.value);
+                      store.setDeckName(e.target.value);
+                    }}
+                />
               </div>
             </div>
             <div className={"flex flex-row gap-2 items-start"}>
@@ -144,7 +168,7 @@ export const DeckBuilder = () => {
               <Button className={"w-40"} htmlType={"button"} onClick={resetDeck}>New</Button>
             </div>
             <div className={"flex flex-row gap-2 items-start"}>
-              <Dropdown menu={{ items: savedDecks.map(item => ({key: item, label: <>{item}</>, onClick: () => { load(item)}})) }} placement="bottomLeft">
+              <Dropdown menu={{items: savedDecks.map(item => ({key: item.value, label: <>{item.label}</>, onClick: () => { load(item.value)}})) }} placement="bottomLeft">
                 <Button className={"w-40"}>Load</Button>
               </Dropdown>
               <Button className={"w-40"} htmlType={"button"}>Delete</Button>

@@ -1,5 +1,5 @@
 import {Hexagon} from "../Hexagon.tsx";
-import {EyeIcon, MinusIcon, PlusIcon, SwitchIcon} from "../../Icons.tsx";
+import {ExclamationIcon, EyeIcon, MinusIcon, PlusIcon, SwitchIcon} from "../../Icons.tsx";
 import {Image} from "antd";
 import {useStore} from "../../store/store.ts";
 
@@ -9,7 +9,7 @@ export const DeckCard = ({card, amount, isError, isSideDeck}: { card: any, amoun
       <div className={"group relative"}>
         <div className={"z-10"}>
           <div className={"absolute top-[20px] right-[5px]"}>
-            <Hexagon text={amount} isError={isError}/>
+            <Hexagon text={amount}/>
           </div>
         </div>
         <div className={"z-10 md:opacity-0 md:group-hover:opacity-100"}>
@@ -38,8 +38,8 @@ export const DeckCard = ({card, amount, isError, isSideDeck}: { card: any, amoun
           </div>
         </div>
         <Image preview={false} src={card.cardPreviewUrl} alt={"card"}/>
-        <div className={"text-xs font-bold"}>
-          {card.cardname}
+        <div className={"flex gap-1 justify-center text-xs font-bold"}>
+          {isError ? <ExclamationIcon/> : ""}{card.cardname}
         </div>
         <div className={"text-xs font-normal"}>
           {card.cardCode}

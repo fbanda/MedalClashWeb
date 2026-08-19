@@ -95,24 +95,24 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
   const store = useStore();
   const { handleOnSearch } = props;
 
-  const [selectedColor, setSelectedColor] = useState<string>(COLOR_OPTIONS[0].value);
-  const [selectedCardType, setSelectedCardType] = useState<string>(cardTypeOptions[0].value);
-  const [selectedArmor, setSelectedArmor] = useState<string>(COMPARE_OPTIONS[0].value);
-  const [armorInput, setArmorInput] = useState<string>("");
-  const [selectedSpirit, setSelectedSpirit] = useState<string>(COMPARE_OPTIONS[0].value);
-  const [spiritInput, setSpiritInput] = useState<string>("");
-  const [selectedAttribute, setSelectedAttribute] = useState<string>(attributeOptions[0].value);
-  const [selectedGroup, setSelectedGroup] = useState<string>(groupOptions[0].value);
+  const [selectedColor, setSelectedColor] = useState<string>(store.color);
+  const [selectedCardType, setSelectedCardType] = useState<string>(store.cardType);
+  const [selectedArmor, setSelectedArmor] = useState<string>(store.armorCompare);
+  const [armorInput, setArmorInput] = useState<string>(String(store.armorValue));
+  const [selectedSpirit, setSelectedSpirit] = useState<string>(store.spiritCompare);
+  const [spiritInput, setSpiritInput] = useState<string>(String(store.spiritValue));
+  const [selectedAttribute, setSelectedAttribute] = useState<string>(store.attribute);
+  const [selectedGroup, setSelectedGroup] = useState<string>(store.group);
 
-  const [selectedCost, setSelectedCost] = useState<string>(COMPARE_OPTIONS[0].value);
-  const [costInput, setCostInput] = useState<string>("");
-  const [selectedLevel, setSelectedLevel] = useState<string>(COMPARE_OPTIONS[0].value);
-  const [levelInput, setLevelInput] = useState<string>("");
-  const [selectedPower, setSelectedPower] = useState<string>(COMPARE_OPTIONS[0].value);
-  const [powerInput, setPowerInput] = useState<string>("");
-  const [selectedGender, setSelectedGender] = useState<string>(genderOptions[0].value);
-  const [selectedLegType, setSelectedLegType] = useState<string>(legTypeOptions[0].value);
-  const [selectedMedapartType, setSelectedMedapartType] = useState<string>(medapartTypeOptions[0].value);
+  const [selectedCost, setSelectedCost] = useState<string>(store.costCompare);
+  const [costInput, setCostInput] = useState<string>(String(store.costValue));
+  const [selectedLevel, setSelectedLevel] = useState<string>(store.levelCompare);
+  const [levelInput, setLevelInput] = useState<string>(String(store.levelValue));
+  const [selectedPower, setSelectedPower] = useState<string>(store.powerCompare);
+  const [powerInput, setPowerInput] = useState<string>(String(store.powerValue));
+  const [selectedGender, setSelectedGender] = useState<string>(store.gender);
+  const [selectedLegType, setSelectedLegType] = useState<string>(store.legType);
+  const [selectedMedapartType, setSelectedMedapartType] = useState<string>(store.medapartType);
 
   useImperativeHandle(ref, () => ({
     onSearch: () => {
@@ -124,22 +124,55 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
     },
     onClearSearch: () => {
       setSelectedColor(COLOR_OPTIONS[0].value);
+      store.setColor(COLOR_OPTIONS[0].value)
+
       setSelectedCardType(cardTypeOptions[0].value);
+      store.setCardType(cardTypeOptions[0].value)
+
       setSelectedArmor(COMPARE_OPTIONS[0].value);
+      store.setArmorCompare(COMPARE_OPTIONS[0].value);
+
       setArmorInput("");
+      store.setArmorValue(0);
+
       setSelectedSpirit(COMPARE_OPTIONS[0].value);
+      store.setSpiritCompare(COMPARE_OPTIONS[0].value)
+
       setSpiritInput("");
+      store.setSpiritValue(0);
+
       setSelectedCost(COMPARE_OPTIONS[0].value);
+      store.setCostCompare(COMPARE_OPTIONS[0].value);
+
       setCostInput("");
+      store.setCostValue(0);
+
       setSelectedLevel(COMPARE_OPTIONS[0].value);
+      store.setLevelCompare(COMPARE_OPTIONS[0].value)
+
       setLevelInput("");
+      store.setLevelValue(0);
+
       setSelectedPower(COMPARE_OPTIONS[0].value);
+      store.setPowerCompare(COMPARE_OPTIONS[0].value);
+
       setPowerInput("");
-      setSelectedAttribute(attributeOptions[0].value)
-      setSelectedGroup(groupOptions[0].value)
-      setSelectedGender(genderOptions[0].value)
-      setSelectedLegType(legTypeOptions[0].value)
-      setSelectedMedapartType(medapartTypeOptions[0].value)
+      store.setPowerValue(0);
+
+      setSelectedAttribute(attributeOptions[0].value);
+      store.setAttribute(attributeOptions[0].value);
+
+      setSelectedGroup(groupOptions[0].value);
+      store.setGroup(groupOptions[0].value);
+
+      setSelectedGender(genderOptions[0].value);
+      store.setGender(genderOptions[0].value);
+
+      setSelectedLegType(legTypeOptions[0].value);
+      store.setLegType(legTypeOptions[0].value);
+
+      setSelectedMedapartType(medapartTypeOptions[0].value);
+      store.setMedapartType(medapartTypeOptions[0].value);
     },
   }));
 
