@@ -5,6 +5,7 @@ import {Alert, Button, Dropdown, Input, notification} from "antd";
 import {LeaderAndMedalsCard} from "./LeaderAndMedalsCard.tsx";
 import {DeckCard} from "./DeckCard.tsx";
 import {SaveDeckToStore} from "../../Utils.ts";
+import {ConfirmationModal, type ConfirmationModalProps} from "../ConfirmationModal.tsx";
 
 export const DeckBuilder = () => {
   const store = useStore();
@@ -20,6 +21,56 @@ export const DeckBuilder = () => {
   const [medalLvl2, setMedalLvl2] = useState<any>(null);
   const [medalLvl3, setMedalLvl3] = useState<any>(null);
   const [leadMedals, setLeadMedals] = useState<number>(0);
+
+  const [confirmationModalProps, setConfirmationModalProps] = useState<ConfirmationModalProps>({
+    title: "Unsaved Changes",
+    message: "Are you sure you want to continue?",
+    onConfirm: () => {},
+    setIsDeleteModalOpen: () => {},
+    isDeleteModalOpen: false,
+  })
+
+  const deckToJson = () => {
+    const deck = store.deck.cards.map(item => `${item.id}x${item.amount}`);
+    const sideDeck = store.deck.sideCards.map(item => `${item.id}x${item.amount}`);
+    const jsonData = {
+      deckName: deckName,
+      leader: store.deck.leader,
+      medalLvl1: store.deck.medalLvl1,
+      medalLvl2: store.deck.medalLvl2,
+      medalLvl3: store.deck.medalLvl3,
+      deck: deck.join(","),
+      sideDeck: sideDeck.join(","),
+    }
+
+    return jsonData;
+  }
+
+  const isDirty = () => {
+    const deckList = JSON.parse(localStorage.getItem("deckList") || "{}");
+    const currentDeckJson = deckToJson();
+    // Verificar si el deck actual está vacío
+    const isDeckEmpty =
+        store.deck.cards.length === 0 &&
+        store.deck.sideCards.length === 0 &&
+        !store.deck.leader &&
+        !store.deck.medalLvl1 &&
+        !store.deck.medalLvl2 &&
+        !store.deck.medalLvl3;
+
+    const id = store.deck.id;
+    // Si el deck existe en localStorage, comparar
+    if (id && id in deckList) {
+      const savedDeck = deckList[id];
+      return JSON.stringify(savedDeck) !== JSON.stringify(currentDeckJson);
+    }
+    // Si el deck no existe en localStorage y está vacío, no hay cambios
+    if (isDeckEmpty) {
+      return false;
+    }
+    // El deck no existe en localStorage pero tiene contenido, hay cambios
+    return true;
+  }
 
   useEffect(() => {
     const deckCardsIds = store.deck.cards.map(item => item.id);
@@ -41,12 +92,12 @@ export const DeckBuilder = () => {
       if (item.cardId === store.deck.medalLvl2) { setMedalLvl2(item); leadMedalsCount++; }
       if (item.cardId === store.deck.medalLvl3) { setMedalLvl3(item); leadMedalsCount++; }
     });
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (!store.deck.leader) setLeader(null);
     if (!store.deck.medalLvl1) setMedalLvl1(null);
     if (!store.deck.medalLvl2) setMedalLvl2(null);
     if (!store.deck.medalLvl3) setMedalLvl3(null);
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDisplayData(dataToDisplay);
     setSideDisplayData(sideDataToDisplay);
     setLeadMedals(leadMedalsCount);
@@ -62,19 +113,27 @@ export const DeckBuilder = () => {
   }, [store.deck.cards, store.deck.leader, store.deck.medalLvl1, store.deck.medalLvl2, store.deck.medalLvl3, store.deck.sideCards]);
 
   const resetDeck = () => {
-    store.resetDeck();
-    setDeckName(store.deck.name);
+    if (isDirty()) {
+      setConfirmationModalProps({
+        title: "Unsaved Changes",
+        message: "You have unsaved changes. Are you sure you want to continue?",
+        onConfirm: () => store.resetDeck(),
+        isDeleteModalOpen: true,
+        setIsDeleteModalOpen: () => setConfirmationModalProps({...confirmationModalProps, isDeleteModalOpen: false}),
+      })
+    } else {
+      store.resetDeck();
+    }
   }
 
   const onGetURL = async () => {
-    const name = deckName;
     const leader = store.deck.leader;
     const medalLvl1 = store.deck.medalLvl1;
     const medalLvl2 = store.deck.medalLvl2;
     const medalLvl3 = store.deck.medalLvl3;
     const deck = store.deck.cards.map(item => `${item.id}x${item.amount}`);
     const sideDeck = store.deck.sideCards.map(item => `${item.id}x${item.amount}`);
-    const url = `${window.location.origin}/MedalClashWeb/#/loadDeck?deckName=${name}&leader=${leader}&medalLvl1=${medalLvl1}&medalLvl2=${medalLvl2}&medalLvl3=${medalLvl3}&deck=${deck.join(",")}&sideDeck=${sideDeck.join(",")}`;
+    const url = `${window.location.origin}/MedalClashWeb/#/loadDeck?leader=${leader}&medalLvl1=${medalLvl1}&medalLvl2=${medalLvl2}&medalLvl3=${medalLvl3}&deck=${deck.join(",")}&sideDeck=${sideDeck.join(",")}`;
     await navigator.clipboard.writeText(url);
     api.success({
       description: "Url copied to clipboard.",
@@ -83,18 +142,7 @@ export const DeckBuilder = () => {
   }
 
   const save = () => {
-    const deck = store.deck.cards.map(item => `${item.id}x${item.amount}`);
-    const sideDeck = store.deck.sideCards.map(item => `${item.id}x${item.amount}`);
-    const jsonData = {
-      deckName: deckName,
-      leader: store.deck.leader,
-      medalLvl1: store.deck.medalLvl1,
-      medalLvl2: store.deck.medalLvl2,
-      medalLvl3: store.deck.medalLvl3,
-      deck: deck.join(","),
-      sideDeck: sideDeck.join(","),
-    }
-
+    const jsonData = deckToJson();
     const deckList: string | null = localStorage.getItem("deckList");
     let newDeckList = "";
     const curDate = String(new Date().getTime());
@@ -124,20 +172,54 @@ export const DeckBuilder = () => {
   }
 
   const load = (deckId: string) => {
+    const loadDeck = () => {
+      const deckList: string | null = localStorage.getItem("deckList");
+      if (deckList) {
+        const deckListObj = JSON.parse(deckList);
+        if (deckListObj[deckId]) {
+          const deckData = deckListObj[deckId];
+          store.resetDeck();
+          SaveDeckToStore(store, deckData.deckName, deckData.deck, deckData.sideDeck, deckData.leader, deckData.medalLvl1, deckData.medalLvl2, deckData.medalLvl3, deckId);
+          api.success({
+            description: "Deck loaded successfully.",
+          })
+        }
+      }
+    }
+
+    if (isDirty()) {
+      setConfirmationModalProps({
+        title: "Unsaved Changes",
+        message: "You have unsaved changes. Are you sure you want to continue?",
+        onConfirm: () => loadDeck(),
+        isDeleteModalOpen: true,
+        setIsDeleteModalOpen: () => setConfirmationModalProps({...confirmationModalProps, isDeleteModalOpen: false}),
+      })
+    } else {
+      loadDeck();
+    }
+  }
+
+  const deleteDeck = () => {
     const deckList: string | null = localStorage.getItem("deckList");
     if (deckList) {
       const deckListObj = JSON.parse(deckList);
-      if (deckListObj[deckId]) {
-        const deckData = deckListObj[deckId];
+      if (deckListObj[store.deck.id]) {
+        delete deckListObj[store.deck.id];
+        localStorage.setItem("deckList", JSON.stringify(deckListObj));
+        setSavedDecks(Object.keys(deckListObj).map(item => ({
+          label: deckListObj[item].deckName,
+          value: item,
+        })));
         store.resetDeck();
-        setDeckName(deckData.deckName);
-        SaveDeckToStore(store, deckData.deckName, deckData.deck, deckData.sideDeck, deckData.leader, deckData.medalLvl1, deckData.medalLvl2, deckData.medalLvl3, deckId);
-        api.success({
-          description: "Deck loaded successfully.",
-        })
       }
     }
   }
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setDeckName(store.deck.name)
+  }, [store.deck.name]);
 
   const warningMissingLeaderMedal = store.deck.leader === "";
   const warningRequirements = store.deck.cards.some(card => card.isError) || store.deck.sideCards.some(card => card.isError);
@@ -148,6 +230,7 @@ export const DeckBuilder = () => {
   return (
       <div className={"flex flex-col gap-0 p-4 my-6"}>
         {contextHolder}
+        <ConfirmationModal {...confirmationModalProps}/>
         <div className={"flex flex-col md:flex-row gap-4"}>
           <div className={"flex flex-col gap-4 basis-1/3 mb-6"}>
             <div className={"flex flex-row gap-2 items-center"}>
@@ -171,7 +254,18 @@ export const DeckBuilder = () => {
               <Dropdown menu={{items: savedDecks.map(item => ({key: item.value, label: <>{item.label}</>, onClick: () => { load(item.value)}})) }} placement="bottomLeft">
                 <Button className={"w-40"}>Load</Button>
               </Dropdown>
-              <Button className={"w-40"} htmlType={"button"}>Delete</Button>
+              <Button
+                  className={"w-40"}
+                  htmlType={"button"}
+                  onClick={() => setConfirmationModalProps({
+                    title: "Delete Deck",
+                    message: "Are you sure you want to delete this deck?",
+                    onConfirm: () => deleteDeck(),
+                    isDeleteModalOpen: true,
+                    setIsDeleteModalOpen: () => setConfirmationModalProps({...confirmationModalProps, isDeleteModalOpen: false}),
+                  })}>
+                Delete
+              </Button>
             </div>
             <div className={"flex flex-row gap-2 items-start"}>
               <Button className={"w-40"} htmlType={"button"} onClick={onGetURL}>Share Link</Button>
