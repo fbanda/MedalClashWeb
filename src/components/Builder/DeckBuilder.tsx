@@ -141,6 +141,36 @@ export const DeckBuilder = () => {
     });
   }
 
+  const getColorWord = (color?:string):string => {
+    switch(color){
+      case "R": return "Red";
+      case "P": return "Purple";
+      case "B": return "Blue";
+      case "G": return "Green";
+      case "Y": return "Yellow";
+    }
+    return "";
+  }
+
+  const onExport = async () => {
+    const deckId = store.deck.id;
+    const deckName = store.deck.name;
+
+    const listMedabot = store.deck.cards.filter(item => dataSet.find(c => c.cardId === item.id)?.cardType === "Medabot").map(item => `\n${item.amount} ${item.id}`).join("");
+    const listMedafighter = store.deck.cards.filter(item => dataSet.find(c => c.cardId === item.id)?.cardType === "Medafighter").map(item => `\n${item.amount} ${item.id}`).join("");
+    const listEvent = store.deck.cards.filter(item => dataSet.find(c => c.cardId === item.id)?.cardType === "Event").map(item => `\n${item.amount} ${item.id}`).join("");
+    const listSideboard = store.deck.sideCards.map(item => `\n${item.amount} ${item.id}`).join("");
+
+    const medal1Color = getColorWord(dataSet.find(c => c.cardId === store.deck.medalLvl1)?.colors[0]);
+    const medal2Color = getColorWord(dataSet.find(c => c.cardId === store.deck.medalLvl2)?.colors[0]);
+    const medal3Color = getColorWord(dataSet.find(c => c.cardId === store.deck.medalLvl3)?.colors[0]);
+    const deckString = `Leader:\n1 ${store.deck.leader}\n\nMedal-Lv1-${medal1Color}:\n1 ${store.deck.medalLvl1}\n\nMedal-Lv2-${medal2Color}:\n1 ${store.deck.medalLvl2}\n\nMedal-Lv3-${medal3Color}:\n1 ${store.deck.medalLvl3}\n\nMedabot:${listMedabot}\n\nMedafighter:${listMedafighter}\n\nEvent:${listEvent}\n\nSideboard:${listSideboard}`;
+
+    const deckParam = encodeURIComponent(btoa(deckString));
+    const url = `https://tcg-arena.fr/import?game=Medal+Clash+%28Test%29&name=${deckName}&id=${deckId}&deck=${deckParam}`;
+    window.open(url);
+  }
+
   const save = () => {
     const jsonData = deckToJson();
     const deckList: string | null = localStorage.getItem("deckList");
@@ -269,7 +299,7 @@ export const DeckBuilder = () => {
             </div>
             <div className={"flex flex-row gap-2 items-start"}>
               <Button className={"w-40"} htmlType={"button"} onClick={onGetURL}>Share Link</Button>
-              <Button className={"w-40"} htmlType={"button"}>Export to TCG Arena</Button>
+              <Button className={"w-40"} htmlType={"button"} onClick={onExport}>Export to TCG Arena</Button>
             </div>
           </div>
           <div className={"basis-2/3"}>
