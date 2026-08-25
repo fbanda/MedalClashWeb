@@ -156,6 +156,10 @@ export const DeckBuilder = () => {
     const deckId = store.deck.id;
     const deckName = store.deck.name;
 
+    const listLeader = store.deck.leader !== "" ? `\n1 ${store.deck.leader}` : ``;
+    const listMedal1 = store.deck.medalLvl1 !== "" ? `\n1 ${store.deck.medalLvl1}` : ``;
+    const listMedal2 = store.deck.medalLvl2 !== "" ? `\n1 ${store.deck.medalLvl2}` : ``;
+    const listMedal3 = store.deck.medalLvl3 !== "" ? `\n1 ${store.deck.medalLvl3}` : ``;
     const listMedabot = store.deck.cards.filter(item => dataSet.find(c => c.cardId === item.id)?.cardType === "Medabot").map(item => `\n${item.amount} ${item.id}`).join("");
     const listMedafighter = store.deck.cards.filter(item => dataSet.find(c => c.cardId === item.id)?.cardType === "Medafighter").map(item => `\n${item.amount} ${item.id}`).join("");
     const listEvent = store.deck.cards.filter(item => dataSet.find(c => c.cardId === item.id)?.cardType === "Event").map(item => `\n${item.amount} ${item.id}`).join("");
@@ -164,7 +168,7 @@ export const DeckBuilder = () => {
     const medal1Color = getColorWord(dataSet.find(c => c.cardId === store.deck.medalLvl1)?.colors[0]);
     const medal2Color = getColorWord(dataSet.find(c => c.cardId === store.deck.medalLvl2)?.colors[0]);
     const medal3Color = getColorWord(dataSet.find(c => c.cardId === store.deck.medalLvl3)?.colors[0]);
-    const deckString = `Leader:\n1 ${store.deck.leader}\n\nMedal-Lv1-${medal1Color}:\n1 ${store.deck.medalLvl1}\n\nMedal-Lv2-${medal2Color}:\n1 ${store.deck.medalLvl2}\n\nMedal-Lv3-${medal3Color}:\n1 ${store.deck.medalLvl3}\n\nMedabot:${listMedabot}\n\nMedafighter:${listMedafighter}\n\nEvent:${listEvent}\n\nSideboard:${listSideboard}`;
+    const deckString = `Leader:${listLeader}\n\nMedal-Lv1-${medal1Color}:${listMedal1}\n\nMedal-Lv2-${medal2Color}:${listMedal2}\n\nMedal-Lv3-${medal3Color}:${listMedal3}\n\nMedabot:${listMedabot}\n\nMedafighter:${listMedafighter}\n\nEvent:${listEvent}\n\nSideboard:${listSideboard}`;
 
     const deckParam = encodeURIComponent(btoa(deckString));
     const url = `https://tcg-arena.fr/import?game=Medal+Clash+%28Test%29&name=${deckName}&id=${deckId}&deck=${deckParam}`;
