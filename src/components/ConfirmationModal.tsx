@@ -5,7 +5,7 @@ export interface ConfirmationModalProps {
   message: string;
   isDeleteModalOpen: boolean;
   setIsDeleteModalOpen: (isDeleteModalOpen: boolean) => void;
-  onConfirm: () => void;
+  onConfirm?: () => void;
 }
 
 export const ConfirmationModal = (props: ConfirmationModalProps) => {
@@ -16,8 +16,11 @@ export const ConfirmationModal = (props: ConfirmationModalProps) => {
           title={title}
           closable={{ 'aria-label': 'Custom Close Button' }}
           open={isDeleteModalOpen}
+          okButtonProps={{
+            hidden: !onConfirm,
+          }}
           onOk={() => {
-            onConfirm();
+            onConfirm?.();
             setIsDeleteModalOpen(false)
           }}
           onCancel={() => setIsDeleteModalOpen(false)}

@@ -33,8 +33,8 @@ export const SideCard = (props: SideCardProps) => {
           <img src={image} alt={"card"} className={"w-full h-full object-cover"}/>
         </div>
         <div className={"flex flex-col"}>
-          <div className={"flex gap-1 font-bold max-w-35 leading-4"}>
-            {card?.isError ? <ExclamationIcon/> : ""}{name}{cardType === "Leader" ? " (Leader)" : ""}{medalLevel ? " Lv" + medalLevel : ""}
+          <div className={"flex gap-1 font-bold leading-4"}>
+            {card?.isError ? <div><ExclamationIcon/></div> : ""}<div>{name}{cardType === "Leader" ? " (Leader)" : ""}{medalLevel ? " Lv" + medalLevel : ""}</div>
           </div>
           <div>
             <div className={"flex flex-row"}>

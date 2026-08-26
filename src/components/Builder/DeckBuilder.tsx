@@ -126,19 +126,39 @@ export const DeckBuilder = () => {
     }
   }
 
+  const warningMissingLeaderMedal = store.deck.leader === "";
+  const warningRequirements = store.deck.cards.some(card => card.isError) || store.deck.sideCards.some(card => card.isError);
+  const warningUnder = store.deck.cards.reduce((sum, card) => sum + card.amount, 0) < 40;
+  const warningOverMain = store.deck.cards.reduce((sum, card) => sum + card.amount, 0) > 50;
+  const warningOverSide = store.deck.sideCards.reduce((sum, card) => sum + card.amount, 0) > 10;
+
   const onGetURL = async () => {
-    const leader = store.deck.leader;
-    const medalLvl1 = store.deck.medalLvl1;
-    const medalLvl2 = store.deck.medalLvl2;
-    const medalLvl3 = store.deck.medalLvl3;
-    const deck = store.deck.cards.map(item => `${item.id}x${item.amount}`);
-    const sideDeck = store.deck.sideCards.map(item => `${item.id}x${item.amount}`);
-    const url = `${window.location.origin}/MedalClashWeb/#/loadDeck?leader=${leader}&medalLvl1=${medalLvl1}&medalLvl2=${medalLvl2}&medalLvl3=${medalLvl3}&deck=${deck.join(",")}&sideDeck=${sideDeck.join(",")}`;
-    await navigator.clipboard.writeText(url);
-    api.success({
-      description: "Url copied to clipboard.",
-      placement: "topRight",
-    });
+    const copyDeckLink = async () => {
+      const leader = store.deck.leader;
+      const medalLvl1 = store.deck.medalLvl1;
+      const medalLvl2 = store.deck.medalLvl2;
+      const medalLvl3 = store.deck.medalLvl3;
+      const deck = store.deck.cards.map(item => `${item.id}x${item.amount}`);
+      const sideDeck = store.deck.sideCards.map(item => `${item.id}x${item.amount}`);
+      const url = `${window.location.origin}/MedalClashWeb/#/loadDeck?leader=${leader}&medalLvl1=${medalLvl1}&medalLvl2=${medalLvl2}&medalLvl3=${medalLvl3}&deck=${deck.join(",")}&sideDeck=${sideDeck.join(",")}`;
+      await navigator.clipboard.writeText(url);
+      api.success({
+        description: "Url copied to clipboard.",
+        placement: "topRight",
+      });
+    }
+
+    if (warningMissingLeaderMedal || warningRequirements || warningUnder || warningOverMain || warningOverSide) {
+      setConfirmationModalProps({
+        title: "Ilegal Deck",
+        message: "The deck is illegal. Are you sure you want to continue?",
+        onConfirm: () => copyDeckLink(),
+        isDeleteModalOpen: true,
+        setIsDeleteModalOpen: () => setConfirmationModalProps({...confirmationModalProps, isDeleteModalOpen: false}),
+      })
+    } else {
+      copyDeckLink();
+    }
   }
 
   const getColorWord = (color?:string):string => {
@@ -176,8 +196,25 @@ export const DeckBuilder = () => {
   }
 
   const save = () => {
-    const jsonData = deckToJson();
     const deckList: string | null = localStorage.getItem("deckList");
+
+    const deckNameAlreadyExists = deckList
+        ? Object.entries(JSON.parse(deckList)).some(
+            ([id, deck]: [string, any]) => deck.deckName === deckName && id !== store.deck.id
+        )
+        : false;
+
+    if (deckNameAlreadyExists) {
+      setConfirmationModalProps({
+        title: "Deck name already exists",
+        message: "The deck name already exists. Please choose a different name.",
+        isDeleteModalOpen: true,
+        setIsDeleteModalOpen: () => setConfirmationModalProps({...confirmationModalProps, isDeleteModalOpen: false}),
+      })
+      return;
+    }
+
+    const jsonData = deckToJson();
     let newDeckList = "";
     const curDate = String(new Date().getTime());
 
@@ -254,12 +291,6 @@ export const DeckBuilder = () => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setDeckName(store.deck.name)
   }, [store.deck.name]);
-
-  const warningMissingLeaderMedal = store.deck.leader === "";
-  const warningRequirements = store.deck.cards.some(card => card.isError) || store.deck.sideCards.some(card => card.isError);
-  const warningUnder = store.deck.cards.reduce((sum, card) => sum + card.amount, 0) < 40;
-  const warningOverMain = store.deck.cards.reduce((sum, card) => sum + card.amount, 0) > 50;
-  const warningOverSide = store.deck.sideCards.reduce((sum, card) => sum + card.amount, 0) > 10;
 
   return (
       <div className={"flex flex-col gap-0 p-4 my-6"}>

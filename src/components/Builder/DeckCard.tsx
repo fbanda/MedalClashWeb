@@ -39,7 +39,7 @@ export const DeckCard = ({card, amount, isError, isSideDeck}: { card: any, amoun
         </div>
         <Image preview={false} src={card.cardPreviewUrl} alt={"card"}/>
         <div className={"flex gap-1 justify-center text-xs font-bold"}>
-          {isError ? <ExclamationIcon/> : ""}{card.cardname}
+          {isError ? <div><ExclamationIcon/></div> : ""}<div>{card.cardname}</div>
         </div>
         <div className={"text-xs font-normal"}>
           {card.cardCode}
