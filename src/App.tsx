@@ -5,6 +5,8 @@ import {Builder} from "./pages/Builder.tsx";
 import {Navbar} from "./components/Navbar.tsx";
 import {ConfigProvider} from "antd";
 import {LoadDeck} from "./pages/LoadDeck.tsx";
+import {Rules} from "./pages/Rules.tsx";
+import {Info} from "./pages/Info.tsx";
 
 const theme = {
   "token": {
@@ -21,6 +23,8 @@ function App() {
             <Route path="/" element={<Home/>}/>
             <Route path="/builder" element={<Builder/>}/>
             <Route path="/loadDeck" element={<LoadDeck/>}/>
+            <Route path="/rules" element={<Rules/>}/>
+            <Route path="/info" element={<Info/>}/>
           </Routes>
         </HashRouter>
       </ConfigProvider>

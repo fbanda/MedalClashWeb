@@ -28,8 +28,12 @@ export const Navbar = () => {
             <div className={getLinkClass("/builder")}>
               <Link to={"/builder"}>DECK BUILDER</Link>
             </div>
-            <div className={buttonClass}>RULES</div>
-            <div className={buttonClass}>INFO</div>
+            <div className={getLinkClass("/rules")}>
+              <Link to={"/rules"}>RULES</Link>
+            </div>
+            <div className={getLinkClass("/info")}>
+              <Link to={"/info"}>INFO</Link>
+            </div>
           </div>
           <div className={"flex md:hidden justify-end p-4"}>
             <Button onClick={() => setIsOpen(true)}>
@@ -50,8 +54,12 @@ export const Navbar = () => {
           <div className={getLinkClass("/builder")}>
             <Link className={"!text-black"} to={"/builder"} onClick={() => setIsOpen(false)}>DECK BUILDER</Link>
           </div>
-          <div className={buttonClass}>RULES</div>
-          <div className={buttonClass}>INFO</div>
+          <div className={getLinkClass("/rules")}>
+            <Link className={"!text-black"} to={"/rules"} onClick={() => setIsOpen(false)}>RULES</Link>
+          </div>
+          <div className={getLinkClass("/info")}>
+            <Link className={"!text-black"} to={"/info"} onClick={() => setIsOpen(false)}>INFO</Link>
+          </div>
         </Drawer>
       </nav>
   )
