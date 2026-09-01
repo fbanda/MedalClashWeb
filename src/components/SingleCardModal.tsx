@@ -8,9 +8,9 @@ export interface SingleCardModalProps {
 
 const Row = ({label, text, bg} : {label: string, text: string, bg?: boolean}) => {
   return (
-      <div className={`mb-3 px-2 ${bg ? "bg-[#dbf1fa]" : ""}`}>
-        <p><b>{label}:</b></p>
-        <p>{text}</p>
+      <div className={`flex mb-3 px-2 ${bg ? "bg-[#dbf1fa]" : ""}`}>
+        <div className={"basis-[30%]"}><b>{label}</b></div>
+        <div className={"basis-[70%]"}>{text}</div>
       </div>
   )
 }
