@@ -16,21 +16,21 @@ export const Info = () => {
             See Rules <Link className={"underline"} to={"/rules"}>here</Link>
           </p>
         </div>
-        <div className={"mb-4"}>
+        <div className={"mb-5"}>
           <p className={"text-left font-bold"}>How to play on TCG Arena:</p>
-          <p className={"text-left"}>
+          <p className={"text-left mb-2"}>
             1. Go to <Link className={"underline"} to={"https://tcgarena.fr/"} target={"_blank"}>https://tcgarena.fr/</Link> and create an account.
           </p>
-          <p className={"text-left"}>
+          <p className={"text-left mb-2"}>
             2. Go to <Link className={"underline"} to={"https://tcgarena.fr/urlblabla"} target={"_blank"}>https://tcgarena.fr/urlblabla</Link> to import the game.
           </p>
-          <p className={"text-left"}>
+          <p className={"text-left mb-2"}>
             3. Use the deck builder and click on "Export to TCG Arena" to import the deck into your account.
           </p>
-          <p className={"text-left"}>
+          <p className={"text-left mb-2"}>
             4. Click on the play tab.
           </p>
-          <p className={"text-left"}>
+          <p className={"text-left mb-2"}>
             5. Share your ID or copy you opponent's ID to connect.
           </p>
         </div>
