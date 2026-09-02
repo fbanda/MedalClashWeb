@@ -1,5 +1,6 @@
-import {Image, Modal} from "antd";
+import {Button, Image, Modal} from "antd";
 import {useStore} from "../store/store.ts";
+import dataSet from "../assets/TestCardDataSet.json";
 
 export interface SingleCardModalProps {
   isModalOpen: boolean;
@@ -42,6 +43,11 @@ export const SingleCardModal = (props: SingleCardModalProps) => {
             <Image preview={false} src={selectedCard?.cardImageUrl ?? ""} alt={"card"}/>
           </div>
           <div>
+            {selectedCard?.otherside !== "" && (
+            <Button htmlType={"button"}>Flip Card</Button>)}
+            {selectedCard?.tokens.map((id: string) => (
+            <Button htmlType={"button"}>{dataSet.find(c => c.cardId === id)?.cardname} Token</Button>
+            ))}
             <Row label={"Name"} text={selectedCard?.cardname} bg></Row>
             <Row label={"Card Type"} text={selectedCard?.cardType} ></Row>
             {!selectedCard?.isToken && (
@@ -85,10 +91,12 @@ export const SingleCardModal = (props: SingleCardModalProps) => {
             <Row label={"Flavor Text"} text={selectedCard?.flavorText} bg></Row>
             <Row label={"Set"} text={selectedCard?.set} ></Row>
             <Row label={"Collector Number"} text={selectedCard?.collectorNumber} bg></Row>
+            <Row label={"Rulings"} text={""} ></Row>
             </div>)}
             {selectedCard?.cardType !== "Event" && (<div>
             <Row label={"Set"} text={selectedCard?.set} bg></Row>
             <Row label={"Collector Number"} text={selectedCard?.collectorNumber} ></Row>
+            <Row label={"Rulings"} text={""} bg></Row>
             </div>)}
           </div>
         </div>
