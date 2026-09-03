@@ -10373,7 +10373,7 @@
     "power": 10,
     "armor": 25,
     "spirit": -1,
-    "mainText": "■ When this card attacks ► Damage your Leader. This card gets one for each Medabot on your field with {MC}Main Cost 2 or less or the {LW}Wheel type:\n▫ P+5 (You can choose this multiple times.)\n▫ Chain Reaction (This card damages Leaders twice.)\n▫ Laser (If this card's attack destroys a Medabot, it continues to the Leader.)",
+    "mainText": "■ When this card attacks ► Damage your Leader. For the turn, this card gets one for each Medabot on your field with {MC}Main Cost 2 or less or the {LW}Wheel type:\n▫ P+5 (Can be done more than once.)\n▫ Chain Reaction (This card damages Leaders twice.)\n▫ Laser (If this card's attack destroys a Medabot, it continues to the Leader.)",
     "flavorText": "",
     "medabotType": "RAY (Crayfish)",
     "medafighterIdentity": "",
