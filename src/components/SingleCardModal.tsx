@@ -45,7 +45,7 @@ export const SingleCardModal = (props: SingleCardModalProps) => {
           <div>
             {selectedCard?.otherside !== "" && (
             <Button htmlType={"button"}>Flip Card</Button>)}
-            {selectedCard?.tokens.map((id: string) => (
+            {selectedCard?.tokens?.map((id: string) => (
             <Button htmlType={"button"}>{dataSet.find(c => c.cardId === id)?.cardname} Token</Button>
             ))}
             <Row label={"Name"} text={selectedCard?.cardname} bg></Row>
