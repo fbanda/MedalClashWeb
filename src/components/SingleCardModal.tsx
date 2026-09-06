@@ -1,7 +1,7 @@
 import {Button, Image, Modal} from "antd";
 import {useStore} from "../store/store.ts";
 import dataSet from "../assets/TestCardDataSet.json";
-import {Fragment, type ReactNode, useEffect, useState} from "react";
+import {Fragment, useEffect, useState} from "react";
 import {ChevronDown, ChevronRight} from "../Icons.tsx";
 
 const ICON_MAP: { [key: string]: string} = {
@@ -80,34 +80,6 @@ export const SingleCardModal = (props: SingleCardModalProps) => {
     return "";
   }
 
-  const Rulings = (): ReactNode => {
-    return (
-        selectedCard?.rulings.map((r: any, i: number) => (
-            <>
-              <button
-                  key={i}
-                  className={"pl-16 h-9 flex items-center cursor-pointer w-full"}
-                  onClick={() => {
-                    setShowRulings(
-                        showRulings?.map((s, j) => j === i ? !s : false)
-                    )
-                  }}
-              >
-                <div className={"flex items-center gap-2"}>
-                  {showRulings && showRulings[i] ? <ChevronDown/> : <ChevronRight/>}
-                  {r.title}
-                </div>
-              </button>
-              <div className={`pl-22 overflow-hidden transition-all duration-300 ease-in-out ${showRulings && showRulings[i] ? "max-h-screen" : "max-h-0"}`}>
-                {r.list.map((l: string, j: number) => (
-                    <div key={j} className={"mb-4"}>{l}</div>
-                ))}
-              </div>
-            </>
-        ))
-    )
-  }
-
   return (
       <Modal
           width={1200}
@@ -174,7 +146,6 @@ export const SingleCardModal = (props: SingleCardModalProps) => {
                   <Row label={"Set"} text={selectedCard?.set} ></Row>
                   <Row label={"Collector Number"} text={selectedCard?.collectorNumber} bg></Row>
                   <Row label={"Rulings"} text={""} ></Row>
-                  {Rulings()}
                 </>
             )}
             {selectedCard?.cardType !== "Event" && (
@@ -182,9 +153,31 @@ export const SingleCardModal = (props: SingleCardModalProps) => {
                   <Row label={"Set"} text={selectedCard?.set} bg></Row>
                   <Row label={"Collector Number"} text={selectedCard?.collectorNumber} ></Row>
                   <Row label={"Rulings"} text={""} bg></Row>
-                  {Rulings()}
                 </>
             )}
+            {selectedCard?.rulings.map((r: any, i: number) => (
+                <>
+                  <button
+                      key={i}
+                      className={"pl-16 h-9 flex items-center cursor-pointer w-full"}
+                      onClick={() => {
+                        setShowRulings(
+                            showRulings?.map((s, j) => j === i ? !s : false)
+                        )
+                      }}
+                  >
+                    <div className={"flex items-center gap-2"}>
+                      {showRulings && showRulings[i] ? <ChevronDown/> : <ChevronRight/>}
+                      {r.title}
+                    </div>
+                  </button>
+                  <div className={`pl-22 overflow-hidden transition-all duration-300 ease-in-out ${showRulings && showRulings[i] ? "max-h-screen" : "max-h-0"}`}>
+                    {r.list.map((l: string, j: number) => (
+                        <div key={j} className={"mb-4"}>{l}</div>
+                    ))}
+                  </div>
+                </>
+            ))}
           </div>
         </div>
 
