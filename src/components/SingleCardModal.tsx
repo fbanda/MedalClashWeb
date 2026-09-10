@@ -52,7 +52,7 @@ export interface SingleCardModalProps {
 
 const Row = ({label, text, bg} : {label: string, text: string, bg?: boolean}) => {
   return (
-      <div className={`flex py-1 px-2 ${bg ? "bg-[#dbf1fa]" : ""}`}>
+      <div className={`flex py-1 px-2 rounded-[8px] ${bg ? "bg-[#dbf1fa]" : ""}`}>
         <div className={"basis-[30%]"}><b>{label}</b></div>
         <div className={"basis-[70%]"}>{parseTextToImages(text)}</div>
       </div>
@@ -89,7 +89,7 @@ export const SingleCardModal = (props: SingleCardModalProps) => {
           onCancel={() => store.setIsSingleCardModalOpen(false)}
           footer={null}
       >
-        <div className={"flex flex-col md:flex-row gap-8"}>
+        <div className={"flex flex-col md:flex-row gap-8 mt-8"}>
           <div className={"text-center"}>
             <Image className={`md:!w-[496px] md:!h-[692px] max-w-[496px]`} preview={false} src={selectedCard?.cardImageUrl ?? ""} alt={"card"}/>
           </div>
@@ -156,27 +156,31 @@ export const SingleCardModal = (props: SingleCardModalProps) => {
                 </>
             )}
             {selectedCard?.rulings.map((r: any, i: number) => (
-                <>
-                  <button
-                      key={i}
-                      className={"pl-16 h-9 flex items-center cursor-pointer w-full"}
-                      onClick={() => {
-                        setShowRulings(
-                            showRulings?.map((s, j) => j === i ? !s : false)
-                        )
-                      }}
-                  >
-                    <div className={"flex items-center gap-2"}>
-                      {showRulings && showRulings[i] ? <ChevronDown/> : <ChevronRight/>}
-                      {r.title}
+                <div className={"pl-16 mb-1 mt-1"}>
+                  <div className={"border border-gray-400 rounded-lg px-2"}>
+                    <button
+                        key={i}
+                        className={"h-9 flex items-center cursor-pointer w-full"}
+                        onClick={() => {
+                          setShowRulings(
+                              showRulings?.map((s, j) => j === i ? !s : false)
+                          )
+                        }}
+                    >
+                      <div className={"flex items-center gap-2"}>
+                        {showRulings && showRulings[i] ? <ChevronDown/> : <ChevronRight/>}
+                        {r.title}
+                      </div>
+                    </button>
+                    <div className={`pl-10 overflow-hidden transition-all duration-300 ease-in-out ${showRulings && showRulings[i] ? "max-h-screen" : "max-h-0"}`}>
+                      <ul style={{listStyle: "disc"}}>
+                        {r.list.map((l: string, j: number) => (
+                            <li key={j} className={"mb-4"}>{l}</li>
+                        ))}
+                      </ul>
                     </div>
-                  </button>
-                  <div className={`pl-22 overflow-hidden transition-all duration-300 ease-in-out ${showRulings && showRulings[i] ? "max-h-screen" : "max-h-0"}`}>
-                    {r.list.map((l: string, j: number) => (
-                        <div key={j} className={"mb-4"}>{l}</div>
-                    ))}
                   </div>
-                </>
+                </div>
             ))}
           </div>
         </div>
