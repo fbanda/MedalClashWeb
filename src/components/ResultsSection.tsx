@@ -12,7 +12,6 @@ export const ResultsSection = () => {
   const store = useStore();
   const [displayData, setDisplayData] = useState<any[]>([]);
   const [totalResults, setTotalResults] = useState<number>(dataSet.length);
-  const [selectedCard, setSelectedCard] = useState<any>(null);
 
   useEffect(() => {
     const newDisplayData = dataSet.filter(card => {
@@ -49,13 +48,13 @@ export const ResultsSection = () => {
           (store.costCompare === "LTEQ" && card.triggerCost <= store.costValue)
         )) || store.costValue === 0)
 
-      const comparePower = () => (store.powerValue > 0 && card.power >= 0 && (
-          (store.powerCompare === "EQ" && card.power === store.powerValue) ||
-          (store.powerCompare === "GT" && card.power > store.powerValue) ||
-          (store.powerCompare === "GTEQ" && card.power >= store.powerValue) ||
-          (store.powerCompare === "LT" && card.power < store.powerValue) ||
-          (store.powerCompare === "LTEQ" && card.power <= store.powerValue)
-      ) || store.powerValue === 0)
+      const comparePower = () => (store.powerValue !== "" && (
+          (store.powerCompare === "EQ" && card.power === +store.powerValue) ||
+          (store.powerCompare === "GT" && card.power > +store.powerValue) ||
+          (store.powerCompare === "GTEQ" && card.power >= +store.powerValue) ||
+          (store.powerCompare === "LT" && card.power < +store.powerValue) ||
+          (store.powerCompare === "LTEQ" && card.power <= +store.powerValue)
+      ) || store.powerValue === "")
 
       const compareLevel = () => (store.levelValue > 0 && card.medalLevel >= 0 && (
           (store.levelCompare === "EQ" && card.medalLevel === store.levelValue) ||
@@ -123,7 +122,7 @@ export const ResultsSection = () => {
 
   return (
       <>
-        <SingleCardModal isModalOpen={store.isSingleCardModalOpen} selectedCard={selectedCard}/>
+        <SingleCardModal />
 
         <div className={"flex flex-col gap-4 p-4 my-6"}>
           <Pagination align="center" current={store.currentPage} pageSize={PAGE_SIZE} showSizeChanger={false} total={totalResults} onChange={(page) => store.setCurrentPage(page)} />
@@ -195,7 +194,7 @@ export const ResultsSection = () => {
                               isBtn
                               onClick={() => {
                                 store.setIsSingleCardModalOpen(true);
-                                setSelectedCard(card)
+                                store.setSelectedCard(card)
                               }}
                               text={<EyeIcon/>}
                           />

@@ -120,7 +120,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
       store.setSpiritValue(+spiritInput)
       store.setCostValue(+costInput);
       store.setLevelValue(+levelInput);
-      store.setPowerValue(+powerInput);
+      store.setPowerValue(powerInput);
     },
     onClearSearch: () => {
       setSelectedColor(COLOR_OPTIONS[0].value);
@@ -157,7 +157,7 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
       store.setPowerCompare(COMPARE_OPTIONS[0].value);
 
       setPowerInput("");
-      store.setPowerValue(0);
+      store.setPowerValue("");
 
       setSelectedAttribute(attributeOptions[0].value);
       store.setAttribute(attributeOptions[0].value);
@@ -213,9 +213,11 @@ export const AdvancedFilters = forwardRef((props: AdvancedFiltersProps, ref) => 
                    className={"w-full"}
                    value={selectedCardType}
                    onChange={(value) => {
+                     if(store.cardType !== "Leader" && store.cardType !== "Medal") {
+                       store.setCardType(value);
+                       handleOnSearch();
+                     }
                      setSelectedCardType(value);
-                     store.setCardType(value);
-                     handleOnSearch();
                    }}
                    options={cardTypeOptions}
                />

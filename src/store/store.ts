@@ -87,8 +87,8 @@ export interface StoreInterface {
 
   powerCompare: string;
   setPowerCompare: (value: string) => void;
-  powerValue: number;
-  setPowerValue: (value: number) => void;
+  powerValue: string;
+  setPowerValue: (value: string) => void;
 
   levelCompare: string;
   setLevelCompare: (value: string) => void;
@@ -105,8 +105,12 @@ export interface StoreInterface {
 
   // functions
   resetDeck: () => void;
+
+  // single card modal
   isSingleCardModalOpen: boolean,
   setIsSingleCardModalOpen: (value: boolean) => void,
+  selectedCard: any;
+  setSelectedCard: (card: any) => void
 }
 
 const deckName = "NewDeck__" + getCurrentFormattedDate();
@@ -142,12 +146,13 @@ export const useStore = create<StoreInterface>()(persist((set, getState) => ({
       spiritCompare: "EQ",
       spiritValue: 0,
       powerCompare: "EQ",
-      powerValue: 0,
+      powerValue: "",
       costCompare: "EQ",
       costValue: 0,
       levelCompare: "EQ",
       levelValue: 0,
       isSingleCardModalOpen: false,
+      selectedCard: null,
 
       setDeckId: (id: string) => {
         const state = getState();
@@ -278,7 +283,7 @@ export const useStore = create<StoreInterface>()(persist((set, getState) => ({
       setCostCompare: (value: string) => set({costCompare: value}),
       setCostValue: (value: number) => set({costValue: value}),
       setPowerCompare: (value: string) => set({powerCompare: value}),
-      setPowerValue: (value: number) => set({powerValue: value}),
+      setPowerValue: (value: string) => set({powerValue: value}),
       setLevelCompare: (value: string) => set({levelCompare: value}),
       setLevelValue:  (value: number) => set({levelValue: value}),
 
@@ -367,6 +372,8 @@ export const useStore = create<StoreInterface>()(persist((set, getState) => ({
         })
       },
       setIsSingleCardModalOpen: (value: boolean) => set({isSingleCardModalOpen: value}),
+      setSelectedCard: (value: any) => set({selectedCard: value}),
+
     }),
     {
       name: 'medabot-deck-storage',

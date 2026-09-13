@@ -127,7 +127,7 @@ export const Filters = () => {
           <div className={"basis-1/4"}>
             <div className={"flex justify-between"}>
               <p>
-                CARD TYPE
+                CATEGORY
               </p>
             </div>
             <div className={"flex mt-2"}>
