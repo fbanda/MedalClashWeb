@@ -27,6 +27,7 @@ export const LeaderAndMedalsSection = () => {
                   cardCode={leaderCard.cardCode}
                   amount={"1"}
                   hideHexagon
+                  card={leaderCard}
               />
           )}
           {store.deck.medalLvl1 && medalLevel1Card && (
@@ -40,6 +41,7 @@ export const LeaderAndMedalsSection = () => {
                   amount={"1"}
                   hideHexagon
                   medalReq1={medalLevel1Card.colors[0]}
+                  card={medalLevel1Card}
               />
           )}
           {store.deck.medalLvl2 && medalLevel2Card && (
@@ -53,6 +55,7 @@ export const LeaderAndMedalsSection = () => {
                   amount={"1"}
                   hideHexagon
                   medalReq1={medalLevel2Card.colors[0]}
+                  card={medalLevel2Card}
               />
           )}
           {store.deck.medalLvl3 && medalLevel3Card && (
@@ -66,6 +69,7 @@ export const LeaderAndMedalsSection = () => {
                   amount={"1"}
                   hideHexagon
                   medalReq1={medalLevel3Card.colors[0]}
+                  card={medalLevel3Card}
               />
           )}
         </div>
