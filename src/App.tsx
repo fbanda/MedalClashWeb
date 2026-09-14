@@ -7,6 +7,7 @@ import {ConfigProvider} from "antd";
 import {LoadDeck} from "./pages/LoadDeck.tsx";
 import {Rules} from "./pages/Rules.tsx";
 import {Info} from "./pages/Info.tsx";
+import {SingleCardModal} from "./components/SingleCardModal.tsx";
 
 const theme = {
   "token": {
@@ -27,6 +28,7 @@ function App() {
             <Route path="/info" element={<Info/>}/>
           </Routes>
         </HashRouter>
+        <SingleCardModal />
       </ConfigProvider>
   )
 }

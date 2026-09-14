@@ -31,6 +31,7 @@ export const  DeckSection = ({title, isMainDeck} : DeckSectionProps) => {
                       medalReq1={cardFromDataSet.medalRequirements[0]}
                       medalReq2={cardFromDataSet.medalRequirements[1]}
                       medalReq3={cardFromDataSet.medalRequirements[2]}
+                      card={cardFromDataSet}
                   />)
                 }else {
                   return undefined
@@ -51,6 +52,7 @@ export const  DeckSection = ({title, isMainDeck} : DeckSectionProps) => {
                           medalReq1={cardFromDataSet.medalRequirements[0]}
                           medalReq2={cardFromDataSet.medalRequirements[1]}
                           medalReq3={cardFromDataSet.medalRequirements[2]}
+                          card={cardFromDataSet}
                       />)
                 }else {
                   return undefined

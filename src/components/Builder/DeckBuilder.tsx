@@ -14,7 +14,7 @@ export const DeckBuilder = () => {
   const [sideDisplayData, setSideDisplayData] = useState<any[]>([]);
   const [deckName, setDeckName] = useState<string>(store.deck.name);
 
-  const [savedDecks, setSavedDecks] = useState<{label: string, value: string}[]>([]);
+  const [savedDecks, setSavedDecks] = useState<{ label: string, value: string }[]>([]);
 
   const [leader, setLeader] = useState<any>(null);
   const [medalLvl1, setMedalLvl1] = useState<any>(null);
@@ -25,8 +25,10 @@ export const DeckBuilder = () => {
   const [confirmationModalProps, setConfirmationModalProps] = useState<ConfirmationModalProps>({
     title: "Unsaved Changes",
     message: "Are you sure you want to continue?",
-    onConfirm: () => {},
-    setIsDeleteModalOpen: () => {},
+    onConfirm: () => {
+    },
+    setIsDeleteModalOpen: () => {
+    },
     isDeleteModalOpen: false,
   })
 
@@ -87,10 +89,22 @@ export const DeckBuilder = () => {
       if (sideCardsIds.includes(item.cardId)) {
         sideDataToDisplay.push(item);
       }
-      if (item.cardId === store.deck.leader) { setLeader(item); leadMedalsCount++; }
-      if (item.cardId === store.deck.medalLvl1) { setMedalLvl1(item); leadMedalsCount++; }
-      if (item.cardId === store.deck.medalLvl2) { setMedalLvl2(item); leadMedalsCount++; }
-      if (item.cardId === store.deck.medalLvl3) { setMedalLvl3(item); leadMedalsCount++; }
+      if (item.cardId === store.deck.leader) {
+        setLeader(item);
+        leadMedalsCount++;
+      }
+      if (item.cardId === store.deck.medalLvl1) {
+        setMedalLvl1(item);
+        leadMedalsCount++;
+      }
+      if (item.cardId === store.deck.medalLvl2) {
+        setMedalLvl2(item);
+        leadMedalsCount++;
+      }
+      if (item.cardId === store.deck.medalLvl3) {
+        setMedalLvl3(item);
+        leadMedalsCount++;
+      }
     });
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (!store.deck.leader) setLeader(null);
@@ -161,13 +175,18 @@ export const DeckBuilder = () => {
     }
   }
 
-  const getColorWord = (color?:string):string => {
-    switch(color){
-      case "R": return "Red";
-      case "P": return "Purple";
-      case "B": return "Blue";
-      case "G": return "Green";
-      case "Y": return "Yellow";
+  const getColorWord = (color?: string): string => {
+    switch (color) {
+      case "R":
+        return "Red";
+      case "P":
+        return "Purple";
+      case "B":
+        return "Blue";
+      case "G":
+        return "Green";
+      case "Y":
+        return "Yellow";
     }
     return "";
   }
@@ -192,7 +211,18 @@ export const DeckBuilder = () => {
 
     const deckParam = encodeURIComponent(btoa(deckString));
     const url = `https://tcg-arena.fr/import?game=Medal+Clash+%28Test%29&name=${deckName}&id=${deckId}&deck=${deckParam}`;
-    window.open(url);
+
+    if (warningMissingLeaderMedal || warningRequirements || warningUnder || warningOverMain || warningOverSide) {
+      setConfirmationModalProps({
+        title: "Ilegal Deck",
+        message: "The deck is illegal. Are you sure you want to continue?",
+        onConfirm: () => window.open(url),
+        isDeleteModalOpen: true,
+        setIsDeleteModalOpen: () => setConfirmationModalProps({...confirmationModalProps, isDeleteModalOpen: false}),
+      });
+    } else {
+      window.open(url)
+    }
   }
 
   const save = () => {
@@ -316,7 +346,13 @@ export const DeckBuilder = () => {
               <Button className={"w-40"} htmlType={"button"} onClick={resetDeck}>New</Button>
             </div>
             <div className={"flex flex-row gap-2 items-start"}>
-              <Dropdown menu={{items: savedDecks.map(item => ({key: item.value, label: <>{item.label}</>, onClick: () => { load(item.value)}})) }} placement="bottomLeft">
+              <Dropdown menu={{
+                items: savedDecks.map(item => ({
+                  key: item.value, label: <>{item.label}</>, onClick: () => {
+                    load(item.value)
+                  }
+                }))
+              }} placement="bottomLeft">
                 <Button className={"w-40"}>Load</Button>
               </Dropdown>
               <Button
@@ -327,7 +363,10 @@ export const DeckBuilder = () => {
                     message: "Are you sure you want to delete this deck?",
                     onConfirm: () => deleteDeck(),
                     isDeleteModalOpen: true,
-                    setIsDeleteModalOpen: () => setConfirmationModalProps({...confirmationModalProps, isDeleteModalOpen: false}),
+                    setIsDeleteModalOpen: () => setConfirmationModalProps({
+                      ...confirmationModalProps,
+                      isDeleteModalOpen: false
+                    }),
                   })}>
                 Delete
               </Button>
@@ -339,9 +378,9 @@ export const DeckBuilder = () => {
           </div>
           <div className={"basis-2/3"}>
             {warningMissingLeaderMedal && (
-              <div className={"mb-2"}>
-                <Alert title="Deck needs 1 Leader and 3 Medals" type="error" showIcon/>
-              </div>
+                <div className={"mb-2"}>
+                  <Alert title="Deck needs 1 Leader and 3 Medals" type="error" showIcon/>
+                </div>
             )}
             <div className={"font-michroma font-bold text-xl text-left mb-3"}>Leader and Medals ({leadMedals})</div>
             {!leader && !medalLvl1 && !medalLvl2 && !medalLvl3 && (
@@ -369,21 +408,23 @@ export const DeckBuilder = () => {
           </div>
         </div>
         {warningRequirements && (
-          <div className={"mb-2"}>
-            <Alert title="Some cards don't meet their Medal Requirements" type="error" showIcon/>
-          </div>
+            <div className={"mb-2"}>
+              <Alert title="Some cards don't meet their Medal Requirements" type="error" showIcon/>
+            </div>
         )}
         {warningUnder && (
-          <div className={"mb-2"}>
-            <Alert title="Main Deck needs at least 40 cards" type="error" showIcon/>
-          </div>
+            <div className={"mb-2"}>
+              <Alert title="Main Deck needs at least 40 cards" type="error" showIcon/>
+            </div>
         )}
         {warningOverMain && (
-          <div className={"mb-2"}>
-            <Alert title="Main Deck can't have more than 50 cards" type="error" showIcon/>
-          </div>
+            <div className={"mb-2"}>
+              <Alert title="Main Deck can't have more than 50 cards" type="error" showIcon/>
+            </div>
         )}
-        <div className={"font-michroma font-bold text-xl text-left mb-3"}>Main Deck ({store.deck.cards.reduce((sum, card) => sum + card.amount, 0)})</div>
+        <div className={"font-michroma font-bold text-xl text-left mb-3"}>Main Deck
+          ({store.deck.cards.reduce((sum, card) => sum + card.amount, 0)})
+        </div>
         {displayData.length === 0 && (
             <div className={"text-start"}>
               No cards have been selected for Main Deck.
@@ -401,11 +442,13 @@ export const DeckBuilder = () => {
           ))}
         </div>
         {warningOverSide && (
-          <div className={"mb-2"}>
-            <Alert title="Side Deck can't have more than 10 cards" type="error" showIcon/>
-          </div>
+            <div className={"mb-2"}>
+              <Alert title="Side Deck can't have more than 10 cards" type="error" showIcon/>
+            </div>
         )}
-        <div className={"font-michroma font-bold text-xl text-left mb-3"}>Side Deck ({store.deck.sideCards.reduce((sum, card) => sum + card.amount, 0)})</div>
+        <div className={"font-michroma font-bold text-xl text-left mb-3"}>Side Deck
+          ({store.deck.sideCards.reduce((sum, card) => sum + card.amount, 0)})
+        </div>
         {sideDisplayData.length === 0 && (
             <div className={"text-start"}>
               No cards have been selected for Side Deck.

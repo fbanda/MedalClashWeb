@@ -34,7 +34,15 @@ export const DeckCard = ({card, amount, isError, isSideDeck}: { card: any, amoun
                      }}/>
           </div>
           <div className={"absolute bottom-[45px] right-[10px]"}>
-            <Hexagon isBtn onClick={() => {}} text={<EyeIcon/>} />
+            <Hexagon
+                isBtn
+                text={<EyeIcon/>}
+                onClick={() => {
+                  console.log("ewf")
+                  store.setSelectedCard(card);
+                  store.setIsSingleCardModalOpen(true);
+                }}
+            />
           </div>
         </div>
         <Image preview={false} src={card.cardPreviewUrl} alt={"card"}/>

@@ -3,7 +3,6 @@ import {Hexagon} from "./Hexagon.tsx";
 import {DEFAULT_CARD_TYPE, useStore} from "../store/store.ts";
 import dataSet from "../assets/TestCardDataSet.json";
 import {useEffect, useState} from "react";
-import {SingleCardModal} from "./SingleCardModal.tsx";
 import {EyeIcon, MinusIcon, PlusIcon} from "../Icons.tsx";
 
 const PAGE_SIZE = 20;
@@ -122,8 +121,6 @@ export const ResultsSection = () => {
 
   return (
       <>
-        <SingleCardModal />
-
         <div className={"flex flex-col gap-4 p-4 my-6"}>
           <Pagination align="center" current={store.currentPage} pageSize={PAGE_SIZE} showSizeChanger={false} total={totalResults} onChange={(page) => store.setCurrentPage(page)} />
           {displayData.length === 0 && (
