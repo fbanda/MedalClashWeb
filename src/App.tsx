@@ -18,6 +18,7 @@ const theme = {
 function App() {
   return (
       <ConfigProvider theme={theme}>
+        <SingleCardModal />
         <HashRouter>
           <Navbar/>
           <Routes>
@@ -28,7 +29,6 @@ function App() {
             <Route path="/info" element={<Info/>}/>
           </Routes>
         </HashRouter>
-        <SingleCardModal />
       </ConfigProvider>
   )
 }

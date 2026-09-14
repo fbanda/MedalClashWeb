@@ -132,7 +132,7 @@ const parseTextToImages = (text: ReactNode) => {
 const parseMedalRequirements = (requirements: string[]) => {
   return (
       <div className={"flex flex-row items-center gap-2"}>
-        {requirements.map((r, i) => (
+        {requirements?.map((r, i) => (
             <img key={i} src={`https://fbanda.github.io/Arena-MedabotsCard/Assets/Icons/R${r}.png`} alt={r}
                  style={{width: '16px', height: '16px'}}/>
         ))}
@@ -184,6 +184,7 @@ export const SingleCardModal = () => {
 
   return (
       <Modal
+          zIndex={2000}
           width={1200}
           title={""}
           centered
