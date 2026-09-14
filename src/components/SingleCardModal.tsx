@@ -41,7 +41,7 @@ const ICON_MAP: { [key: string]: string } = {
   '{Rn}': 'https://fbanda.github.io/Arena-MedabotsCard/Assets/Icons/ARn.png',
   '{Ml}': 'https://fbanda.github.io/Arena-MedabotsCard/Assets/Icons/AMl.png',
   '{Am}': 'https://fbanda.github.io/Arena-MedabotsCard/Assets/Icons/AAm.png',
-  '{As}': 'https://fbanda.github.io/Arena-MedabotsCard/Assets/Icons/AAs.png',
+  '{As}': 'https://fbanda.github.io/Arena-MedabotsCard/Assets/Icons/ASp.png',
   '{Df}': 'https://fbanda.github.io/Arena-MedabotsCard/Assets/Icons/ADf.png',
   '{Mr}': 'https://fbanda.github.io/Arena-MedabotsCard/Assets/Icons/AMr.png',
   '{LB}': 'https://fbanda.github.io/Arena-MedabotsCard/Assets/Icons/LB.png',
