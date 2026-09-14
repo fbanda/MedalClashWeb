@@ -834,7 +834,7 @@
         "hidden": false,
         "list": [
           "The {P}Power of the target is compared when you try to play this skill. If its Power changes after that but before the skill is played, the effect will still destroy it as normal.",
-          "If this skill destroys a Medabot that was in robattle, the whole robattle process will still continue. For example, your opponent can still play skills that trigger from your attack, and even block the attack. By the time the robattle outcome would be determined, if one or both cards involved have left the field, no outcome happens. Skills such as \"When this card finishes attacking\" still trigger before the robattle ends."
+          "If this skill destroys a Medabot that was in robattle, the whole robattle process will still continue. For example, your opponent can still play skills that trigger from your attack, and even block the attack. By the time the robattle outcome would be determined, if one or both cards involved have left the field, no outcome happens. Skills such as \"When this card finishes attacking\" still trigger after the robattle ends."
         ]
       }
     ],
@@ -997,7 +997,7 @@
         "title": "Second skill",
         "hidden": false,
         "list": [
-          "This skill counts different Medabot Types, not different Medabots. If the only Medabots on your field are two DOG-Types, you can target a Medabot with {P}Power 20 or less. Count when you're paying this skill's cost.",
+          "This skill counts different Medabot Types, not different Medabots. If the only Medabots on your field are two DOG-Types, you can target a Medabot with {P}Power 30 or less. Count when you're paying this skill's cost.",
           "The {P}Power of the target is compared when you try to play this skill. If its Power changes after that but before the skill is played, the effect will still destroy it as normal."
         ]
       }
@@ -2962,6 +2962,16 @@
         ]
       },
       {
+        "title": "Guard",
+        "hidden": true,
+        "list": [
+          "To block an attack means the blocking card is now the attacked card, and the previously attacked card is no longer involved in the robattle.",
+          "Skills such as \"When you heat a Medabot\" will trigger and be played before the card blocks.",
+          "If multiple cards on your field have Guard, you may play as many Guard skills as you wish during a single attack. Only the card that blocked last will remain in the robattle.",
+          "A card's Guard skill will not trigger if it was declared as the attacked card."
+        ]
+      },
+      {
         "title": "Medapart skill",
         "hidden": false,
         "list": [
@@ -3829,8 +3839,8 @@
         "title": "Third skill",
         "hidden": false,
         "list": [
-          "This is a block by effect. Unlike the Guard skill, this doesn't need you to heat the card.",
-          "If an effect makes it so that the attack cannot be blocked, this effect won't work.",
+          "To block an attack means the blocking card is now the attacked card, and the previously attacked card is no longer involved in the robattle.",
+          "Unlike the Guard skill, this skill doesn't need you to heat the card to block.",
           "This skill is mandatory. If a card on your field is being attacked, this card has to block."
         ]
       },
@@ -3961,7 +3971,8 @@
         "hidden": true,
         "list": [
           "If the attacked Leader levels up after the first damage, its {A}Armor will be updated immediately. This can result in the second damage missing if the attacker's {P}Power isn't high enough.",
-          "If a Medabot with Chain Reaction is destroyed by robattle against a Leader, the second damage will happen after it is destroyed, using the {P}Power it had at that moment."
+          "If a Medabot with Chain Reaction is destroyed by robattle against a Leader, the second damage will happen after it is destroyed, using the {P}Power it had at that moment.",
+          "If a card with Chain Reaction gets a second instance of Chain Reaction, it will still attempt to damage Leaders only twice."
         ]
       },
       {
@@ -4140,6 +4151,16 @@
           "Even if the target was already cooled, the rest of the effect will happen.",
           "A card is considered to be \"blocking\" if it was the last card to block the current attack. If your opponent attacks one of your heated {LF}Flight Medabots, it won't be blocking and thus can be destroyed by robattle.",
           "Guard is a skill so if one of your {LF}Flight Medabots loses its skills, it won't be able to use Guard to block. The last effect is not a skill, so even if a Medabot loses its skills, it will still work (if they can block another way)."
+        ]
+      },
+      {
+        "title": "Guard",
+        "hidden": true,
+        "list": [
+          "To block an attack means the blocking card is now the attacked card, and the previously attacked card is no longer involved in the robattle.",
+          "Skills such as \"When you heat a Medabot\" will trigger and be played before the card blocks.",
+          "If multiple cards on your field have Guard, you may play as many Guard skills as you wish during a single attack. Only the card that blocked last will remain in the robattle.",
+          "A card's Guard skill will not trigger if it was declared as the attacked card."
         ]
       }
     ],
@@ -4775,7 +4796,7 @@
         "title": "First skill",
         "hidden": false,
         "list": [
-          "If there are no heated Medabots on your field, you cannot play this skill, even if you want to damage your Leader.",
+          "If there are no other heated Medabots on your field, you cannot play this skill, even if you want to damage your Leader.",
           "Skills such as \"When your Leader is damaged\" will trigger and be played before the effects that follow the play symbol (►). If your Leader has 15 damage, you will lose the game immediately."
         ]
       },
@@ -5140,8 +5161,8 @@
         "title": "Second skill",
         "hidden": false,
         "list": [
-          "This skill triggers when a robattle in which the card was attacking ends. If the attacking card left the field before this, including if it was destroyed by that same robattle, the skill won't trigger.",
-          "Even if your Leader was not damaged during the robattle, this skill will trigger. Even if it was damaged multiple times, this skill will trigger only once.",
+          "This skill triggers when a robattle ends with the attacking card still on the field. If the attacking card left the field before this, including if it was destroyed by that same robattle, the skill won't trigger.",
+          "Assuming the attacking card got to the end of the robattle, this skill will trigger once per robattle, regardless of how many times your Leader was damaged if at all.",
           "When a Medapart is destroyed, the effects of its permanent skills (ones without ► such as \"Equipped Medabot has {P}+10.\") will end immediately. However, effects from its playable skills (such as \"... ► Equipped Medabot gets {P}+10 for the turn.\") will remain.",
           "\"Then, you may ... ►\" allows you to pay a cost to play what is known as a chained skill. This will create another checkpoint, just like a triggered skill, and your opponent can cancel the play of this chained skill.",
           "This skill allows you attack during an opponent's turn. The robattle process is the same as attacking in your turn. Your opponent can cancel the attack, skills such as \"When this card attacks\" will trigger, etc.",
@@ -5268,7 +5289,7 @@
         "title": "Second skill",
         "hidden": false,
         "list": [
-          "A card's base {P}Power is normally its printed Power. If an effect overrides the base Power, it just means that will be the new value from which effects will increase or decrease it.",
+          "A card's base {P}Power is normally its printed Power. If an effect overrides the base Power, that will be the new value from which effects will increase or decrease it.",
           "If multiple effects are currently affecting a card's base {P}Power, the one that was most recently applied wins.",
           "This effect immediately updates this card's {P}Power everytime the cards on your opponent's field enter, leave or have their {P}Power changed, even in the middle of performing game actions.",
           "If this card has the Laser skill and destroys an attacked Medabot by robattle, that might cause its {P}Power to update and miss the damage against the Leader."
@@ -7813,7 +7834,7 @@
         "title": "Second skill",
         "hidden": false,
         "list": [
-          "A card's base {P}Power is normally its printed Power. If an effect overrides the base Power, it just means that will be the new value from which effects will increase or decrease it.",
+          "A card's base {P}Power is normally its printed Power. If an effect overrides the base Power, that will be the new value from which effects will increase or decrease it.",
           "If multiple effects are currently affecting a card's base {P}Power, the one that was most recently applied wins."
         ]
       },
@@ -8959,7 +8980,7 @@
         "title": "Melee Guard",
         "hidden": true,
         "list": [
-          "Melee Guard is a variant of Guard. It means \"When another card on your field is attacked by a {Ml}Melee Medabot, you may heat this card ► This card blocks the attack.\"",
+          "Melee Guard is a variant of Guard. If an effect asks if a card has Guard, a card with Melee Guard will also count.",
           "To block an attack means the blocking card is now the attacked card, and the previously attacked card is no longer involved in the robattle.",
           "Skills such as \"When you heat a Medabot\" will trigger and be played before the card blocks.",
           "If multiple cards on your field have Guard, you may play as many Guard skills as you wish during a single attack. Only the card that blocked last will remain in the robattle.",
@@ -10593,7 +10614,7 @@
         "title": "Token skill",
         "hidden": false,
         "list": [
-          "This skill triggers when a robattle in which the card was attacking ends. If the attacking card left the field before this, including if it was destroyed by that same robattle, the skill won't trigger."
+          "This skill triggers when a robattle ends with this attacking card still on the field. If this card left the field before this, including if it was destroyed by that same robattle, the skill won't trigger."
         ]
       },
       {
@@ -14499,8 +14520,32 @@
     "medapartText": "",
     "set": "#1 Core Adventure",
     "collectorNumber": "1",
-    "tokens": [],
-    "rulings": [],
+    "tokens": [
+      "1090",
+      "1094",
+      "1149",
+      "1163",
+      "1210"
+    ],
+    "rulings": [
+      {
+        "title": "Tokens",
+        "hidden": true,
+        "list": [
+          "Tokens are cards that are only played by effects. They don't go in your initial deck.",
+          "Tokens can only exist in the transport zone (when about to be played) and on the field. If destroyed, they are removed, they don't go to the trash. If an effect tries to move it to the hand or deck, it doesn't work.",
+          "Tokens have no color and no {MC}Main Cost. Medabot tokens can't be played as Medaparts."
+        ]
+      },
+      {
+        "title": "Support",
+        "hidden": true,
+        "list": [
+          "You can target the same card that is using the Support skill (if it is a Medabot).",
+          "While the effect is active, the target is considered to be \"Supported\", even if the card with the Support skill leaves the field or loses the skill."
+        ]
+      }
+    ],
     "banned": false
   },
   {
@@ -14524,7 +14569,7 @@
     "power": 30,
     "armor": 20,
     "spirit": -1,
-    "mainText": "\" ",
+    "mainText": "",
     "flavorText": "",
     "medabotType": "SNA (Snake)",
     "medafighterIdentity": "",
@@ -14544,8 +14589,21 @@
     "medapartText": "",
     "set": "#1 Core Adventure",
     "collectorNumber": "2",
-    "tokens": [],
-    "rulings": [],
+    "tokens": [
+      "1031",
+      "1125"
+    ],
+    "rulings": [
+      {
+        "title": "Tokens",
+        "hidden": true,
+        "list": [
+          "Tokens are cards that are only played by effects. They don't go in your initial deck.",
+          "Tokens can only exist in the transport zone (when about to be played) and on the field. If destroyed, they are removed, they don't go to the trash. If an effect tries to move it to the hand or deck, it doesn't work.",
+          "Tokens have no color and no {MC}Main Cost. Medabot tokens can't be played as Medaparts."
+        ]
+      }
+    ],
     "banned": false
   },
   {
@@ -14569,7 +14627,7 @@
     "power": -1,
     "armor": -1,
     "spirit": 1,
-    "mainText": "■ You can spend all {S} and target 1 Medabot ►The target gets {P}+10 {A}+10 for the turn.",
+    "mainText": "■ You can spend all {S} and target 1 Medabot ► The target gets {P}+10 {A}+10 for the turn.",
     "flavorText": "",
     "medabotType": "",
     "medafighterIdentity": "",
@@ -14585,8 +14643,21 @@
     "medapartText": "",
     "set": "#1 Core Adventure",
     "collectorNumber": "3",
-    "tokens": [],
-    "rulings": [],
+    "tokens": [
+      "1069",
+      "1136"
+    ],
+    "rulings": [
+      {
+        "title": "Tokens",
+        "hidden": true,
+        "list": [
+          "Tokens are cards that are only played by effects. They don't go in your initial deck.",
+          "Tokens can only exist in the transport zone (when about to be played) and on the field. If destroyed, they are removed, they don't go to the trash. If an effect tries to move it to the hand or deck, it doesn't work.",
+          "Tokens have no color and no {MC}Main Cost. Medabot tokens can't be played as Medaparts."
+        ]
+      }
+    ],
     "banned": false
   },
   {
@@ -14610,7 +14681,7 @@
     "power": -1,
     "armor": -1,
     "spirit": 1,
-    "mainText": "■ You can spend all {S} and target 1 Medabot ►The target gets {P}-10 {A}-10 for the turn.",
+    "mainText": "■ You can spend all {S} and target 1 Medabot ► The target gets {P}-10 {A}-10 for the turn.",
     "flavorText": "",
     "medabotType": "",
     "medafighterIdentity": "",
@@ -14626,8 +14697,28 @@
     "medapartText": "",
     "set": "#1 Core Adventure",
     "collectorNumber": "4",
-    "tokens": [],
-    "rulings": [],
+    "tokens": [
+      "1040",
+      "1044"
+    ],
+    "rulings": [
+      {
+        "title": "Tokens",
+        "hidden": true,
+        "list": [
+          "Tokens are cards that are only played by effects. They don't go in your initial deck.",
+          "Tokens can only exist in the transport zone (when about to be played) and on the field. If destroyed, they are removed, they don't go to the trash. If an effect tries to move it to the hand or deck, it doesn't work.",
+          "Tokens have no color and no {MC}Main Cost. Medabot tokens can't be played as Medaparts."
+        ]
+      },
+      {
+        "title": "First skill",
+        "hidden": false,
+        "list": [
+          "An effect that reduces a Medabot's {A}Armor doesn't destroy it unless it says so. A Medabot can remain on the field with {A}Armor 0 or less."
+        ]
+      }
+    ],
     "banned": false
   },
   {
@@ -14644,7 +14735,7 @@
       "C"
     ],
     "medalRequirements": [],
-    "cardType": "",
+    "cardType": "Medapart",
     "medalLevel": -1,
     "mainCost": -1,
     "triggerCost": -1,
@@ -14665,7 +14756,14 @@
     "medapartText": "Equipped Medabot has {P}+10 {A}+10.",
     "set": "#1 Core Adventure",
     "collectorNumber": "5",
-    "tokens": [],
+    "tokens": [
+      "1019",
+      "1040",
+      "1059",
+      "1127",
+      "1192",
+      "1209"
+    ],
     "rulings": [],
     "banned": false
   },
@@ -14683,7 +14781,7 @@
       "C"
     ],
     "medalRequirements": [],
-    "cardType": "",
+    "cardType": "Medapart",
     "medalLevel": -1,
     "mainCost": -1,
     "triggerCost": -1,
@@ -14704,7 +14802,9 @@
     "medapartText": "Equipped Medabot has {P}+10 {A}+10.\nWhen equipped Medabot finishes attacking ► Destroy this Medapart.",
     "set": "#1 Core Adventure",
     "collectorNumber": "5",
-    "tokens": [],
+    "tokens": [
+      "1166"
+    ],
     "rulings": [],
     "banned": false
   },
@@ -14722,7 +14822,7 @@
       "C"
     ],
     "medalRequirements": [],
-    "cardType": "",
+    "cardType": "Medapart",
     "medalLevel": -1,
     "mainCost": -1,
     "triggerCost": -1,
@@ -14743,7 +14843,9 @@
     "medapartText": "Equipped Medabot has {P}+10 {A}+10.\nWhen equipped Medabot finishes attacking ► Destroy this Medapart.",
     "set": "#1 Core Adventure",
     "collectorNumber": "6",
-    "tokens": [],
+    "tokens": [
+      "1166"
+    ],
     "rulings": [],
     "banned": false
   }

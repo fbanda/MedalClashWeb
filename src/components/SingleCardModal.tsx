@@ -103,7 +103,7 @@ export const SingleCardModal = () => {
           onCancel={() => store.setIsSingleCardModalOpen(false)}
           footer={null}
       >
-        <div className={"flex flex-col md:flex-row gap-8 mt-8"}>
+        <div className={"flex flex-col md:flex-row gap-8"}>
           <div className={"text-center"}>
             <Image className={`md:!w-[496px] md:!h-[692px] max-w-[496px]`} preview={false}
                    src={store.selectedCard?.cardImageUrl ?? ""} alt={"card"}/>
@@ -117,11 +117,15 @@ export const SingleCardModal = () => {
                 </Button>
             )}
             <div className={"[&>*:nth-child(odd)]:bg-[#dbf1fa]"}>
-              <Row label={"Name"} text={store.selectedCard?.cardname}></Row>
-              <Row label={"Card Type"} text={store.selectedCard?.cardType}></Row>
+              {store.selectedCard?.cardType !== "Medapart" && (
+                <>
+                  <Row label={"Name"} text={store.selectedCard?.cardname}></Row>
+                  <Row label={"Card Type"} text={store.selectedCard?.cardType}></Row>
+                </>
+              )}
               {!store.selectedCard?.isToken && (
                   <Row label={"Color"}
-                       text={store.selectedCard?.colors.filter((c: string) => c !== "M").map((c: string) => getColorWord(c)).join(", ")}
+                       text={store.selectedCard?.colors.length == 0 ? "-" : store.selectedCard?.colors.filter((c: string) => c !== "M").map((c: string) => getColorWord(c)).join(", ")}
                   ></Row>
               )}
               {store.selectedCard?.cardType !== "Leader" && store.selectedCard?.cardType !== "Medal" && !store.selectedCard?.isToken && (
@@ -154,19 +158,25 @@ export const SingleCardModal = () => {
               {store.selectedCard?.cardType === "Medafighter" && (
                 <>
                   <Row label={"Spirit"} text={store.selectedCard?.spirit}></Row>
-                  <Row label={"Identity"} text={store.selectedCard?.medafighterIdentity}></Row>
+                  <Row label={"Identity"} text={store.selectedCard?.medafighterIdentity !== "" ? store.selectedCard?.medafighterIdentity : "-"}></Row>
                 </>
               )}
-              {store.selectedCard?.cardType !== "Leader" && (
+              {store.selectedCard?.cardType !== "Leader" && store.selectedCard?.cardType !== "Medapart" && (
                   <Row label={"Groups"}
                        text={store.selectedCard?.groups.length === 0 ? "-" : store.selectedCard?.groups.map((g: string) => `[${g}]`).join(", ")}
                   ></Row>
               )}
-              <Row label={"Card Text"} text={store.selectedCard?.mainText}></Row>
-              {store.selectedCard?.cardType === "Medapart" || (store.selectedCard?.cardType === "Medabot" && !store.selectedCard?.isToken) && (
+              {store.selectedCard?.cardType !== "Medapart" && (
+                <Row label={"Card Text"} text={store.selectedCard?.mainText}></Row>
+              )}
+              {(store.selectedCard?.cardType === "Medapart" || (store.selectedCard?.cardType === "Medabot" && !store.selectedCard?.isToken)) && (
+                  <Row label={"Medapart Name"} text={store.selectedCard?.medapartName}></Row>
+              )}
+              {(store.selectedCard?.cardType === "Medabot" && !store.selectedCard?.isToken) && (
+                  <Row label={"Medapart Cost"} text={store.selectedCard?.medapartCost}></Row>
+              )}
+              {(store.selectedCard?.cardType === "Medapart" || (store.selectedCard?.cardType === "Medabot" && !store.selectedCard?.isToken)) && (
                   <>
-                    <Row label={"Medapart Name"} text={store.selectedCard?.medapartName}></Row>
-                    <Row label={"Medapart Cost"} text={store.selectedCard?.medapartCost}></Row>
                     <Row label={"Medapart Type"} text={store.selectedCard?.medapartType}></Row>
                     <Row label={"Medapart Text"} text={store.selectedCard?.medapartText}></Row>
                   </>
@@ -177,13 +187,16 @@ export const SingleCardModal = () => {
               <Row label={"Set"} text={store.selectedCard?.set}></Row>
               <Row label={"Collector Number"} text={store.selectedCard?.collectorNumber}></Row>
               {store.selectedCard?.tokens.length > 0 && (
-                  <Row label={"Tokens"} text={""}></Row>
+                  <Row label={store.selectedCard?.isToken ? "Created by" : "Tokens"} text={""}></Row>
               )}
               {store.selectedCard?.tokens?.map((id: string) => (
                   <div className={"pl-16 mb-1 mt-1 !bg-white"}>
                       <Button className={"w-full"} htmlType={"button"} onClick={() => onFlipCard(id)}>
                         <FlipIcon/>
-                        {dataSet.find(c => c.cardId === id)?.cardname} Token
+                        {store.selectedCard?.isToken ?
+                          dataSet.find(c => c.cardId === id)?.cardname + " (" + dataSet.find(c => c.cardId === id)?.cardCode + ")"
+                          : dataSet.find(c => c.cardId === id)?.cardname + " Token"
+                        }
                       </Button>
                   </div>
               ))}
