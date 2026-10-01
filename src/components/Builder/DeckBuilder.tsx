@@ -347,11 +347,16 @@ export const DeckBuilder = () => {
             </div>
             <div className={"flex flex-row gap-2 items-start"}>
               <Dropdown menu={{
+                style: {
+                  maxHeight: '500px',
+                  overflowY: 'auto',
+                },
                 items: savedDecks.map(item => ({
                   key: item.value, label: <>{item.label}</>, onClick: () => {
                     load(item.value)
                   }
                 }))
+
               }} placement="bottomLeft">
                 <Button className={"w-40"}>Load</Button>
               </Dropdown>
