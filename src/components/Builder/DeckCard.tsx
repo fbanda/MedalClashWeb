@@ -38,7 +38,6 @@ export const DeckCard = ({card, amount, isError, isSideDeck}: { card: any, amoun
                 isBtn
                 text={<EyeIcon/>}
                 onClick={() => {
-                  console.log("ewf")
                   store.setSelectedCard(card);
                   store.setIsSingleCardModalOpen(true);
                 }}

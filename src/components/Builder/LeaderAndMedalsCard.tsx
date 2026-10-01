@@ -27,8 +27,11 @@ export const LeaderAndMedalsCard = ({card}: { card: any }) => {
           <div className={"absolute bottom-[45px] right-[10px]"}>
             <Hexagon
                 isBtn
-                onClick={() => {}}
                 text={<EyeIcon/>}
+                onClick={() => {
+                  store.setSelectedCard(card);
+                  store.setIsSingleCardModalOpen(true);
+                }}
             />
           </div>
         </div>

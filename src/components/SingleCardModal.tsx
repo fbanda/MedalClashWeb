@@ -1,7 +1,7 @@
 import {Button, Image, Modal} from "antd";
 import {useStore} from "../store/store.ts";
 import dataSet from "../assets/TestCardDataSet.json";
-import {Fragment, type ReactNode, useEffect, useState} from "react";
+import {Fragment, type ReactNode, useEffect, useRef, useState} from "react";
 import {ChevronDown, ChevronRight, FlipIcon} from "../Icons.tsx";
 
 const ICON_MAP: { [key: string]: string } = {
@@ -121,7 +121,7 @@ const parseTextToImages = (text: ReactNode) => {
                 />
             );
           } else if (part === '\n') {
-            return <div className={"mb-1"}></div>
+            return <div className={"mb-1"} key={index}></div>
           }
           return <Fragment key={index}>{part}</Fragment>;
         })}
@@ -182,6 +182,8 @@ export const SingleCardModal = () => {
     }
   }
 
+  const scrollPanel = useRef<HTMLDivElement>(null);
+
   return (
       <Modal
           zIndex={2000}
@@ -189,6 +191,7 @@ export const SingleCardModal = () => {
           title={""}
           centered
           open={store.isSingleCardModalOpen}
+          afterOpenChange={() => {if (scrollPanel.current) scrollPanel.current.scrollTop = 0;}}
           onCancel={() => store.setIsSingleCardModalOpen(false)}
           footer={null}
       >
@@ -197,7 +200,7 @@ export const SingleCardModal = () => {
             <Image className={`md:!w-[496px] md:!h-[692px] max-w-[496px]`} preview={false}
                    src={store.selectedCard?.cardImageUrl ?? ""} alt={"card"}/>
           </div>
-          <div className={"max-h-[698px] overflow-y-auto pb-12 w-full"}>
+          <div ref={scrollPanel} className={"max-h-[698px] overflow-y-auto pb-12 w-full"}>
             {store.selectedCard?.otherside !== "" && (
                 <Button className={"mb-4 w-full"} htmlType={"button"}
                         onClick={() => onFlipCard(store.selectedCard?.otherside)}>
@@ -252,7 +255,7 @@ export const SingleCardModal = () => {
                     <Row
                         notParse
                         label={"Attributes"}
-                        text={store.selectedCard?.attributes.map((item: string) => <IconField field={item}/>)}
+                        text={store.selectedCard?.attributes.map((item: string, i: number) => <IconField field={item} key={"attribute" + i}/>)}
                     />
                   </>
               )}
@@ -306,7 +309,7 @@ export const SingleCardModal = () => {
                   <Row label={"Rulings"} text={""}/>
               )}
               {store.selectedCard?.rulings.map((r: any, i: number) => (
-                  <div className={"pl-16 mb-1 mt-1 !bg-white"}>
+                  <div className={"pl-16 mb-1 mt-1 !bg-white"} key={"ruling" + i}>
                     <div className={"border border-gray-400 rounded-lg px-2"}>
                       <button
                           key={i}
