@@ -348,7 +348,7 @@ export const DeckBuilder = () => {
             <div className={"flex flex-row gap-2 items-start"}>
               <Dropdown menu={{
                 style: {
-                  maxHeight: '500px',
+                  maxHeight: '400px',
                   overflowY: 'auto',
                 },
                 items: savedDecks.map(item => ({
