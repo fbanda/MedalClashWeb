@@ -210,7 +210,7 @@ export const DeckBuilder = () => {
     const deckString = `Leader:${listLeader}\n\nMedal-Lv1-${medal1Color}:${listMedal1}\n\nMedal-Lv2-${medal2Color}:${listMedal2}\n\nMedal-Lv3-${medal3Color}:${listMedal3}\n\nMedabot:${listMedabot}\n\nMedafighter:${listMedafighter}\n\nEvent:${listEvent}\n\nSideboard:${listSideboard}`;
 
     const deckParam = encodeURIComponent(btoa(deckString));
-    const url = `https://tcg-arena.fr/import?game=Medal+Clash+%28Test%29&name=${deckName}&id=${deckId}&deck=${deckParam}`;
+    const url = `https://tcg-arena.fr/import?game=Medal+Clash&name=${deckName}&id=${deckId}&deck=${deckParam}`;
 
     if (warningMissingLeaderMedal || warningRequirements || warningUnder || warningOverMain || warningOverSide) {
       setConfirmationModalProps({
