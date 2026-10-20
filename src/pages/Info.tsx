@@ -19,7 +19,7 @@ export const Info = () => {
         <div className={"mb-5"}>
           <p className={"text-left font-bold"}>How to play on TCG Arena:</p>
           <p className={"text-left mb-2"}>
-            1. Go to <Link className={"underline"} to={"https://tcgarena.fr/"} target={"_blank"}>https://tcgarena.fr/</Link> and create an account.
+            1. Go to <Link className={"underline"} to={"https://tcg-arena.fr/"} target={"_blank"}>https://tcg-arena.fr/</Link> and create an account.
           </p>
           <p className={"text-left mb-2"}>
             2. Go to <Link className={"underline"} to={"https://tcg-arena.fr/load/aHR0cHMlM0ElMkYlMkZmYmFuZGEuZ2l0aHViLmlvJTJGQXJlbmEtTWVkYWJvdHNDYXJkJTJGZ2FtZS5qc29u"} target={"_blank"}>this link</Link> to import the game.
