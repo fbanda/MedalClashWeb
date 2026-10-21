@@ -4,7 +4,7 @@ import dataSet from "../../assets/TestCardDataSet.json";
 import {Alert, Button, Dropdown, Input, notification} from "antd";
 import {LeaderAndMedalsCard} from "./LeaderAndMedalsCard.tsx";
 import {DeckCard} from "./DeckCard.tsx";
-import {SaveDeckToStore} from "../../Utils.ts";
+import {cardSort, SaveDeckToStore} from "../../Utils.ts";
 import {ConfirmationModal, type ConfirmationModalProps} from "../ConfirmationModal.tsx";
 
 export const DeckBuilder = () => {
@@ -111,6 +111,9 @@ export const DeckBuilder = () => {
     if (!store.deck.medalLvl1) setMedalLvl1(null);
     if (!store.deck.medalLvl2) setMedalLvl2(null);
     if (!store.deck.medalLvl3) setMedalLvl3(null);
+
+    dataToDisplay.sort(cardSort);
+    sideDataToDisplay.sort(cardSort);
 
     setDisplayData(dataToDisplay);
     setSideDisplayData(sideDataToDisplay);

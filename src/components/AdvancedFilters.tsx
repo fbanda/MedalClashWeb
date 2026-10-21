@@ -13,6 +13,7 @@ interface Option {
 
 const COLOR_OPTIONS = [
   { value: 'ALL', label: 'ALL' },
+  { value: 'MEDALS', label: 'By Medals'},
   { value: 'R', label: 'Red' },
   { value: 'P', label: 'Purple' },
   { value: 'B', label: 'Blue' },

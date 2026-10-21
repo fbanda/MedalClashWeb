@@ -137,3 +137,42 @@ export const getCurrentFormattedDate = () => {
 
   return `${year}-${month}-${day}_${hours}-${minutes}-${seconds}`;
 }
+
+const sortValueCardType = (cardType?: string): number => {
+  switch (cardType) {
+    case "Medabot": return 1;
+    case "Medafighter": return 2;
+    case "Event": return 3;
+    case "Medapart": return 99;
+  }
+  return 0;
+}
+
+export function cardSort(a: any, b: any): number {
+  var aVal = 0;
+  var bVal = 0;
+
+  if (a.cardType != b.cardType){
+    aVal = sortValueCardType(a.cardType);
+    bVal = sortValueCardType(b.cardType);
+  }else if (a.mainCost != b.mainCost){
+    aVal = a.mainCost;
+    bVal = b.mainCost;
+  }else if (a.triggerCost != b.triggerCost){
+    aVal = a.triggerCost;
+    bVal = b.triggerCost;
+  }else if (a.power != b.power)
+  {
+    aVal = a.power;
+    bVal = b.power;
+  }else if (a.armor != b.armor)
+  {
+    aVal = a.armor;
+    bVal = b.armor;
+  }else if (a.spirit != b.spirit)
+  {
+    aVal = a.spirit;
+    bVal = b.spirit;
+  }
+  return aVal - bVal;
+}

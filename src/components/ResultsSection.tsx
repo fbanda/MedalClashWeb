@@ -4,6 +4,7 @@ import {DEFAULT_CARD_TYPE, useStore} from "../store/store.ts";
 import dataSet from "../assets/TestCardDataSet.json";
 import {useEffect, useState} from "react";
 import {EyeIcon, MinusIcon, PlusIcon} from "../Icons.tsx";
+import { isValidMedalRequirements } from "../Utils.ts";
 
 const PAGE_SIZE = 20;
 
@@ -75,7 +76,7 @@ export const ResultsSection = () => {
           )) &&
           (store.searchBySet && card.set.removeAccentsToLowerCase() === store.searchBySet.removeAccentsToLowerCase() || !store.searchBySet || store.searchBySet === "ALL") &&
           (store.cardType !== DEFAULT_CARD_TYPE && store.cardType === card.cardType || store.cardType === DEFAULT_CARD_TYPE && card.cardType !== "Leader" && card.cardType !== "Medal") &&
-          (store.color !== "ALL" && (card.colors as string[]).includes(store.color) || store.color === "ALL") &&
+          ((store.color !== "ALL" && (card.colors as string[]).includes(store.color)) || (store.color === "MEDALS" && isValidMedalRequirements(card.medalRequirements, store.medalsColor)) || store.color === "ALL") &&
           (store.attribute !== "ALL" && (card.attributes as string[]).includes(store.attribute) || store.attribute === "ALL") &&
           (store.group !== "ALL" && (card.groups as string[]).includes(store.group) || store.group === "ALL") &&
           (store.gender !== "ALL" && card.gender == store.gender || store.gender === "ALL") &&
