@@ -5680,9 +5680,9 @@
         "title": "Event skill",
         "hidden": false,
         "list": [
-          "This Event resolves and is moved to the trash with you being about to play the cards. Then, there is a checkpoint when skills such as \"When your opponent is about to play a card\" will trigger and can potentially cancel the play. Only after both players pass that checkpoint and the cards are played will the rest of the effect happen.",
+          "This Event resolves and is moved to the trash with you being about to play the Medabots. Then, there is a checkpoint when skills such as \"When your opponent is about to play a Medabot\" will trigger and can potentially cancel the play. Only after both players pass that checkpoint and the Medabots are played will the rest of the effect happen.",
           "When you play more than one card at the same time, they all go to your transport zone. Skills such as \"When your opponent is about to play a card\" will trigger for each of those. If the cards are successfully played, they will enter the field at the same time.",
-          "You can choose to play only 1 of the tokens, if you don't want to surpass your field limit.",
+          "You cannot choose to play only 1 token, even if you don't want to surpass your field limit. If you do, you will have to destroy some of the existing Medabots.",
           "The tokens played by this effect (which have the Support skill) will also get Evasion."
         ]
       },
@@ -8789,7 +8789,7 @@
         "list": [
           "This effect can track cards as they move from either field to your trash, as well as from either field to the Medawatch. If a card went somewhere else after being destroyed or left your trash or your Medawatch, the effect won't work. Even if the card left one of those zones and went back again, it won't work.",
           "The cards don't need to have been on your field when they were destroyed. If a card on your opponent's field was destroyed but ended up in your trash (because you own it) or in your Medawatch (because an effect replaced where it went, or an effect moved it from your trash to your Medawatch), that card will be played too.",
-          "This Event resolves and is moved to the trash with you being about to play the cards. Then, there is a checkpoint when skills such as \"When your opponent is about to play a card\" will trigger and can potentially cancel the play. Only after both players pass that checkpoint and the cards are played will the rest of the effect happen.",
+          "This Event resolves and is moved to the trash with you being about to play the Medabots. Then, there is a checkpoint when skills such as \"When your opponent is about to play a Medabot\" will trigger and can potentially cancel the play. Only after both players pass that checkpoint and the Medabots are played will the rest of the effect happen.",
           "When you play more than one card at the same time, they all go to your transport zone. Skills such as \"When your opponent is about to play a card\" will trigger for each of those. If the cards are successfully played, they will enter the field at the same time."
         ]
       }
@@ -10272,12 +10272,13 @@
         "hidden": false,
         "list": [
           "A player discards cards by moving them from their hand to their trash (they choose which).",
-          "If multiple Medabots on your field Supported the same Medabot (that attacked this turn), you will draw for each of them.",
+          "If multiple Medabots on your field Supported the same Medabot (and it attacked this turn), you will draw for each of them.",
           "If the same Medabot on your field Supported multiple Medabots (that attacked this turn), you will draw for each of them.",
-          "If a Medabot on your field Supported itself and it still attacked this turn, you will draw for each of them.",
+          "If a Medabot on your field Supported itself and it still attacked this turn, you will draw for that.",
           "If a Medabot first attacked and then was Supported after the attack, it will still count.",
           "If a Medabot was Supported and attacked this turn, but it's no longer on the field, it will still count.",
-          "If a Medabot had all of its attacks canceled this turn, it won't count as having attacked this turn."
+          "If a Supported Medabot attacked twice this turn, the amount of draw will not be doubled. It counts times you Supported Medabots that attacked, regardless of how many times they attacked.",
+          "If a Medabot had all of its attacks canceled this turn, it won't count as having attacked this turn. You won't draw for the times it was Supported."
         ]
       },
       {
@@ -10343,7 +10344,7 @@
         "hidden": false,
         "list": [
           "When you play more than one card at the same time, they all go to your transport zone. Skills such as \"When your opponent is about to play a card\" will trigger for each of those. If the cards are successfully played, they will enter the field at the same time.",
-          "You can choose to play only 1 of the tokens, if you don't want to surpass your field limit."
+          "You cannot choose to play only 1 token, even if you don't want to surpass your field limit. If you do, you will have to destroy some of the existing Medabots."
         ]
       },
       {
@@ -10394,7 +10395,7 @@
     "power": 10,
     "armor": 25,
     "spirit": -1,
-    "mainText": "■ When this card attacks ► Damage your Leader. For the turn, this card gets one for each Medabot on your field with {MC}Main Cost 2 or less or the {LW}Wheel type:\n▫ P+5 (Can be done more than once.)\n▫ Chain Reaction (This card damages Leaders twice.)\n▫ Laser (If this card's attack destroys a Medabot, it continues to the Leader.)",
+    "mainText": "■ When this card attacks ► Damage your Leader. This card gets one for the turn for each Medabot on your field with {MC}Main Cost 2 or less or the {LW}Wheel type:\n▫ {P}+5 (You can choose this multiple times.)\n▫ Chain Reaction (This card damages Leaders twice.)\n▫ Laser (If this card's attack destroys a Medabot, it continues to the Leader.)",
     "flavorText": "",
     "medabotType": "RAY (Crayfish)",
     "medafighterIdentity": "",
