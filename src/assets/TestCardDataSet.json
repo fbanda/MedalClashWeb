@@ -2068,7 +2068,7 @@
     "power": 40,
     "armor": 40,
     "spirit": -1,
-    "mainText": "■ Tank (When you play this card ►Heat it.)\n■ Chain Reaction (This card damages Leaders twice.)\n■ Scrap ► Your opponent destroys 1 Medabot on their field. If scrapping a [Rubberobo Gang] card, they destroy one with {MC}Main Cost 3 or more if possible. (When you play this card, you may destroy 1 Medabot/Medafighter on your field ►Play the Scrap skill.)",
+    "mainText": "■ Tank (When you play this card ►Heat it.)\n■ Chain Reaction (This card damages Leaders twice.)\n■ Scrap ► Destroy 1 Medabot on your opponent's field of their choice. If scrapping a [Rubberobo Gang] card, it must have {MC}Main Cost 3 or more if possible. (When you play this card, you may destroy 1 Medabot/Medafighter on your field ►Play the Scrap skill.)",
     "flavorText": "",
     "medabotType": "JEL (Jellyfish)",
     "medafighterIdentity": "",
@@ -2109,9 +2109,9 @@
         "title": "Third skill",
         "hidden": false,
         "list": [
-          "Your opponent is the one who chooses what Medabot to destroy.",
-          "This will count as them destroying their own Medabot by effect, not you.",
-          "Your opponent must always destroy a Medabot on their field. If you scrapped a [Rubberobo Gang] card and none of them have {MC}Main Cost 3 or more, they just destroy any of them."
+          "Your opponent chooses what Medabot to destroy, but it will count as you destroying the Medabot.",
+          "If an effect prevents you from destroying a particular Medabot, your opponent cannot choose that Medabot for this effect. They must choose one that you can actually mark for destruction.",
+          "If you scrapped a [Rubberobo Gang] card, your opponent must try to choose a Medabot with {MC}Main Cost 3 or more. But if there are none, or if an effect prevents you from destroying them, they must choose one of the other Medabots."
         ]
       },
       {
